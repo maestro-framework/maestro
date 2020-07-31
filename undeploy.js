@@ -45,5 +45,6 @@ const deleteRole = (name) => {
 }
 
 deleteLambdas(lambdaNames)
+  .catch(() = {})
   .then(() => detachPolicies(policyArns, roleName))
   .then(() => deleteRole(roleName));
