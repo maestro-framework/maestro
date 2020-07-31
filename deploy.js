@@ -25,8 +25,8 @@ const lambdaPolicyArns = [
 ];
 
 const statesPolicyArns = [
-  "arn:aws:iam::aws:policy/service-role/LambdaInvokeScopedAccessPolicy",
-  "arn:aws:iam::aws:policy/service-role/XRayAccessPolicy",
+  "arn:aws:iam::aws:policy/service-role/AWSLambdaRole",
+  "arn:aws:iam::aws:policy/AWSXRayDaemonWriteAccess",
 ];
 
 // Extract zipping function files to a helper
@@ -100,6 +100,7 @@ const attachPolicies = (policyArns, roleName) => {
       PolicyArn: policyArn,
       RoleName: roleName,
     };
+
     return retryAsync(
       () => {
         return iam.attachRolePolicy(policyParams).promise();
@@ -113,7 +114,7 @@ const attachPolicies = (policyArns, roleName) => {
 };
 
 const createRoleParams = (roleName) => {
-  const service = roleName.startsWith('lambda') ? 'lambda' : 'states';
+  const service = roleName.startsWith("lambda") ? "lambda" : "states";
   return {
     RoleName: roleName,
     AssumeRolePolicyDocument: JSON.stringify(getRolePolicy(service)),
@@ -152,17 +153,17 @@ const createLambdaFunctions = (allParams) => {
 };
 
 iam
-  .createRole(() => createRoleParams(lambdaRoleName))
+  .createRole(createRoleParams(lambdaRoleName))
   .promise()
   .then(() => console.log("Successfully created role"))
   .then(() => attachPolicies(lambdaPolicyArns, lambdaRoleName))
   .then(() => console.log("Successfully attached policies"))
-  .then(() => generateMultipleFunctionParams(basenamesAndZipBuffers, roleName))
+  .then(() => generateMultipleFunctionParams(basenamesAndZipBuffers, lambdaRoleName))
   .then(createLambdaFunctions)
   .then(() => console.log("Successfully created function(s)"));
 
 iam
-  .createRole(() => createRoleParams(statesRoleName))
+  .createRole(createRoleParams(statesRoleName))
   .promise()
   .then(() => console.log("Successfully created role"))
   .then(() => attachPolicies(statesPolicyArns, statesRoleName))
