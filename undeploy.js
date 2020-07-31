@@ -27,6 +27,15 @@ const basename = (filename) => filename.replace(/\..*$/, "");
 const lambdaNames = fs.readdirSync("lambdas").map(basename);
 const stateMachineNames = fs.readdirSync("state-machines").map(basename);
 
+const getStateMachineArns = async (names) => {
+  const stateMachines = (await stepFunctions.listStateMachines().promise())
+    .stateMachines;
+
+  return stateMachines
+    .filter(({ name }) => names.includes(name))
+    .map(({ stateMachineArn }) => stateMachineArn);
+};
+
 const deleteLambdas = (names) => {
   const deleteLambdaPromises = names.map((name) => {
     return lambda
@@ -70,7 +79,11 @@ deleteLambdas(lambdaNames)
   .then(() => deleteRole(lambdaRoleName))
   .catch(() => {});
 
-detachPolicies(statesPolicyArns, statesRoleName)
+getStateMachineArns(stateMachineNames)
+  .then(getStateMachineArns)
+  .catch(() => {})
+  .then(deleteStateMachines)
+  .then(() => detachPolicies(statesPolicyArns, statesRoleName))
   .catch(() => {})
   .then(() => deleteRole(statesRoleName))
   .catch(() => {});
