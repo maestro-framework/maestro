@@ -57,4 +57,4 @@ deleteLambdas(lambdaNames)
   .then(() => detachPolicies(lambdaPolicyArns, lambdaRoleName))
   .then(() => deleteRole(lambdaRoleName));
 
-detatchPolicies(statesPolicyArns, statesRoleName).then(() => deleteRole(statesRoleName));
+detachPolicies(statesPolicyArns, statesRoleName).then(() => deleteRole(statesRoleName));
