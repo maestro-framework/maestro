@@ -9,6 +9,7 @@ const apiVersion = "latest";
 
 const iam = new AWS.IAM();
 const lambda = new AWS.Lambda({ apiVersion, region });
+const stepFunctions = new AWS.StepFunctions({ apiVersion, region });
 
 const lambdaRoleName = "lambda_basic_execution";
 const lambdaPolicyArns = [
