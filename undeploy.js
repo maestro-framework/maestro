@@ -16,6 +16,12 @@ const lambdaPolicyArns = [
   "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
 ];
 
+const statesRoleName = "stepFunctions_basic_execution";
+const statesPolicyArns = [
+  "arn:aws:iam::aws:policy/service-role/AWSLambdaRole",
+  "arn:aws:iam::aws:policy/AWSXRayDaemonWriteAccess",
+];
+
 const basename = (filename) => filename.replace(".js", "");
 
 const lambdaNames = fs.readdirSync("lambdas").map(basename);
@@ -49,4 +55,6 @@ const deleteRole = (name) => {
 deleteLambdas(lambdaNames)
   .catch(() => {})
   .then(() => detachPolicies(lambdaPolicyArns, lambdaRoleName))
-  .then(() => deleteRole(roleName));
+  .then(() => deleteRole(lambdaRoleName));
+
+detatchPolicies(statesPolicyArns, statesRoleName).then(() => deleteRole(statesRoleName));
