@@ -15,45 +15,53 @@ const fs = require("fs");
 const childProcess = require("child_process");
 const iam = new AWS.IAM();
 const region = "us-west-2";
-const roleName = "lambda_basic_execution";
+const lambdaRoleName = "lambda_basic_execution";
+const statesRoleName = "stepFunctions_basic_execution";
 const apiVersion = "latest";
 const lambda = new AWS.Lambda({ apiVersion, region });
-const policyArns = [
+const lambdaPolicyArns = [
   "arn:aws:iam::aws:policy/service-role/AWSLambdaRole",
   "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
-]
+];
+
+const statesPolicyArns = [
+  "arn:aws:iam::aws:policy/service-role/LambdaInvokeScopedAccessPolicy",
+  "arn:aws:iam::aws:policy/service-role/XRayAccessPolicy",
+];
 
 // Extract zipping function files to a helper
 const zipFileToBuffer = (fileBasename) => {
   return childProcess.execSync(`zip -j - lambdas/${fileBasename}.js`);
-}
+};
 
 // Create a function to read all files in 'lambdas' directory
 const getBasenamesAndZipBuffers = () => {
-  const fileNames = fs.readdirSync('lambdas');
+  const fileNames = fs.readdirSync("lambdas");
   const basenames = fileNames.map((filename) => {
-    return filename.replace('.js', '');
+    return filename.replace(".js", "");
   });
 
-  return basenames.map( (basename) => {
+  return basenames.map((basename) => {
     const zipBuffer = zipFileToBuffer(basename);
-    return { basename, zipBuffer }
+    return { basename, zipBuffer };
   });
-}
+};
 
 const basenamesAndZipBuffers = getBasenamesAndZipBuffers();
 
-const rolePolicy = {
-  Version: "2012-10-17",
-  Statement: [
-    {
-      Effect: "Allow",
-      Principal: {
-        Service: "lambda.amazonaws.com",
+const getRolePolicy = (service) => {
+  return {
+    Version: "2012-10-17",
+    Statement: [
+      {
+        Effect: "Allow",
+        Principal: {
+          Service: `${service}.amazonaws.com`,
+        },
+        Action: "sts:AssumeRole",
       },
-      Action: "sts:AssumeRole",
-    },
-  ],
+    ],
+  };
 };
 
 async function sleep(ms) {
@@ -74,7 +82,7 @@ async function retryAsync(
       throw err;
     }
 
-    console.log('Unsuccessful operation. Retrying...');
+    console.log("Unsuccessful operation. Retrying...");
 
     await sleep(interval);
     await retryAsync(
@@ -86,12 +94,12 @@ async function retryAsync(
   }
 }
 
-const attachPolicies = () => {
-  const attachPolicyPromises = policyArns.map( (policyArn) => {
+const attachPolicies = (policyArns, roleName) => {
+  const attachPolicyPromises = policyArns.map((policyArn) => {
     const policyParams = {
       PolicyArn: policyArn,
       RoleName: roleName,
-    }
+    };
     return retryAsync(
       () => {
         return iam.attachRolePolicy(policyParams).promise();
@@ -102,15 +110,17 @@ const attachPolicies = () => {
   });
 
   return Promise.all(attachPolicyPromises);
-}
+};
 
-const createRoleParams = {
-  RoleName: roleName,
-  AssumeRolePolicyDocument: JSON.stringify(rolePolicy),
+const createRoleParams = (roleName) => {
+  const service = roleName.startsWith('lambda') ? 'lambda' : 'states';
+  return {
+    RoleName: roleName,
+    AssumeRolePolicyDocument: JSON.stringify(getRolePolicy(service)),
+  };
 };
 
 const generateFunctionParams = (basename, zipBuffer, role) => {
-
   return {
     Code: {
       ZipFile: zipBuffer,
@@ -122,31 +132,38 @@ const generateFunctionParams = (basename, zipBuffer, role) => {
   };
 };
 
-const generateMultipleFunctionParams = async (basenamesAndZipBuffers, roleName) => {
+const generateMultipleFunctionParams = async (
+  basenamesAndZipBuffers,
+  roleName
+) => {
   const role = await iam.getRole({ RoleName: roleName }).promise();
 
-  return basenamesAndZipBuffers.map( ({ basename, zipBuffer }) => {
+  return basenamesAndZipBuffers.map(({ basename, zipBuffer }) => {
     return generateFunctionParams(basename, zipBuffer, role);
   });
-}
+};
 
 const createLambdaFunctions = (allParams) => {
-  const createFunctionPromises = allParams.map((params) => retryAsync(
-    () => lambda.createFunction(params).promise(),
-    5,
-    7000,
-    0.6
-  ));
+  const createFunctionPromises = allParams.map((params) =>
+    retryAsync(() => lambda.createFunction(params).promise(), 5, 7000, 0.6)
+  );
 
   return Promise.all(createFunctionPromises);
 };
 
 iam
-  .createRole(createRoleParams)
+  .createRole(() => createRoleParams(lambdaRoleName))
   .promise()
   .then(() => console.log("Successfully created role"))
-  .then(attachPolicies)
+  .then(() => attachPolicies(lambdaPolicyArns, lambdaRoleName))
   .then(() => console.log("Successfully attached policies"))
   .then(() => generateMultipleFunctionParams(basenamesAndZipBuffers, roleName))
   .then(createLambdaFunctions)
   .then(() => console.log("Successfully created function(s)"));
+
+iam
+  .createRole(() => createRoleParams(statesRoleName))
+  .promise()
+  .then(() => console.log("Successfully created role"))
+  .then(() => attachPolicies(statesPolicyArns, statesRoleName))
+  .then(() => console.log("Successfully attached policies"));
