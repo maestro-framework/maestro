@@ -22,9 +22,10 @@ const statesPolicyArns = [
   "arn:aws:iam::aws:policy/AWSXRayDaemonWriteAccess",
 ];
 
-const basename = (filename) => filename.replace(".js", "");
+const basename = (filename) => filename.replace(/\..*$/, "");
 
 const lambdaNames = fs.readdirSync("lambdas").map(basename);
+const stateMachineNames = fs.readdirSync("state-machines").map(basename);
 
 const deleteLambdas = (names) => {
   const deleteLambdaPromises = names.map((name) => {
@@ -36,6 +37,16 @@ const deleteLambdas = (names) => {
   });
 
   return Promise.all(deleteLambdaPromises);
+};
+
+const deleteStateMachines = (arns) => {
+  const deleteStateMachinePromises = arns.map((arn) => {
+    return stepFunctions
+      .deleteStateMachines({ stateMachineArn: arn })
+      .promise();
+  });
+
+  return Promise.all(deleteStateMachinePromises);
 };
 
 const detachPolicies = (policyArns, roleName) => {
