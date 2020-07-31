@@ -10,7 +10,7 @@ const apiVersion = "latest";
 const iam = new AWS.IAM();
 const lambda = new AWS.Lambda({ apiVersion, region });
 
-const lambdaRoleName = 'lambda_basic_execution';
+const lambdaRoleName = "lambda_basic_execution";
 const lambdaPolicyArns = [
   "arn:aws:iam::aws:policy/service-role/AWSLambdaRole",
   "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
@@ -34,15 +34,17 @@ const deleteLambdas = (names) => {
 
 const detachPolicies = (policyArns, roleName) => {
   const detachPolicyPromises = policyArns.map((arn) => {
-    return iam.detachRolePolicy({ PolicyArn: arn, RoleName: roleName }).promise();
+    return iam
+      .detachRolePolicy({ PolicyArn: arn, RoleName: roleName })
+      .promise();
   });
 
-  return Promise.all(detachPolicyPromises)
+  return Promise.all(detachPolicyPromises);
 };
 
 const deleteRole = (name) => {
   return iam.deleteRole({ RoleName: name }).promise();
-}
+};
 
 deleteLambdas(lambdaNames)
   .catch(() => {})
