@@ -52,7 +52,7 @@ const deleteLambdas = (names) => {
 const deleteStateMachines = (arns) => {
   const deleteStateMachinePromises = arns.map((arn) => {
     return stepFunctions
-      .deleteStateMachines({ stateMachineArn: arn })
+      .deleteStateMachine({ stateMachineArn: arn })
       .promise();
   });
 
@@ -73,17 +73,43 @@ const deleteRole = (name) => {
   return iam.deleteRole({ RoleName: name }).promise();
 };
 
+async function sleep(ms) {
+  await new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function retryAsync(
+  promiseCallback,
+  maxAttempts = 3,
+  interval = 2000,
+  backoffRate = 3
+) {
+  try {
+    await promiseCallback();
+  } catch (err) {
+    // base case
+    if (maxAttempts <= 1) {
+      throw err;
+    }
+
+    console.log("Unsuccessful operation. Retrying...");
+
+    await sleep(interval);
+    await retryAsync(
+      promiseCallback,
+      maxAttempts - 1,
+      interval * backoffRate,
+      backoffRate
+    );
+  }
+}
+
 deleteLambdas(lambdaNames)
-  .catch(() => {})
+  .catch(console.log)
   .then(() => detachPolicies(lambdaPolicyArns, lambdaRoleName))
-  .catch(() => {})
-  .then(() => deleteRole(lambdaRoleName))
-  .catch(() => {});
+  .then(() => retryAsync(() => deleteRole(lambdaRoleName), 5, 7000, .6))
 
 getStateMachineArns(stateMachineNames)
-  .catch(() => {})
+  .catch(console.log)
   .then(deleteStateMachines)
   .then(() => detachPolicies(statesPolicyArns, statesRoleName))
-  .catch(() => {})
-  .then(() => deleteRole(statesRoleName))
-  .catch(() => {});
+  .then(() => retryAsync(() => deleteRole(statesRoleName), 5, 7000, .6))
