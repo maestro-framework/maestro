@@ -81,7 +81,6 @@ deleteLambdas(lambdaNames)
   .catch(() => {});
 
 getStateMachineArns(stateMachineNames)
-  .then(getStateMachineArns)
   .catch(() => {})
   .then(deleteStateMachines)
   .then(() => detachPolicies(statesPolicyArns, statesRoleName))
