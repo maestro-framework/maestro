@@ -6,6 +6,8 @@ Next steps:
 3. Separate different components (iam, lambda, step function) into different files
    - Use `require("./foo.js")` syntax
    - Could be 1 file per component or multiple
+
+note: Add validation for ASL
 */
 
 const AWS = require("aws-sdk");
@@ -19,6 +21,8 @@ const lambdaRoleName = "lambda_basic_execution";
 const statesRoleName = "stepFunctions_basic_execution";
 const apiVersion = "latest";
 const lambda = new AWS.Lambda({ apiVersion, region });
+const stepFunctions = new AWS.StepFunctions({ apiVersion, region });
+
 const lambdaPolicyArns = [
   "arn:aws:iam::aws:policy/service-role/AWSLambdaRole",
   "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
@@ -152,19 +156,42 @@ const createLambdaFunctions = (allParams) => {
   return Promise.all(createFunctionPromises);
 };
 
+const generateStateMachineParams = async (roleName) => {
+  const role = await iam.getRole({ RoleName: roleName }).promise();
+  const definition = fs.readFileSync(
+    "state-machines/example-workflow.asl.json"
+  ).toString();
+
+  return {
+    definition,
+    name: "example-workflow",
+    roleArn: role.Role.Arn,
+  };
+};
+
+const createStepFunction = (params) => {
+  return stepFunctions.createStateMachine(params).promise();
+};
+
 iam
   .createRole(createRoleParams(lambdaRoleName))
   .promise()
-  .then(() => console.log("Successfully created role"))
+  .then(() => console.log("\nSuccessfully created lambda role\n"))
   .then(() => attachPolicies(lambdaPolicyArns, lambdaRoleName))
-  .then(() => console.log("Successfully attached policies"))
-  .then(() => generateMultipleFunctionParams(basenamesAndZipBuffers, lambdaRoleName))
+  .then(() => console.log("\nSuccessfully attached policies\n"))
+  .then(() =>
+    generateMultipleFunctionParams(basenamesAndZipBuffers, lambdaRoleName)
+  )
   .then(createLambdaFunctions)
-  .then(() => console.log("Successfully created function(s)"));
+  .then(() => console.log("\nSuccessfully created function(s)\n"));
 
 iam
   .createRole(createRoleParams(statesRoleName))
   .promise()
-  .then(() => console.log("Successfully created role"))
+  .then(() => console.log("\nSuccessfully created state machine role\n"))
   .then(() => attachPolicies(statesPolicyArns, statesRoleName))
-  .then(() => console.log("Successfully attached policies"));
+  .then(() => console.log("\nSuccessfully attached policies\n"))
+  .then(() => generateStateMachineParams(statesRoleName))
+  .then(createStepFunction)
+  .then(() => console.log("\nSuccessfully created state machine\n"))
+  .catch(() => {});
