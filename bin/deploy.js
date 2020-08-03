@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 const retryAsync = require("../lib/util/retryAsync");
-const zipLambdaFileToBuffer = require("../lib/util/zipLambdaFileToBuffer");
+const getBasenamesAndZipBuffers = require("../lib/util/getBasenamesAndZipBuffers");
 
 const AWS = require("aws-sdk");
 AWS.config.logger = console;
@@ -13,6 +13,7 @@ const statesRoleName = "stepFunctions_basic_execution";
 const apiVersion = "latest";
 const lambda = new AWS.Lambda({ apiVersion, region });
 const stepFunctions = new AWS.StepFunctions({ apiVersion, region });
+const basenamesAndZipBuffers = getBasenamesAndZipBuffers();
 
 const lambdaPolicyArns = [
   "arn:aws:iam::aws:policy/service-role/AWSLambdaRole",
@@ -23,21 +24,6 @@ const statesPolicyArns = [
   "arn:aws:iam::aws:policy/service-role/AWSLambdaRole",
   "arn:aws:iam::aws:policy/AWSXRayDaemonWriteAccess",
 ];
-
-// Create a function to read all files in 'lambdas' directory
-const getBasenamesAndZipBuffers = () => {
-  const fileNames = fs.readdirSync("lambdas");
-  const basenames = fileNames.map((filename) => {
-    return filename.replace(".js", "");
-  });
-
-  return basenames.map((basename) => {
-    const zipBuffer = zipLambdaFileToBuffer(basename);
-    return { basename, zipBuffer };
-  });
-};
-
-const basenamesAndZipBuffers = getBasenamesAndZipBuffers();
 
 const getRolePolicy = (service) => {
   return {
