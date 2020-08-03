@@ -1,32 +1,19 @@
 #!/usr/bin/env node
 
-const { iam, lambda, stepFunctions } = require("../lib/aws/services");
-
 // TODO: determine how to implement ../lib/util/requireJSON.js
-const { lambdaPolicyArns, statesPolicyArns, } = require("../lib/config/policy-arn");
+const {
+  lambdaPolicyArns,
+  statesPolicyArns,
+} = require("../lib/config/policy-arn");
 
+const { iam, lambda, stepFunctions } = require("../lib/aws/services");
 const retryAsync = require("../lib/util/retryAsync");
 const getBasenamesAndZipBuffers = require("../lib/util/getBasenamesAndZipBuffers");
-
+const generateRolePolicy = require("../lib/aws/generateRolePolicy");
 const fs = require("fs");
 const lambdaRoleName = "lambda_basic_execution";
 const statesRoleName = "stepFunctions_basic_execution";
 const basenamesAndZipBuffers = getBasenamesAndZipBuffers();
-
-const getRolePolicy = (service) => {
-  return {
-    Version: "2012-10-17",
-    Statement: [
-      {
-        Effect: "Allow",
-        Principal: {
-          Service: `${service}.amazonaws.com`,
-        },
-        Action: "sts:AssumeRole",
-      },
-    ],
-  };
-};
 
 const attachPolicies = (policyArns, roleName) => {
   const attachPolicyPromises = policyArns.map((policyArn) => {
@@ -51,7 +38,7 @@ const createRoleParams = (roleName) => {
   const service = roleName.startsWith("lambda") ? "lambda" : "states";
   return {
     RoleName: roleName,
-    AssumeRolePolicyDocument: JSON.stringify(getRolePolicy(service)),
+    AssumeRolePolicyDocument: JSON.stringify(generateRolePolicy(service)),
   };
 };
 
