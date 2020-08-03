@@ -8,4 +8,4 @@ const statesPolicyArns = [
   "arn:aws:iam::aws:policy/AWSXRayDaemonWriteAccess",
 ];
 
-module.exports = { lambdaPolicyArns, statesPolicyArns};
+module.exports = { lambdaPolicyArns, statesPolicyArns };

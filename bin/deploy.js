@@ -16,25 +16,6 @@ const lambdaRoleName = "lambda_basic_execution";
 const statesRoleName = "stepFunctions_basic_execution";
 const basenamesAndZipBuffers = getBasenamesAndZipBuffers();
 
-const attachPolicies = (policyArns, roleName) => {
-  const attachPolicyPromises = policyArns.map((policyArn) => {
-    const policyParams = {
-      PolicyArn: policyArn,
-      RoleName: roleName,
-    };
-
-    return retryAsync(
-      () => {
-        return iam.attachRolePolicy(policyParams).promise();
-      },
-      2,
-      1000
-    );
-  });
-
-  return Promise.all(attachPolicyPromises);
-};
-
 const createRoleParams = (roleName) => {
   const service = roleName.startsWith("lambda") ? "lambda" : "states";
   return {
