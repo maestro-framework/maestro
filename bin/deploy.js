@@ -1,98 +1,21 @@
 #!/usr/bin/env node
 
-// TODO: determine how to implement ../src/util/requireJSON.js
-const {
-  lambdaPolicyArns,
-  statesPolicyArns,
-} = require("../src/config/policy-arn");
-
 const { iam, lambda, stepFunctions } = require("../src/aws/services");
-const retryAsync = require("../src/util/retryAsync");
+// TODO: determine how to implement ../src/util/requireJSON.js
+const { lambdaPolicyArns, statesPolicyArns } = require("../src/config/policy-arn");
 const getBasenamesAndZipBuffers = require("../src/util/getBasenamesAndZipBuffers");
-const generateRolePolicy = require("../src/aws/generateRolePolicy");
 const attachPolicies = require("../src/aws/attachPolicies");
-const fs = require("fs");
-const lambdaRoleName = "lambda_basic_execution";
-const statesRoleName = "stepFunctions_basic_execution";
+const generateRoleParams = require('../src/aws/generateRoleParams');
+const generateMultipleFunctionParams = require('../src/aws/generateMultipleFunctionParams');
+const generateStateMachineParams = require('../src/aws/generateStateMachineParams');
+const createLambdaFunctions = require('../src/aws/createLambdaFunctions');
+const createStepFunction = require('../src/aws/createStepFunction');
 const basenamesAndZipBuffers = getBasenamesAndZipBuffers();
-
-const attachPolicies = (policyArns, roleName) => {
-  const attachPolicyPromises = policyArns.map((policyArn) => {
-    const policyParams = {
-      PolicyArn: policyArn,
-      RoleName: roleName,
-    };
-
-    return retryAsync(
-      () => {
-        return iam.attachRolePolicy(policyParams).promise();
-      },
-      2,
-      1000
-    );
-  });
-
-  return Promise.all(attachPolicyPromises);
-};
-
-const createRoleParams = (roleName) => {
-  const service = roleName.startsWith("lambda") ? "lambda" : "states";
-  return {
-    RoleName: roleName,
-    AssumeRolePolicyDocument: JSON.stringify(generateRolePolicy(service)),
-  };
-};
-
-const generateFunctionParams = (basename, zipBuffer, role) => {
-  return {
-    Code: {
-      ZipFile: zipBuffer,
-    },
-    FunctionName: basename,
-    Handler: `${basename}.handler`,
-    Role: role.Role.Arn,
-    Runtime: "nodejs12.x",
-  };
-};
-
-const generateMultipleFunctionParams = async (
-  basenamesAndZipBuffers,
-  roleName
-) => {
-  const role = await iam.getRole({ RoleName: roleName }).promise();
-
-  return basenamesAndZipBuffers.map(({ basename, zipBuffer }) => {
-    return generateFunctionParams(basename, zipBuffer, role);
-  });
-};
-
-const createLambdaFunctions = (allParams) => {
-  const createFunctionPromises = allParams.map((params) =>
-    retryAsync(() => lambda.createFunction(params).promise(), 5, 7000, 0.6)
-  );
-
-  return Promise.all(createFunctionPromises);
-};
-
-const generateStateMachineParams = async (roleName) => {
-  const role = await iam.getRole({ RoleName: roleName }).promise();
-  const definition = fs
-    .readFileSync("state-machines/example-workflow.asl.json")
-    .toString();
-
-  return {
-    definition,
-    name: "example-workflow",
-    roleArn: role.Role.Arn,
-  };
-};
-
-const createStepFunction = (params) => {
-  return stepFunctions.createStateMachine(params).promise();
-};
+const {lambdaRoleName, statesRoleName } = require('../src/config/roleNames');
+const stateMachineName = process.argv[2] || 'example-workflow'; // TODO: perhaps throw an error?
 
 iam
-  .createRole(createRoleParams(lambdaRoleName))
+  .createRole(generateRoleParams(lambdaRoleName))
   .promise()
   .then(() => console.log("Successfully created lambda role"))
   .then(() => attachPolicies(lambdaPolicyArns, lambdaRoleName))
@@ -104,12 +27,12 @@ iam
   .then(() => console.log("Successfully created function(s)"));
 
 iam
-  .createRole(createRoleParams(statesRoleName))
+  .createRole(generateRoleParams(statesRoleName))
   .promise()
   .then(() => console.log("Successfully created state machine role"))
   .then(() => attachPolicies(statesPolicyArns, statesRoleName))
   .then(() => console.log("Successfully attached policies"))
-  .then(() => generateStateMachineParams(statesRoleName))
+  .then(() => generateStateMachineParams(statesRoleName, stateMachineName))
   .then(createStepFunction)
   .then(() => console.log("Successfully created state machine"))
   .catch(() => {});
