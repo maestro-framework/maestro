@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const AWS = require("aws-sdk");
-const sleep = require('../lib/util/sleep');
+const retryAsync = require("../lib/util/retryAsync");
 AWS.config.logger = console;
 
 const fs = require("fs");
@@ -58,32 +58,6 @@ const getRolePolicy = (service) => {
     ],
   };
 };
-
-async function retryAsync(
-  promiseCallback,
-  maxAttempts = 3,
-  interval = 2000,
-  backoffRate = 3
-) {
-  try {
-    await promiseCallback();
-  } catch (err) {
-    // base case
-    if (maxAttempts <= 1) {
-      throw err;
-    }
-
-    console.log("Unsuccessful operation. Retrying...");
-
-    await sleep(interval);
-    await retryAsync(
-      promiseCallback,
-      maxAttempts - 1,
-      interval * backoffRate,
-      backoffRate
-    );
-  }
-}
 
 const attachPolicies = (policyArns, roleName) => {
   const attachPolicyPromises = policyArns.map((policyArn) => {
