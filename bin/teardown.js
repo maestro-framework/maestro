@@ -4,7 +4,9 @@ AWS.config.logger = console;
 
 const fs = require("fs");
 const childProcess = require("child_process");
+
 const retryAsync = require("../src/util/retryAsync");
+const { lambdaRoleName, statesRoleName } = require("../src/config/roleNames");
 
 const region = "us-west-2";
 const apiVersion = "latest";
@@ -13,13 +15,11 @@ const iam = new AWS.IAM();
 const lambda = new AWS.Lambda({ apiVersion, region });
 const stepFunctions = new AWS.StepFunctions({ apiVersion, region });
 
-const lambdaRoleName = "lambda_basic_execution";
 const lambdaPolicyArns = [
   "arn:aws:iam::aws:policy/service-role/AWSLambdaRole",
   "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
 ];
 
-const statesRoleName = "stepFunctions_basic_execution";
 const statesPolicyArns = [
   "arn:aws:iam::aws:policy/service-role/AWSLambdaRole",
   "arn:aws:iam::aws:policy/AWSXRayDaemonWriteAccess",
