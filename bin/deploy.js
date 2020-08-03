@@ -1,18 +1,12 @@
 #!/usr/bin/env node
+
+const { iam, lambda, stepFunctions } = require('../lib/aws/services');
 const retryAsync = require("../lib/util/retryAsync");
 const getBasenamesAndZipBuffers = require("../lib/util/getBasenamesAndZipBuffers");
 
-const AWS = require("aws-sdk");
-AWS.config.logger = console;
-
 const fs = require("fs");
-const iam = new AWS.IAM();
-const region = "us-west-2";
 const lambdaRoleName = "lambda_basic_execution";
 const statesRoleName = "stepFunctions_basic_execution";
-const apiVersion = "latest";
-const lambda = new AWS.Lambda({ apiVersion, region });
-const stepFunctions = new AWS.StepFunctions({ apiVersion, region });
 const basenamesAndZipBuffers = getBasenamesAndZipBuffers();
 
 const lambdaPolicyArns = [
