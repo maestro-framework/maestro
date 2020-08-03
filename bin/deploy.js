@@ -1,11 +1,11 @@
 #!/usr/bin/env node
+const retryAsync = require("../lib/util/retryAsync");
+const zipLambdaFileToBuffer = require("../lib/util/zipLambdaFileToBuffer");
 
 const AWS = require("aws-sdk");
-const retryAsync = require("../lib/util/retryAsync");
 AWS.config.logger = console;
 
 const fs = require("fs");
-const childProcess = require("child_process");
 const iam = new AWS.IAM();
 const region = "us-west-2";
 const lambdaRoleName = "lambda_basic_execution";
@@ -24,11 +24,6 @@ const statesPolicyArns = [
   "arn:aws:iam::aws:policy/AWSXRayDaemonWriteAccess",
 ];
 
-// Extract zipping function files to a helper
-const zipFileToBuffer = (fileBasename) => {
-  return childProcess.execSync(`zip -j - lambdas/${fileBasename}.js`);
-};
-
 // Create a function to read all files in 'lambdas' directory
 const getBasenamesAndZipBuffers = () => {
   const fileNames = fs.readdirSync("lambdas");
@@ -37,7 +32,7 @@ const getBasenamesAndZipBuffers = () => {
   });
 
   return basenames.map((basename) => {
-    const zipBuffer = zipFileToBuffer(basename);
+    const zipBuffer = zipLambdaFileToBuffer(basename);
     return { basename, zipBuffer };
   });
 };
@@ -119,9 +114,9 @@ const createLambdaFunctions = (allParams) => {
 
 const generateStateMachineParams = async (roleName) => {
   const role = await iam.getRole({ RoleName: roleName }).promise();
-  const definition = fs.readFileSync(
-    "state-machines/example-workflow.asl.json"
-  ).toString();
+  const definition = fs
+    .readFileSync("state-machines/example-workflow.asl.json")
+    .toString();
 
   return {
     definition,
