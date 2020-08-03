@@ -1,15 +1,16 @@
 #!/usr/bin/env node
 
-// TODO: determine how to implement ../lib/util/requireJSON.js
+// TODO: determine how to implement ../src/util/requireJSON.js
 const {
   lambdaPolicyArns,
   statesPolicyArns,
-} = require("../lib/config/policy-arn");
+} = require("../src/config/policy-arn");
 
-const { iam, lambda, stepFunctions } = require("../lib/aws/services");
-const retryAsync = require("../lib/util/retryAsync");
-const getBasenamesAndZipBuffers = require("../lib/util/getBasenamesAndZipBuffers");
-const generateRolePolicy = require("../lib/aws/generateRolePolicy");
+const { iam, lambda, stepFunctions } = require("../src/aws/services");
+const retryAsync = require("../src/util/retryAsync");
+const getBasenamesAndZipBuffers = require("../src/util/getBasenamesAndZipBuffers");
+const generateRolePolicy = require("../src/aws/generateRolePolicy");
+const attachPolicies = require("../src/aws/attachPolicies");
 const fs = require("fs");
 const lambdaRoleName = "lambda_basic_execution";
 const statesRoleName = "stepFunctions_basic_execution";
