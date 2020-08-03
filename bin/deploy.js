@@ -1,17 +1,7 @@
 #!/usr/bin/env node
-/*
-Next steps:
-1. Attach 2 policies to role
-2. Allow deploying all lambdas in lambdas directory
-   - After creating zip files and deploying lambdas, should zip files be deleted?
-3. Separate different components (iam, lambda, step function) into different files
-   - Use `require("./foo.js")` syntax
-   - Could be 1 file per component or multiple
-
-note: Add validation for ASL
-*/
 
 const AWS = require("aws-sdk");
+const sleep = require('../lib/util/sleep');
 AWS.config.logger = console;
 
 const fs = require("fs");
@@ -68,10 +58,6 @@ const getRolePolicy = (service) => {
     ],
   };
 };
-
-async function sleep(ms) {
-  await new Promise((resolve) => setTimeout(resolve, ms));
-}
 
 async function retryAsync(
   promiseCallback,
