@@ -1,6 +1,4 @@
 #!/usr/bin/env node
-const AWS = require("aws-sdk");
-AWS.config.logger = console;
 
 const fs = require("fs");
 const childProcess = require("child_process");
@@ -8,13 +6,7 @@ const childProcess = require("child_process");
 const retryAsync = require("../src/util/retryAsync");
 const { lambdaRoleName, statesRoleName } = require("../src/config/roleNames");
 const { lambdaPolicyArns, statesPolicyArns } = require("../src/config/policy-arn");
-
-const region = "us-west-2";
-const apiVersion = "latest";
-
-const iam = new AWS.IAM();
-const lambda = new AWS.Lambda({ apiVersion, region });
-const stepFunctions = new AWS.StepFunctions({ apiVersion, region });
+const { iam, lambda, stepFunctions } = require("../src/aws/services");
 
 const basename = (filename) => filename.replace(/\..*$/, "");
 
