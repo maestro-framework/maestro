@@ -7,6 +7,7 @@ const childProcess = require("child_process");
 
 const retryAsync = require("../src/util/retryAsync");
 const { lambdaRoleName, statesRoleName } = require("../src/config/roleNames");
+const { lambdaPolicyArns, statesPolicyArns } = require("../src/config/policy-arn");
 
 const region = "us-west-2";
 const apiVersion = "latest";
@@ -14,16 +15,6 @@ const apiVersion = "latest";
 const iam = new AWS.IAM();
 const lambda = new AWS.Lambda({ apiVersion, region });
 const stepFunctions = new AWS.StepFunctions({ apiVersion, region });
-
-const lambdaPolicyArns = [
-  "arn:aws:iam::aws:policy/service-role/AWSLambdaRole",
-  "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
-];
-
-const statesPolicyArns = [
-  "arn:aws:iam::aws:policy/service-role/AWSLambdaRole",
-  "arn:aws:iam::aws:policy/AWSXRayDaemonWriteAccess",
-];
 
 const basename = (filename) => filename.replace(/\..*$/, "");
 
