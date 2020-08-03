@@ -12,10 +12,11 @@ const getBasenamesAndZipBuffers = require("../src/util/getBasenamesAndZipBuffers
 const attachPolicies = require("../src/aws/attachPolicies");
 const generateRoleParams = require('../src/aws/generateRoleParams');
 const generateMultipleFunctionParams = require('../src/aws/generateMultipleFunctionParams');
-const fs = require("fs");
+const generateStateMachineParams = require('../src/aws/generateStateMachineParams');
 const lambdaRoleName = "lambda_basic_execution";
 const statesRoleName = "stepFunctions_basic_execution";
 const basenamesAndZipBuffers = getBasenamesAndZipBuffers();
+const stateMachineName = 'example-workflow';
 
 const createLambdaFunctions = (allParams) => {
   const createFunctionPromises = allParams.map((params) =>
@@ -23,19 +24,6 @@ const createLambdaFunctions = (allParams) => {
   );
 
   return Promise.all(createFunctionPromises);
-};
-
-const generateStateMachineParams = async (roleName) => {
-  const role = await iam.getRole({ RoleName: roleName }).promise();
-  const definition = fs
-    .readFileSync("state-machines/example-workflow.asl.json")
-    .toString();
-
-  return {
-    definition,
-    name: "example-workflow",
-    roleArn: role.Role.Arn,
-  };
 };
 
 const createStepFunction = (params) => {
@@ -60,7 +48,7 @@ iam
   .then(() => console.log("Successfully created state machine role"))
   .then(() => attachPolicies(statesPolicyArns, statesRoleName))
   .then(() => console.log("Successfully attached policies"))
-  .then(() => generateStateMachineParams(statesRoleName))
+  .then(() => generateStateMachineParams(statesRoleName, stateMachineName))
   .then(createStepFunction)
   .then(() => console.log("Successfully created state machine"))
   .catch(() => {});
