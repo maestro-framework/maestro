@@ -4,6 +4,7 @@ AWS.config.logger = console;
 
 const fs = require("fs");
 const childProcess = require("child_process");
+const retryAsync = require("../src/util/retryAsync");
 
 const region = "us-west-2";
 const apiVersion = "latest";
@@ -73,36 +74,6 @@ const detachPolicies = (policyArns, roleName) => {
 const deleteRole = (name) => {
   return iam.deleteRole({ RoleName: name }).promise();
 };
-
-async function sleep(ms) {
-  await new Promise((resolve) => setTimeout(resolve, ms));
-}
-
-async function retryAsync(
-  promiseCallback,
-  maxAttempts = 3,
-  interval = 2000,
-  backoffRate = 3
-) {
-  try {
-    await promiseCallback();
-  } catch (err) {
-    // base case
-    if (maxAttempts <= 1) {
-      throw err;
-    }
-
-    console.log("Unsuccessful operation. Retrying...");
-
-    await sleep(interval);
-    await retryAsync(
-      promiseCallback,
-      maxAttempts - 1,
-      interval * backoffRate,
-      backoffRate
-    );
-  }
-}
 
 deleteLambdas(lambdaNames)
   .catch(console.log)
