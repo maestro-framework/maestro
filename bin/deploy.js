@@ -10,10 +10,9 @@ const generateMultipleFunctionParams = require('../src/aws/generateMultipleFunct
 const generateStateMachineParams = require('../src/aws/generateStateMachineParams');
 const createLambdaFunctions = require('../src/aws/createLambdaFunctions');
 const createStepFunction = require('../src/aws/createStepFunction');
-const lambdaRoleName = "lambda_basic_execution";
-const statesRoleName = "stepFunctions_basic_execution";
 const basenamesAndZipBuffers = getBasenamesAndZipBuffers();
-const stateMachineName = 'example-workflow';
+const {lambdaRoleName, statesRoleName } = require('../src/config/roleNames');
+const stateMachineName = process.argv[2] || 'example-workflow'; // TODO: perhaps throw an error?
 
 iam
   .createRole(generateRoleParams(lambdaRoleName))
