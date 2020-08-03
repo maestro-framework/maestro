@@ -10,7 +10,8 @@ const { iam, lambda, stepFunctions } = require("../src/aws/services");
 const retryAsync = require("../src/util/retryAsync");
 const getBasenamesAndZipBuffers = require("../src/util/getBasenamesAndZipBuffers");
 const attachPolicies = require("../src/aws/attachPolicies");
-const createRoleParams = require('../src/aws/createRoleParams');
+const generateRoleParams = require('../src/aws/generateRoleParams');
+const generateMultipleFunctionParams = require('../src/aws/generateMultipleFunctionParams');
 const fs = require("fs");
 const lambdaRoleName = "lambda_basic_execution";
 const statesRoleName = "stepFunctions_basic_execution";
@@ -38,7 +39,6 @@ const generateMultipleFunctionParams = async (
     return generateFunctionParams(basename, zipBuffer, role);
   });
 };
-
 const createLambdaFunctions = (allParams) => {
   const createFunctionPromises = allParams.map((params) =>
     retryAsync(() => lambda.createFunction(params).promise(), 5, 7000, 0.6)
@@ -65,7 +65,7 @@ const createStepFunction = (params) => {
 };
 
 iam
-  .createRole(createRoleParams(lambdaRoleName))
+  .createRole(generateRoleParams(lambdaRoleName))
   .promise()
   .then(() => console.log("Successfully created lambda role"))
   .then(() => attachPolicies(lambdaPolicyArns, lambdaRoleName))
@@ -77,7 +77,7 @@ iam
   .then(() => console.log("Successfully created function(s)"));
 
 iam
-  .createRole(createRoleParams(statesRoleName))
+  .createRole(generateRoleParams(statesRoleName))
   .promise()
   .then(() => console.log("Successfully created state machine role"))
   .then(() => attachPolicies(statesPolicyArns, statesRoleName))
