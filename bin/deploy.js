@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 /*
 Next steps:
 1. Attach 2 policies to role

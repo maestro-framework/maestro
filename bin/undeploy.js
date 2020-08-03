@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 const AWS = require("aws-sdk");
 AWS.config.logger = console;
 
