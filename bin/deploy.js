@@ -9,20 +9,12 @@ const {
 const { iam, lambda, stepFunctions } = require("../src/aws/services");
 const retryAsync = require("../src/util/retryAsync");
 const getBasenamesAndZipBuffers = require("../src/util/getBasenamesAndZipBuffers");
-const generateRolePolicy = require("../src/aws/generateRolePolicy");
 const attachPolicies = require("../src/aws/attachPolicies");
+const createRoleParams = require('../src/aws/createRoleParams');
 const fs = require("fs");
 const lambdaRoleName = "lambda_basic_execution";
 const statesRoleName = "stepFunctions_basic_execution";
 const basenamesAndZipBuffers = getBasenamesAndZipBuffers();
-
-const createRoleParams = (roleName) => {
-  const service = roleName.startsWith("lambda") ? "lambda" : "states";
-  return {
-    RoleName: roleName,
-    AssumeRolePolicyDocument: JSON.stringify(generateRolePolicy(service)),
-  };
-};
 
 const generateFunctionParams = (basename, zipBuffer, role) => {
   return {
