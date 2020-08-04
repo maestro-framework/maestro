@@ -1,15 +1,10 @@
 #!/usr/bin/env node
 
 const fs = require("fs");
-// Not referenced in this script. Referencing function moved to:
-//   src/util/getBasenamesAndZipBuffers.js.
-const childProcess = require("child_process");
 
 const retryAsync = require("../src/util/retryAsync");
 const { lambdaRoleName, statesRoleName } = require("../src/config/roleNames");
 const { lambdaPolicyArns, statesPolicyArns } = require("../src/config/policy-arn");
-// Not referenced in this script
-const { iam, lambda, stepFunctions } = require("../src/aws/services");
 const deleteLambdas = require("../src/aws/deleteLambdas");
 const deleteStateMachine = require("../src/aws/deleteStateMachine");
 const deleteRole = require("../src/aws/deleteRole");
