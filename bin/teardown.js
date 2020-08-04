@@ -7,35 +7,18 @@ const retryAsync = require("../src/util/retryAsync");
 const { lambdaRoleName, statesRoleName } = require("../src/config/roleNames");
 const { lambdaPolicyArns, statesPolicyArns } = require("../src/config/policy-arn");
 const { iam, lambda, stepFunctions } = require("../src/aws/services");
+const deleteLambdas = require("../src/aws/deleteLambdas");
+const deleteStateMachine = require("../src/aws/deleteStateMachine");
 const getStateMachineArn = require("../src/aws/getStateMachineArn");
 const basename = require("../src/util/basename");
 
-
-// extract
-const lambdaNames = fs.readdirSync("lambdas").map(basename);
 const stateMachineName = process.argv[2];
+// TODO: Specify Lambdas prepended by a given workflow name to delete
+const lambdaNames = fs.readdirSync("lambdas").map(basename);
 
 if (!stateMachineName) {
   throw new Error("State machine name needs to be provided");
 }
-
-// extract
-const deleteLambdas = (names) => {
-  const deleteLambdaPromises = names.map((name) => {
-    return lambda
-      .deleteFunction({
-        FunctionName: name,
-      })
-      .promise();
-  });
-
-  return Promise.all(deleteLambdaPromises);
-};
-
-// extract
-const deleteStateMachine = (arn) => {
-  return stepFunctions.deleteStateMachine({ stateMachineArn: arn }).promise();
-};
 
 // extract
 const detachPolicies = (policyArns, roleName) => {
