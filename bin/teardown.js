@@ -7,6 +7,7 @@ const retryAsync = require("../src/util/retryAsync");
 const { lambdaRoleName, statesRoleName } = require("../src/config/roleNames");
 const { lambdaPolicyArns, statesPolicyArns } = require("../src/config/policy-arn");
 const { iam, lambda, stepFunctions } = require("../src/aws/services");
+const getStateMachineArn = require("../src/aws/getStateMachineArn");
 
 const basename = (filename) => filename.replace(/\..*$/, "");
 
@@ -16,14 +17,6 @@ const stateMachineName = process.argv[2];
 if (!stateMachineName) {
   throw new Error("State machine name needs to be provided");
 }
-
-const getStateMachineArn = async (name) => {
-  const stateMachines = (await stepFunctions.listStateMachines().promise())
-    .stateMachines;
-
-  return stateMachines.find((stateMachine) => stateMachine.name === name)
-    .stateMachineArn;
-};
 
 const deleteLambdas = (names) => {
   const deleteLambdaPromises = names.map((name) => {
