@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "aws-sdk": "^2.724.0"
+    "aws-sdk": "^2.724.0",
+    "minimist": "^1.2.5"
   }
 }
