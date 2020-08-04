@@ -6,7 +6,8 @@ const zipFileToBuffer = (directory, filename) => {
   return childProcess.execSync(`zip -j - ${directory}/${filename}`);
 };
 
-const getBasenamesAndZipBuffers = (directory) => {
+const getBasenamesAndZipBuffers = (directory, workflowName) => {
+  // TODO: function that filters the directory by workflowName
   const fileNames = fs.readdirSync(`${directory}`);
   const basenames = fileNames.map(basename);
 
