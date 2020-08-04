@@ -9,6 +9,7 @@ const { lambdaPolicyArns, statesPolicyArns } = require("../src/config/policy-arn
 const { iam, lambda, stepFunctions } = require("../src/aws/services");
 const deleteLambdas = require("../src/aws/deleteLambdas");
 const deleteStateMachine = require("../src/aws/deleteStateMachine");
+const detachPolicies = require("../src/aws/detachPolicies");
 const getStateMachineArn = require("../src/aws/getStateMachineArn");
 const basename = require("../src/util/basename");
 
@@ -19,17 +20,6 @@ const lambdaNames = fs.readdirSync("lambdas").map(basename);
 if (!stateMachineName) {
   throw new Error("State machine name needs to be provided");
 }
-
-// extract
-const detachPolicies = (policyArns, roleName) => {
-  const detachPolicyPromises = policyArns.map((arn) => {
-    return iam
-      .detachRolePolicy({ PolicyArn: arn, RoleName: roleName })
-      .promise();
-  });
-
-  return Promise.all(detachPolicyPromises);
-};
 
 // extract
 const deleteRole = (name) => {
