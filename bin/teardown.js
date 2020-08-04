@@ -11,15 +11,18 @@ const { iam, lambda, stepFunctions } = require("../src/aws/services");
 const basename = (filename) => filename.replace(/\..*$/, "");
 
 const lambdaNames = fs.readdirSync("lambdas").map(basename);
-const stateMachineNames = fs.readdirSync("state-machines").map(basename);
+const stateMachineName = process.argv[2];
 
-const getStateMachineArns = async (names) => {
+if (!stateMachineName) {
+  throw new Error("State machine name needs to be provided");
+}
+
+const getStateMachineArn = async (name) => {
   const stateMachines = (await stepFunctions.listStateMachines().promise())
     .stateMachines;
 
-  return stateMachines
-    .filter(({ name }) => names.includes(name))
-    .map(({ stateMachineArn }) => stateMachineArn);
+  return stateMachines.find((stateMachine) => stateMachine.name === name)
+    .stateMachineArn;
 };
 
 const deleteLambdas = (names) => {
@@ -34,14 +37,8 @@ const deleteLambdas = (names) => {
   return Promise.all(deleteLambdaPromises);
 };
 
-const deleteStateMachines = (arns) => {
-  const deleteStateMachinePromises = arns.map((arn) => {
-    return stepFunctions
-      .deleteStateMachine({ stateMachineArn: arn })
-      .promise();
-  });
-
-  return Promise.all(deleteStateMachinePromises);
+const deleteStateMachine = (arn) => {
+  return stepFunctions.deleteStateMachine({ stateMachineArn: arn }).promise();
 };
 
 const detachPolicies = (policyArns, roleName) => {
@@ -63,8 +60,8 @@ deleteLambdas(lambdaNames)
   .then(() => detachPolicies(lambdaPolicyArns, lambdaRoleName))
   .then(() => retryAsync(() => deleteRole(lambdaRoleName), 5, 7000, .6))
 
-getStateMachineArns(stateMachineNames)
+getStateMachineArn(stateMachineName)
   .catch(console.log)
-  .then(deleteStateMachines)
+  .then(deleteStateMachine)
   .then(() => detachPolicies(statesPolicyArns, statesRoleName))
   .then(() => retryAsync(() => deleteRole(statesRoleName), 5, 7000, .6))
