@@ -10,8 +10,10 @@ const generateMultipleFunctionParams = require('../src/aws/generateMultipleFunct
 const generateStateMachineParams = require('../src/aws/generateStateMachineParams');
 const createLambdaFunctions = require('../src/aws/createLambdaFunctions');
 const createStepFunction = require('../src/aws/createStepFunction');
-const basenamesAndZipBuffers = getBasenamesAndZipBuffers();
-const {lambdaRoleName, statesRoleName } = require('../src/config/roleNames');
+// TODO: Separate the retrieving of file basenames and creating zip buffers
+//   Specify files to retrieve by a workflow name
+const basenamesAndZipBuffers = getBasenamesAndZipBuffers('lambdas');
+const { lambdaRoleName, statesRoleName } = require('../src/config/roleNames');
 const stateMachineName = process.argv[2] || 'example-workflow'; // TODO: perhaps throw an error?
 
 iam
