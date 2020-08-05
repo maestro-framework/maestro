@@ -6,7 +6,6 @@ const minimist = require('minimist');
 
 const retryAsync = require("../src/util/retryAsync");
 const { lambdaRoleName, statesRoleName } = require("../src/config/roleNames");
-const { lambdaPolicyArns, statesPolicyArns } = require("../src/config/policy-arn");
 const { iam, lambda, stepFunctions } = require("../src/aws/services");
 const deleteLambdas = require("../src/aws/deleteLambdas");
 const deleteStateMachine = require("../src/aws/deleteStateMachine");
@@ -16,8 +15,16 @@ const getStateMachineArn = require("../src/aws/getStateMachineArn");
 const basename = require("../src/util/basename");
 const promptAsyncYesNoAndExec = require("../src/util/promptAsyncYesNoAndExec");
 
-const argv = minimist(process.argv.slice(2), { boolean: ["f", "force"] });
+const argv = minimist(process.argv.slice(2), {
+  boolean: ["f", "force"],
+  string: ["roles"],
+  default: {
+    roles: "",
+  },
+});
+
 const stateMachineName = argv._[0];
+const rolesToDelete = argv.roles.split(',');
 
 // TODO: Specify Lambdas prepended by a given workflow name to delete
 const lambdaNames = fs.readdirSync("lambdas").map(basename);
