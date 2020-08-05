@@ -19,7 +19,6 @@ const stateMachineName = process.argv[2] || 'example-workflow'; // TODO: perhaps
 establishIAMRole(lambdaRoleName)
   .then(() => attachPolicies(lambdaPolicyArns, lambdaRoleName))
   .then(() => console.log("Successfully attached policies"))
-  .then(() => sleep(7000))
   .then(() =>
     generateMultipleFunctionParams(basenamesAndZipBuffers, lambdaRoleName)
   )

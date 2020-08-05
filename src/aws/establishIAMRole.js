@@ -1,4 +1,5 @@
 const { iam } = require("./services");
+const sleep = require('../util/sleep');
 const generateRoleParams = require("./generateRoleParams");
 
 const establishIAMRole = async (roleName) => {
@@ -7,7 +8,8 @@ const establishIAMRole = async (roleName) => {
   } catch(err) {
     console.log(err.message);
     console.log(`Creating a new role called ${roleName}...`);
-    return await iam.createRole(generateRoleParams(roleName)).promise();
+    return await iam.createRole(generateRoleParams(roleName)).promise()
+    .then(() => sleep(7000));
   } finally {
     console.log(`Successfully established a role called ${roleName}.`);
   }
