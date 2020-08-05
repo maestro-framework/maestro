@@ -1,12 +1,15 @@
 #!/usr/bin/env node
 
 const fs = require("fs");
-const childProcess = require("child_process");
 const minimist = require("minimist");
+const childProcess = require("child_process");
 
 const retryAsync = require("../src/util/retryAsync");
 const { lambdaRoleName, statesRoleName } = require("../src/config/roleNames");
-const { iam, lambda, stepFunctions } = require("../src/aws/services");
+const {
+  lambdaPolicyArns,
+  statesPolicyArns,
+} = require("../src/config/policy-arn");
 const deleteLambdas = require("../src/aws/deleteLambdas");
 const deleteStateMachine = require("../src/aws/deleteStateMachine");
 const teardownRoleByName = require("../src/aws/teardownRoleByName");
