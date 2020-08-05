@@ -4,6 +4,7 @@ const { iam, lambda, stepFunctions } = require("../src/aws/services");
 // TODO: determine how to implement ../src/util/requireJSON.js
 const { lambdaPolicyArns, statesPolicyArns } = require("../src/config/policy-arn");
 const getBasenamesAndZipBuffers = require("../src/util/getBasenamesAndZipBuffers");
+const sleep = require("../src/util/sleep");
 const attachPolicies = require("../src/aws/attachPolicies");
 const generateRoleParams = require('../src/aws/generateRoleParams');
 const generateMultipleFunctionParams = require('../src/aws/generateMultipleFunctionParams');
@@ -22,6 +23,7 @@ iam
   .then(() => console.log("Successfully created lambda role"))
   .then(() => attachPolicies(lambdaPolicyArns, lambdaRoleName))
   .then(() => console.log("Successfully attached policies"))
+  .then(() => sleep(7000))
   .then(() =>
     generateMultipleFunctionParams(basenamesAndZipBuffers, lambdaRoleName)
   )
