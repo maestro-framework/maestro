@@ -1,12 +1,10 @@
 #!/usr/bin/env node
 
-const { iam, lambda, stepFunctions } = require("../src/aws/services");
 // TODO: determine how to implement ../src/util/requireJSON.js
 const { lambdaPolicyArns, statesPolicyArns } = require("../src/config/policy-arn");
 const getBasenamesAndZipBuffers = require("../src/util/getBasenamesAndZipBuffers");
 const sleep = require("../src/util/sleep");
 const attachPolicies = require("../src/aws/attachPolicies");
-const generateRoleParams = require('../src/aws/generateRoleParams');
 const generateMultipleFunctionParams = require('../src/aws/generateMultipleFunctionParams');
 const generateStateMachineParams = require('../src/aws/generateStateMachineParams');
 const createIAMRole = require('../src/aws/createIAMRole');
@@ -18,8 +16,6 @@ const basenamesAndZipBuffers = getBasenamesAndZipBuffers('lambdas');
 const { lambdaRoleName, statesRoleName } = require('../src/config/roleNames');
 const stateMachineName = process.argv[2] || 'example-workflow'; // TODO: perhaps throw an error?
 
-// Create a new function that returns a promise that encapsulates iam.createRole
-// it will take a role name as an argument
 createIAMRole(lambdaRoleName)
   .then(() => console.log("Successfully created lambda role"))
   .then(() => attachPolicies(lambdaPolicyArns, lambdaRoleName))
