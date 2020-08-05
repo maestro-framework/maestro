@@ -17,8 +17,6 @@ const basenamesAndZipBuffers = getBasenamesAndZipBuffers('lambdas');
 const { lambdaRoleName, statesRoleName } = require('../src/config/roleNames');
 const stateMachineName = process.argv[2] || 'example-workflow'; // TODO: perhaps throw an error?
 
-// Create a new function that returns a promise that encapsulates iam.createRole
-// it will take a role name as an argument
 createIAMRole(lambdaRoleName)
   .then(() => console.log("Successfully created lambda role"))
   .then(() => attachPolicies(lambdaPolicyArns, lambdaRoleName))
