@@ -20,12 +20,13 @@ const readStateMachineDefinition = (stateMachineName) => {
 
 const replacePlaceholdersInDefinition = (definition, stateMachineName) => {
   const { region, account_number } = readConfigFileFromHome(account_info_path);
+  let modifiedDefinition = definition;
 
-  definition = definition.replace(/REGION/g, region);
-  definition = definition.replace(/ACCOUNT_ID/g, account_number);
-  definition = definition.replace(/WORKFLOW_NAME/g, stateMachineName);
+  modifiedDefinition = modifiedDefinition.replace(/REGION/g, region);
+  modifiedDefinition = modifiedDefinition.replace(/ACCOUNT_ID/g, account_number);
+  modifiedDefinition = modifiedDefinition.replace(/WORKFLOW_NAME/g, stateMachineName);
 
-  return definition;
+  return modifiedDefinition;
 };
 
 const generateStateMachineParams = async (roleName, stateMachineName) => {
