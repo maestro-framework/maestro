@@ -7,7 +7,7 @@ const sleep = require("../src/util/sleep");
 const attachPolicies = require("../src/aws/attachPolicies");
 const generateMultipleFunctionParams = require('../src/aws/generateMultipleFunctionParams');
 const generateStateMachineParams = require('../src/aws/generateStateMachineParams');
-const createIAMRole = require('../src/aws/createIAMRole');
+const establishIAMRole = require('../src/aws/establishIAMRole');
 const createLambdaFunctions = require('../src/aws/createLambdaFunctions');
 const createStepFunction = require('../src/aws/createStepFunction');
 // TODO: Separate the retrieving of file basenames and creating zip buffers
@@ -16,8 +16,7 @@ const basenamesAndZipBuffers = getBasenamesAndZipBuffers('lambdas');
 const { lambdaRoleName, statesRoleName } = require('../src/config/roleNames');
 const stateMachineName = process.argv[2] || 'example-workflow'; // TODO: perhaps throw an error?
 
-createIAMRole(lambdaRoleName)
-  .then(() => console.log("Successfully created lambda role"))
+establishIAMRole(lambdaRoleName)
   .then(() => attachPolicies(lambdaPolicyArns, lambdaRoleName))
   .then(() => console.log("Successfully attached policies"))
   .then(() => sleep(7000))
@@ -27,8 +26,7 @@ createIAMRole(lambdaRoleName)
   .then(createLambdaFunctions)
   .then(() => console.log("Successfully created function(s)"));
 
-createIAMRole(statesRoleName)
-  .then(() => console.log("Successfully created state machine role"))
+establishIAMRole(statesRoleName)
   .then(() => attachPolicies(statesPolicyArns, statesRoleName))
   .then(() => console.log("Successfully attached policies"))
   .then(() => generateStateMachineParams(statesRoleName, stateMachineName))
