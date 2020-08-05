@@ -15,16 +15,11 @@ const readStateMachineDefinition = (stateMachineName) => {
     .readFileSync(`state-machines/${stateMachineName}.asl.json`)
     .toString();
 
-  console.log('Definition: ', definition);
-
   return definition;
 };
 
 const replacePlaceholdersInDefinition = (definition, stateMachineName) => {
   const { region, account_number } = readConfigFileFromHome(account_info_path);
-
-  console.log('Region: ', region);
-  console.log('Account Number: ', account_number);
 
   definition = definition.replace(/REGION/g, region);
   definition = definition.replace(/ACCOUNT_ID/g, account_number);
@@ -39,8 +34,6 @@ const generateStateMachineParams = async (roleName, stateMachineName) => {
     readStateMachineDefinition(stateMachineName),
     stateMachineName
   );
-
-  console.log("Definition with replacements: ", definition);
 
   return {
     definition,
