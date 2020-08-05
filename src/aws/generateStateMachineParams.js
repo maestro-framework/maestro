@@ -1,22 +1,26 @@
-const { iam } = require('./services');
+const { iam } = require("./services");
 const fs = require("fs");
-const os = require('os');
-const account_info_path = '/.config/maestro/aws_account_info.json';
+const os = require("os");
+const account_info_path = "/.config/maestro/aws_account_info.json";
 
-const readRegionFromFile = (path) => {
+const readConfigFileFromHome = (path) => {
   const homedir = os.homedir();
   const configFile = JSON.parse(fs.readFileSync(homedir + path));
 
-  return configFile.region;
-}
+  return configFile;
+};
 
-const generateStateMachineParams = async (roleName, stateMachineName) => {
-  const role = await iam.getRole({ RoleName: roleName }).promise();
+const readStateMachineDefinition = (stateMachineName) => {
   const definition = fs
     .readFileSync(`state-machines/${stateMachineName}.asl.json`)
     .toString();
 
-  definition.replace()
+  return definition;
+};
+
+const generateStateMachineParams = async (roleName, stateMachineName) => {
+  const role = await iam.getRole({ RoleName: roleName }).promise();
+  const definition = readStateMachineDefinition(stateMachineName);
 
   return {
     definition,
