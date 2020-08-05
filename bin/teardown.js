@@ -3,6 +3,7 @@
 const fs = require("fs");
 const childProcess = require("child_process");
 const minimist = require('minimist');
+const readline = require('readline');
 
 const retryAsync = require("../src/util/retryAsync");
 const { lambdaRoleName, statesRoleName } = require("../src/config/roleNames");
@@ -16,8 +17,8 @@ const getStateMachineArn = require("../src/aws/getStateMachineArn");
 const basename = require("../src/util/basename");
 
 const argv = minimist(process.argv.slice(2));
-
 const stateMachineName = argv._[0];
+
 // TODO: Specify Lambdas prepended by a given workflow name to delete
 const lambdaNames = fs.readdirSync("lambdas").map(basename);
 
@@ -25,13 +26,43 @@ if (!stateMachineName) {
   throw new Error("State machine name needs to be provided");
 }
 
-deleteLambdas(lambdaNames)
-  .catch(console.log)
-  .then(() => detachPolicies(lambdaPolicyArns, lambdaRoleName))
-  .then(() => retryAsync(() => deleteRole(lambdaRoleName), 5, 7000, .6))
+const promptAsync = (question) => {
+  const rl = readline.createInterface({
+    output: process.stdout,
+    input: process.stdin,
+  });
 
-getStateMachineArn(stateMachineName)
-  .catch(console.log)
-  .then(deleteStateMachine)
-  .then(() => detachPolicies(statesPolicyArns, statesRoleName))
-  .then(() => retryAsync(() => deleteRole(statesRoleName), 5, 7000, .6))
+  return new Promise((resolve) => {
+    rl.question(question, (result) => {
+      rl.close();
+      resolve(result);
+    });
+  });
+};
+
+const main = () => {
+  deleteLambdas(lambdaNames)
+    .catch(console.log)
+    .then(() => detachPolicies(lambdaPolicyArns, lambdaRoleName))
+    .then(() => retryAsync(() => deleteRole(lambdaRoleName), 5, 7000, .6));
+
+  getStateMachineArn(stateMachineName)
+    .catch(console.log)
+    .then(deleteStateMachine)
+    .then(() => detachPolicies(statesPolicyArns, statesRoleName))
+    .then(() => retryAsync(() => deleteRole(statesRoleName), 5, 7000, .6));
+};
+
+(async function() {
+  switch ((await promptAsync(`Are you sure you want to delete ${stateMachineName}? `)).trim()) {
+    case 'y':
+    case 'yes':
+    case 'Y':
+    case 'Yes':
+      main();
+      break;
+    default:
+      console.log('Aborting...');
+      break;
+  }
+})();
