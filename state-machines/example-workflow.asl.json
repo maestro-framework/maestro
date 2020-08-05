@@ -4,12 +4,12 @@
   "States": {
     "Requester": {
       "Type": "Task",
-      "Resource": "arn:aws:lambda:us-west-2:726360710446:function:requester",
+      "Resource": "arn:aws:lambda:REGION:ACCOUNT_ID:function:WORKFLOW_NAME_requester",
       "Next": "Validator"
     },
     "Validator": {
       "Type": "Task",
-      "Resource": "arn:aws:lambda:us-west-2:726360710446:function:validator",
+      "Resource": "arn:aws:lambda:REGION:ACCOUNT_ID:function:WORKFLOW_NAME_validator",
       "Next": "Manager",
       "Catch": [
         {
@@ -21,7 +21,7 @@
     },
     "Manager": {
       "Type": "Task",
-      "Resource": "arn:aws:lambda:us-west-2:726360710446:function:manager",
+      "Resource": "arn:aws:lambda:REGION:ACCOUNT_ID:function:WORKFLOW_NAME_manager",
       "Next": "ManagerChoice"
     },
     "ManagerChoice": {
@@ -37,7 +37,7 @@
     },
     "Provisioner": {
       "Type": "Task",
-      "Resource": "arn:aws:lambda:us-west-2:726360710446:function:provisioner",
+      "Resource": "arn:aws:lambda:REGION:ACCOUNT_ID:function:WORKFLOW_NAME_provisioner",
       "Next": "AccessGranter",
       "Retry": [
         {
