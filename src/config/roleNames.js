@@ -1,4 +1,4 @@
 module.exports = {
-  lambdaRoleName: "lambda_basic_execution",
-  statesRoleName: "stepFunctions_basic_execution",
+  lambdaRoleName: "maestro_lambda",
+  statesRoleName: "maestro_step_functions",
 };
