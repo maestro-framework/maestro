@@ -24,7 +24,7 @@ const argv = minimist(process.argv.slice(2), {
   },
 });
 const stateMachineName = argv._[0];
-const rolesToDelete = argv.roles.split(',');
+const rolesToDelete = argv.roles.split(',').filter((role) => role.length > 0);
 
 if (!stateMachineName) {
   throw new Error("State machine name needs to be provided");
