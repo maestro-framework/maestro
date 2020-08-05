@@ -4,7 +4,6 @@
 const { lambdaPolicyArns, statesPolicyArns } = require("../src/config/policy-arn");
 const getBasenamesAndZipBuffers = require("../src/util/getBasenamesAndZipBuffers");
 const attachPolicies = require("../src/aws/attachPolicies");
-// const generateRoleParams = require('../src/aws/generateRoleParams');
 const generateMultipleFunctionParams = require('../src/aws/generateMultipleFunctionParams');
 const generateStateMachineParams = require('../src/aws/generateStateMachineParams');
 const createIAMRole = require('../src/aws/createIAMRole');
