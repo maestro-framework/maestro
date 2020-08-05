@@ -18,7 +18,7 @@ const readStateMachineDefinition = (stateMachineName) => {
   return definition;
 };
 
-const replacePlaceHoldersInStateMachineDefinition = (definition, stateMachineName) => {
+const replacePlaceholdersInDefinition = (definition, stateMachineName) => {
   const { region, account_number } = readConfigFileFromHome(account_info_path);
 
   definition = definition.replaceAll("REGION", region);
@@ -30,7 +30,10 @@ const replacePlaceHoldersInStateMachineDefinition = (definition, stateMachineNam
 
 const generateStateMachineParams = async (roleName, stateMachineName) => {
   const role = await iam.getRole({ RoleName: roleName }).promise();
-  const definition = readStateMachineDefinition(stateMachineName);
+  const definition = replacePlaceholdersInDefinition(
+    readStateMachineDefinition(stateMachineName),
+    stateMachineName
+  );
 
   return {
     definition,
