@@ -41,12 +41,9 @@ const deleteRoleByName = async (name) => {
 };
 
 const main = async () => {
-  await deleteLambdas(lambdaNames)
-    .catch(console.log);
-
-  await getStateMachineArn(stateMachineName)
-    .then(deleteStateMachine)
-    .catch(console.log);
+  const deleteLambdasPromise = deleteLambdas(lambdaNames).catch(console.log);
+  const deleteStateMachinePromise = getStateMachineArn(stateMachineName).then(deleteStateMachine).catch(console.log);
+  await Promise.all([deleteLambdasPromise, deleteStateMachinePromise]);
 
   rolesToDelete.forEach(deleteRoleByName);
 };
