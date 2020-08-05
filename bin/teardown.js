@@ -3,7 +3,6 @@
 const fs = require("fs");
 const childProcess = require("child_process");
 const minimist = require('minimist');
-const readline = require('readline');
 
 const retryAsync = require("../src/util/retryAsync");
 const { lambdaRoleName, statesRoleName } = require("../src/config/roleNames");
@@ -15,6 +14,7 @@ const deleteRole = require("../src/aws/deleteRole");
 const detachPolicies = require("../src/aws/detachPolicies");
 const getStateMachineArn = require("../src/aws/getStateMachineArn");
 const basename = require("../src/util/basename");
+const promptAsync = require("../src/util/promptAsync");
 
 const argv = minimist(process.argv.slice(2));
 const stateMachineName = argv._[0];
@@ -25,20 +25,6 @@ const lambdaNames = fs.readdirSync("lambdas").map(basename);
 if (!stateMachineName) {
   throw new Error("State machine name needs to be provided");
 }
-
-const promptAsync = (question) => {
-  const rl = readline.createInterface({
-    output: process.stdout,
-    input: process.stdin,
-  });
-
-  return new Promise((resolve) => {
-    rl.question(question, (result) => {
-      rl.close();
-      resolve(result);
-    });
-  });
-};
 
 const main = () => {
   deleteLambdas(lambdaNames)
