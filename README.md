@@ -1,8 +1,7 @@
-# Example Workflow Deployer #
+# Maestro #
 
-The example workflow deployer (`deploy.js`) is an automatic deployer script
-that will deploy AWS IAM Roles, AWS Lambdas, and AWS Step Functions to create
-a functioning state machine.
+Maestro is a framework to manage and deploy workflows. There is a deployer (`deploy.js`) which is an automatic deployer script
+that will deploy AWS IAM Roles, AWS Lambdas, and AWS Step Functions to create a functioning state machine.
 
 In the `bin` directory lie `deploy.js` and `teardown.js`. `deploy.js` command takes an argument when invoked from the command line specifying the workflow to deploy; `example-workflow` is deployed if a workflow name is not provided as an argument. Likewise, `teardown.js` can be invoked with a workflow name to teardown and will throw an error if one is not provided.
 
@@ -10,8 +9,8 @@ In the `bin` directory lie `deploy.js` and `teardown.js`. `deploy.js` command ta
 
 To use, you must have the [AWS CLI][aws-cli] installed and set up.
 
-1. Clone this repository (`git clone https://github.com/maestro-team/example-workflow-deployer.git`)
-2. Change directories into the newly cloned repo (`cd example-workflow-deployer`)
+1. Clone this repository (`git clone https://github.com/maestro-framework/maestro.git`)
+2. Change directories into the newly cloned repo (`cd maestro`)
 3. Install npm packages (`npm install`)
 4. Place all lambda files (directories not supported yet) into the `lambdas` directory
 5. Place state machine definition(s) into the `state-machines` directory
