@@ -18,16 +18,15 @@ const readStateMachineDefinition = (stateMachineName) => {
   return definition;
 };
 
-const replacePlaceHoldersInStateMachineDefinition = (stateMachineName) => {
+const replacePlaceHoldersInStateMachineDefinition = (definition, stateMachineName) => {
   const { region, account_number } = readConfigFileFromHome(account_info_path);
-  let definition = readStateMachineDefinition(stateMachineName);
 
-  definition = definition.replaceAll('REGION', region);
-  definition = definition.replaceAll('ACCOUNT_NUMBER', account_number);
-  definition = definition.replaceAll('WORKFLOW_NAME', stateMachineName);
+  definition = definition.replaceAll("REGION", region);
+  definition = definition.replaceAll("ACCOUNT_ID", account_number);
+  definition = definition.replaceAll("WORKFLOW_NAME", stateMachineName);
 
   return definition;
-}
+};
 
 const generateStateMachineParams = async (roleName, stateMachineName) => {
   const role = await iam.getRole({ RoleName: roleName }).promise();
