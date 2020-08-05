@@ -16,7 +16,7 @@ const getStateMachineArn = require("../src/aws/getStateMachineArn");
 const basename = require("../src/util/basename");
 const promptAsync = require("../src/util/promptAsync");
 
-const argv = minimist(process.argv.slice(2));
+const argv = minimist(process.argv.slice(2), { boolean: ["f", "force"] });
 const stateMachineName = argv._[0];
 
 // TODO: Specify Lambdas prepended by a given workflow name to delete
