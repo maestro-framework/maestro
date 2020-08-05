@@ -15,8 +15,10 @@ To use, you must have the [AWS CLI][aws-cli] installed and set up.
 4. Place all lambda files (directories not supported yet) into the `lambdas` directory
 5. Place state machine definition(s) into the `state-machines` directory
 6. Edit `src/aws/services.js` to modify the region for deployment. The region for deployment is hard coded to `us-west-2` and will be extracted to a config file in the future.
-7. Run `deploy.js` (`bin/deploy.js`) to deploy
-8. To tear down state machine and associated resources, run the teardown script (`bin/teardown.js`)
+7. Run `deploy.js`, along with the name of the workflow (`bin/deploy.js example-workflow`) to deploy
+8. To tear down state machine and associated resources, run the teardown script with the name of the workflow (`bin/teardown.js example-workflow`)
+   - This prompts you for confirmation. If you prefer to run it without a confirmation, provide a `-f` or `--force` flag
+   - This doesn't tear down the roles that were created by `deploy.js`. To do that, provide a `--roles` flag with a comma-separated-list of role names to tear down (for example, `--roles=roleName1,roleName2` OR `--roles roleName1,roleName2`)
 
 ## Dependencies ##
 
