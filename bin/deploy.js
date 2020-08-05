@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 
-const { iam, lambda, stepFunctions } = require("../src/aws/services");
 // TODO: determine how to implement ../src/util/requireJSON.js
 const { lambdaPolicyArns, statesPolicyArns } = require("../src/config/policy-arn");
 const getBasenamesAndZipBuffers = require("../src/util/getBasenamesAndZipBuffers");
