@@ -14,7 +14,7 @@ const deleteRole = require("../src/aws/deleteRole");
 const detachPolicies = require("../src/aws/detachPolicies");
 const getStateMachineArn = require("../src/aws/getStateMachineArn");
 const basename = require("../src/util/basename");
-const promptAsync = require("../src/util/promptAsync");
+const asyncPromptYesNoAndExec = require("../src/util/asyncPromptYesNoAndExec");
 
 const argv = minimist(process.argv.slice(2), { boolean: ["f", "force"] });
 const stateMachineName = argv._[0];
@@ -37,15 +37,6 @@ const main = () => {
     .then(deleteStateMachine)
     .then(() => detachPolicies(statesPolicyArns, statesRoleName))
     .then(() => retryAsync(() => deleteRole(statesRoleName), 5, 7000, .6));
-};
-
-const asyncPromptYesNoAndExec = async (prompt, callback) => {
-  switch ((await promptAsync(prompt, "y", "N")).trim().toLowerCase()) {
-    case "y":
-    case "yes":
-      callback();
-      break;
-  }
 };
 
 if (argv.force || argv.f) {
