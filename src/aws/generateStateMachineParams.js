@@ -24,7 +24,10 @@ const replacePlaceholdersInDefinition = (definition, stateMachineName) => {
 
   modifiedDefinition = modifiedDefinition.replace(/REGION/g, region);
   modifiedDefinition = modifiedDefinition.replace(/ACCOUNT_ID/g, account_number);
-  modifiedDefinition = modifiedDefinition.replace(/WORKFLOW_NAME/g, stateMachineName);
+  // TODO: replace WORKFLOW_NAME (not WORKFLOW_NAME_) with stateMachineName
+  //       temporarily only removes the placeholder until the lambdas names
+  //       are updated to reflect the name of the workflow
+  modifiedDefinition = modifiedDefinition.replace(/WORKFLOW_NAME_/g, '');
 
   return modifiedDefinition;
 };
