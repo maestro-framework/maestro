@@ -39,24 +39,28 @@ const main = () => {
     .then(() => retryAsync(() => deleteRole(statesRoleName), 5, 7000, .6));
 };
 
-(async function () {
-  switch (
-    (
-      await promptAsync(
-        `Are you sure you want to delete ${stateMachineName}?`,
-        "y",
-        "N"
+if (argv.force || argv.f) {
+  main();
+} else {
+  (async function () {
+    switch (
+      (
+        await promptAsync(
+          `Are you sure you want to delete ${stateMachineName}?`,
+          "y",
+          "N"
+        )
       )
-    )
-      .trim()
-      .toLowerCase()
-  ) {
-    case "y":
-    case "yes":
-      main();
-      break;
-    default:
-      console.log("Aborting...");
-      break;
-  }
-})();
+        .trim()
+        .toLowerCase()
+    ) {
+      case "y":
+      case "yes":
+        main();
+        break;
+      default:
+        console.log("Aborting...");
+        break;
+    }
+  })();
+}
