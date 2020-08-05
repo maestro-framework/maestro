@@ -17,7 +17,6 @@ const { lambdaRoleName, statesRoleName } = require('../src/config/roleNames');
 const stateMachineName = process.argv[2] || 'example-workflow'; // TODO: perhaps throw an error?
 
 establishIAMRole(lambdaRoleName)
-  .then(() => console.log("Successfully established lambda role"))
   .then(() => attachPolicies(lambdaPolicyArns, lambdaRoleName))
   .then(() => console.log("Successfully attached policies"))
   .then(() => sleep(7000))
@@ -28,7 +27,6 @@ establishIAMRole(lambdaRoleName)
   .then(() => console.log("Successfully created function(s)"));
 
 establishIAMRole(statesRoleName)
-  .then(() => console.log("Successfully established state machine role"))
   .then(() => attachPolicies(statesPolicyArns, statesRoleName))
   .then(() => console.log("Successfully attached policies"))
   .then(() => generateStateMachineParams(statesRoleName, stateMachineName))
