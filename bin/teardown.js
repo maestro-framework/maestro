@@ -9,7 +9,7 @@ const { lambdaRoleName, statesRoleName } = require("../src/config/roleNames");
 const { iam, lambda, stepFunctions } = require("../src/aws/services");
 const deleteLambdas = require("../src/aws/deleteLambdas");
 const deleteStateMachine = require("../src/aws/deleteStateMachine");
-const deleteRoleByName = require("../src/aws/deleteRoleByName");
+const teardownRoleByName = require("../src/aws/teardownRoleByName");
 const getStateMachineArn = require("../src/aws/getStateMachineArn");
 const basename = require("../src/util/basename");
 const promptAsyncYesNoAndExec = require("../src/util/promptAsyncYesNoAndExec");
@@ -37,7 +37,7 @@ const main = async () => {
   const deleteStateMachinePromise = getStateMachineArn(stateMachineName).then(deleteStateMachine).catch(console.log);
   await Promise.all([deleteLambdasPromise, deleteStateMachinePromise]);
 
-  rolesToDelete.forEach(deleteRoleByName);
+  rolesToDelete.forEach(teardownRoleByName);
 };
 
 if (argv.force || argv.f) {
