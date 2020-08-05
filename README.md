@@ -1,4 +1,4 @@
-# Example Workflow Deployer #
+# Maestro #
 
 Maestro is a framework to manage and deploy workflows. There is a deployer (`deploy.js`) which is an automatic deployer script
 that will deploy AWS IAM Roles, AWS Lambdas, and AWS Step Functions to create a functioning state machine.
