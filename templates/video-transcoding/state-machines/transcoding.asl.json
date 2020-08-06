@@ -27,7 +27,8 @@
       }
     },
     "Joiner": {
-      "Type": "Pass",
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:REGION:ACCOUNT_ID:function:WORKFLOW_NAME_joiner",
       "End": true
     }
   }

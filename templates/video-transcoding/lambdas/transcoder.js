@@ -7,6 +7,7 @@ exports.handler = async ({
   sourceBucket,
   intermediateBucket,
 }) => {
+  // Sleep in order to simulate transcoding segments
   await new Promise((resolve) => setTimeout(resolve, 5000));
 
   // Read from source bucket using particular segment meta data
