@@ -1,4 +1,4 @@
-# Video-Transcoding #
+# Video Transcoding #
 
 ## Pattern
 - Fan-Out / Fan-In
