@@ -10,9 +10,6 @@ const readConfigFileFromHome = (path) => {
   return configFile;
 };
 
-// TODO: Add function readStateMachineName which reads the name of the current
-//       directory.
-
 // TODO: The state machine name is now going to be moved up to the directory
 //       having the name of the workflow. This directory represents what will
 //       be the project directory in the future. Issue #34

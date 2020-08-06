@@ -16,8 +16,7 @@ establishIAMRole(lambdaRoleName)
   .then(() =>
     generateMultipleFunctionParams(
       basenamesAndZipBuffers,
-      lambdaRoleName,
-      stateMachineName
+      lambdaRoleName
     )
   )
   .then(createLambdaFunctions)
