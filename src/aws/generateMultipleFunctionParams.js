@@ -14,7 +14,8 @@ const generateFunctionParams = (basename, zipBuffer, role) => {
 
 const generateMultipleFunctionParams = async (
   basenamesAndZipBuffers,
-  roleName
+  roleName,
+  stateMachineName
 ) => {
   const role = await iam.getRole({ RoleName: roleName }).promise();
 
