@@ -10,9 +10,15 @@ const readConfigFileFromHome = (path) => {
   return configFile;
 };
 
-const readStateMachineDefinition = (stateMachineName) => {
+// TODO: Add function readStateMachineName which reads the name of the current
+//       directory.
+
+// TODO: The state machine name is now going to be moved up to the directory
+//       having the name of the workflow. This directory represents what will
+//       be the project directory in the future. Issue #34
+const readStateMachineDefinition = () => {
   const definition = fs
-    .readFileSync(`state-machines/${stateMachineName}.asl.json`)
+    .readFileSync(`state-machines/${}.asl.json`)
     .toString();
 
   return definition;
@@ -32,8 +38,11 @@ const replacePlaceholdersInDefinition = (definition, stateMachineName) => {
   return modifiedDefinition;
 };
 
-const generateStateMachineParams = async (roleName, stateMachineName) => {
+// TODO: Remove stateMachineName. Per issue #34, we'll now read in the current directory
+//       to represent the stateMachineName. Also, the Maestro project README reflects this.
+const generateStateMachineParams = async (roleName) => {
   const role = await iam.getRole({ RoleName: roleName }).promise();
+  // TODO: readStateMachineName and assign to variable
   const definition = replacePlaceholdersInDefinition(
     readStateMachineDefinition(stateMachineName),
     stateMachineName
