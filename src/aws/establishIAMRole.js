@@ -1,7 +1,6 @@
 const { iam } = require("./services");
 const { lambdaPolicyArns, statesPolicyArns } = require("../config/policy-arn");
 const sleep = require("../util/sleep");
-const retryAsync = require("../util/retryAsync");
 const generateRoleParams = require("./generateRoleParams");
 
 const attachPolicies = (policyArns, roleName) => {
@@ -11,13 +10,7 @@ const attachPolicies = (policyArns, roleName) => {
       RoleName: roleName,
     };
 
-    return retryAsync(
-      () => {
-        return iam.attachRolePolicy(policyParams).promise();
-      },
-      2,
-      1000
-    );
+    return iam.attachRolePolicy(policyParams).promise();
   });
 
   return Promise.all(attachPolicyPromises);
