@@ -8,10 +8,10 @@
     },
     "Transcode-All": {
       "Type": "Map",
-      "ItemsPath": "$.segments",
+      "ItemsPath": "$.segmentsMetaData",
       "Next": "Joiner",
       "Parameters": {
-        "segment.$": "$$.Map.Item.Value",
+        "segmentMetaData.$": "$$.Map.Item.Value",
         "intermediateBucket.$": "$.intermediateBucket",
         "sourceBucket.$": "$.sourceBucket"
       },

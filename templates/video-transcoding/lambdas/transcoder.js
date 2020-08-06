@@ -8,9 +8,10 @@ exports.handler = async ({
   intermediateBucket,
 }) => {
   // Sleep in order to simulate transcoding segments
-  await new Promise((resolve) => setTimeout(resolve, 5000));
+  await new Promise((resolve) => setTimeout(resolve, 2000));
 
   // Read from source bucket using particular segment meta data
   // Perform transcoding on segment
   // Write transcoded segment to intermediate bucket
+  return { success: true };
 };
