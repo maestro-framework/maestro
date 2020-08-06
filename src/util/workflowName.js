@@ -1,2 +1,5 @@
-// This gets the name of the current working directory and removes any preceding path
-module.exports = process.cwd().replace(/\/.*\//, '');
+const cwd = process.cwd();
+const cwdBasename = cwd.replace(/\/.*\//, '')
+const cleanedCwdBasename = cwdBasename.replace(/\W/g, '-');
+
+module.exports = cleanedCwdBasename;
