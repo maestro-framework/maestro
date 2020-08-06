@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 
-// TODO: determine how to implement ../src/util/requireJSON.js
 const getBasenamesAndZipBuffers = require("../src/util/getBasenamesAndZipBuffers");
 const generateMultipleFunctionParams = require("../src/aws/generateMultipleFunctionParams");
 const generateStateMachineParams = require("../src/aws/generateStateMachineParams");
@@ -11,7 +10,6 @@ const createStepFunction = require("../src/aws/createStepFunction");
 //   Specify files to retrieve by a workflow name
 const basenamesAndZipBuffers = getBasenamesAndZipBuffers("lambdas");
 const { lambdaRoleName, statesRoleName } = require("../src/config/roleNames");
-const stateMachineName = process.argv[2] || "example-workflow"; // TODO: perhaps throw an error?
 
 establishIAMRole(lambdaRoleName)
   .then(() =>
@@ -21,7 +19,7 @@ establishIAMRole(lambdaRoleName)
   .then(() => console.log("Successfully created function(s)"));
 
 establishIAMRole(statesRoleName)
-  .then(() => generateStateMachineParams(statesRoleName, stateMachineName))
+  .then(() => generateStateMachineParams(statesRoleName))
   .then(createStepFunction)
   .then(() => console.log("Successfully created state machine"))
   .catch(() => {});
