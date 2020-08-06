@@ -10,7 +10,6 @@ const createStepFunction = require("../src/aws/createStepFunction");
 //   Specify files to retrieve by a workflow name
 const basenamesAndZipBuffers = getBasenamesAndZipBuffers("lambdas");
 const { lambdaRoleName, statesRoleName } = require("../src/config/roleNames");
-const stateMachineName = require("../src/util/workflowName");
 
 establishIAMRole(lambdaRoleName)
   .then(() =>
@@ -20,7 +19,7 @@ establishIAMRole(lambdaRoleName)
   .then(() => console.log("Successfully created function(s)"));
 
 establishIAMRole(statesRoleName)
-  .then(() => generateStateMachineParams(statesRoleName, stateMachineName))
+  .then(() => generateStateMachineParams(statesRoleName))
   .then(createStepFunction)
   .then(() => console.log("Successfully created state machine"))
   .catch(() => {});
