@@ -7,13 +7,9 @@ exports.handler = async ({
   destinationBucket
 }) => {
   // Use S3 bucket as a source for video
-  // obtain length of video and split into multiple segments
+  const segmentsMetaData = [];
 
-  // this is a naive interpretation
-  const segments = [];
-
-  // Build up an array of segments
-
+  // Build up an array of segments meta data...
   // Example segment object:
   // {
   //   resolution: xxx,
@@ -25,5 +21,5 @@ exports.handler = async ({
   //   intermediateBucketName: intermediateBucket.name,
   // }
 
-  return { segments, intermediateBucket, destinationBucket };
+  return { segmentsMetaData, sourceBucket, intermediateBucket, destinationBucket };
 };
