@@ -10,7 +10,7 @@ In the `bin` directory lie `deploy.js` and `teardown.js`. `deploy.js` command ta
 To use, you must have the [AWS CLI][aws-cli] installed and set up.
 
 1. Clone this repository (`git clone https://github.com/maestro-framework/maestro.git`)
-2. Change directories into the newly cloned repo (`cd maestro`)
+2. Change directory into the newly cloned repo (`cd maestro`)
 3. Install npm packages (`npm install`)
 4. Place all lambda files (directories not supported yet) into the `lambdas` directory
 5. Place state machine definition(s) into the `state-machines` directory
@@ -26,5 +26,11 @@ To use, you must have the [AWS CLI][aws-cli] installed and set up.
 - `npm`
 - `zip` command line utility
 - [AWS CLI][aws-cli]
+
+## Development Assumptions ##
+
+- The name of the workflow is the project directory
+  - The project directory has to have a `lambdas` and `state-machines` child directory (to change soon)
+- We'll never deploy or teardown from any location that isn't the project root directory (can't deploy from the lambdas directory or any nested)
 
 [aws-cli]: https://aws.amazon.com/cli/
