@@ -1,4 +1,9 @@
-# Fan-Out / Fan-In #
+# Video-Transcoding #
+
+## Pattern
+- Fan-Out / Fan-In
+
+## Description
 
 This template workflow models the popular "fan-out/fan-in" workflow. The idea 
 here is that there is 1 big lambda that splits the work into many pieces, and 
