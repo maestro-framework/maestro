@@ -27,4 +27,10 @@ To use, you must have the [AWS CLI][aws-cli] installed and set up.
 - `zip` command line utility
 - [AWS CLI][aws-cli]
 
+## Development Assumptions ##
+
+- The name of the workflow is the project directory
+  - The project directory has to have a `lambdas` and `state-machines` child directory (to change soon)
+- We'll never deploy or teardown from any location that isn't the project root directory (can't deploy from the lambdas directory or any nested)
+
 [aws-cli]: https://aws.amazon.com/cli/
