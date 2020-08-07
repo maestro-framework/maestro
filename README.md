@@ -3,7 +3,7 @@
 Maestro is a framework to manage and deploy workflows. There is a deployer (`deploy.js`) which is an automatic deployer script
 that will deploy AWS IAM Roles, AWS Lambdas, and AWS Step Functions to create a functioning state machine.
 
-In the `bin` directory lie `deploy.js` and `teardown.js`. When `deploy.js` is invoked in a directory that has a `lambdas` subdirectory and `definition.asl.json` state machine definition file, all of the lambdas in that specified directory are deployed, and the `definition.asl.json` file is deployed as well, filling in values as necesarry.
+In the `bin` directory lie `deploy.js` and `teardown.js`. When `deploy.js` is invoked in a directory that has a `lambdas` subdirectory and `definition.asl.json` state machine definition file, all of the lambdas in that specified directory are deployed, and the `definition.asl.json` file is deployed as well, filling in values as necessary.
 
 ## Usage ##
 
