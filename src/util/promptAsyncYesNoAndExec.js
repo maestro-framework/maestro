@@ -1,4 +1,4 @@
-const promptAsync = require('./promptAsync');
+const promptAsync = require("./promptAsync");
 
 const promptAsyncYesNoAndExec = async (prompt, callback) => {
   switch ((await promptAsync(prompt, "y", "N")).trim().toLowerCase()) {

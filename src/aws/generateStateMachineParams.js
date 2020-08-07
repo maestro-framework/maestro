@@ -27,7 +27,10 @@ const replacePlaceholdersInDefinition = (definition) => {
     account_number
   );
 
-  modifiedDefinition = modifiedDefinition.replace(/WORKFLOW_NAME/g, stateMachineName);
+  modifiedDefinition = modifiedDefinition.replace(
+    /WORKFLOW_NAME/g,
+    stateMachineName
+  );
 
   return modifiedDefinition;
 };

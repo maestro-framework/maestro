@@ -13,10 +13,7 @@ const { lambdaRoleName, statesRoleName } = require("../src/config/roleNames");
 
 establishIAMRole(lambdaRoleName)
   .then(() =>
-    generateMultipleFunctionParams(
-      basenamesAndZipBuffers,
-      lambdaRoleName
-    )
+    generateMultipleFunctionParams(basenamesAndZipBuffers, lambdaRoleName)
   )
   .then(createLambdaFunctions)
   .then(() => console.log("Successfully created function(s)"));
