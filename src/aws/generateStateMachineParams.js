@@ -2,6 +2,7 @@ const { iam } = require("./services");
 const fs = require("fs");
 const os = require("os");
 const account_info_path = "/.config/maestro/aws_account_info.json";
+const stateMachineName = require("../util/workflowName");
 
 const readConfigFileFromHome = (path) => {
   const homedir = os.homedir();
@@ -10,13 +11,13 @@ const readConfigFileFromHome = (path) => {
   return configFile;
 };
 
-const readStateMachineDefinition = (stateMachineName) => {
+const readStateMachineDefinition = () => {
   const definition = fs.readFileSync("definition.asl.json").toString();
 
   return definition;
 };
 
-const replacePlaceholdersInDefinition = (definition, stateMachineName) => {
+const replacePlaceholdersInDefinition = (definition) => {
   const { region, account_number } = readConfigFileFromHome(account_info_path);
   let modifiedDefinition = definition;
 
@@ -25,19 +26,19 @@ const replacePlaceholdersInDefinition = (definition, stateMachineName) => {
     /ACCOUNT_ID/g,
     account_number
   );
-  // TODO: replace WORKFLOW_NAME (not WORKFLOW_NAME_) with stateMachineName
-  //       temporarily only removes the placeholder until the lambdas names
-  //       are updated to reflect the name of the workflow
-  modifiedDefinition = modifiedDefinition.replace(/WORKFLOW_NAME_/g, "");
+
+  modifiedDefinition = modifiedDefinition.replace(
+    /WORKFLOW_NAME/g,
+    stateMachineName
+  );
 
   return modifiedDefinition;
 };
 
-const generateStateMachineParams = async (roleName, stateMachineName) => {
+const generateStateMachineParams = async (roleName) => {
   const role = await iam.getRole({ RoleName: roleName }).promise();
   const definition = replacePlaceholdersInDefinition(
-    readStateMachineDefinition(stateMachineName),
-    stateMachineName
+    readStateMachineDefinition()
   );
 
   return {

@@ -27,8 +27,12 @@ const argv = minimist(process.argv.slice(2), {
 const stateMachineName = require("../src/util/workflowName");
 const rolesToDelete = argv.roles.split(",").filter((role) => role.length > 0);
 
-// TODO: Specify Lambdas prepended by a given workflow name to delete
-const lambdaNames = fs.readdirSync("lambdas").map(basename);
+const lambdaNames = fs
+  .readdirSync("lambdas")
+  .map(basename)
+  .map((lambdaName) => {
+    return stateMachineName + "_" + lambdaName;
+  });
 
 const main = async () => {
   const deleteLambdasPromise = deleteLambdas(lambdaNames).catch(console.log);

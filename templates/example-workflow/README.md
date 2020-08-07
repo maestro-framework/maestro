@@ -1,11 +1,11 @@
-# Example Workflow #
+# Example Workflow
 
-The example workflow is a generic workflow that demonstrates how to 
-coordinate multiple lambdas, handling failed steps with retries and catching 
+The example workflow is a generic workflow that demonstrates how to
+coordinate multiple lambdas, handling failed steps with retries and catching
 errors. The premise of the workflow is this:
 
-Imagine there is a developer at a startup, tasked with creating an internal 
-tool for provisioning a resource with managerial approval. The workflow is 
+Imagine there is a developer at a startup, tasked with creating an internal
+tool for provisioning a resource with managerial approval. The workflow is
 like this:
 
 1. A request comes in to the manager
@@ -18,10 +18,10 @@ like this:
 5. Finally the requester is notified of their acceptance and sent instructions
 6. Or, if the manager denied, skip steps 3-5 and just notify the requester
 
-This makes for a good example workflow because of the potential failures, 
-long-running or wait tasks (provisioner, manager), and because it is still 
+This makes for a good example workflow because of the potential failures,
+long-running or wait tasks (provisioner, manager), and because it is still
 simple enough to implement with just a few lambdas.
 
-# How It Works #
+# How It Works
 
 (Include one of the many diagrams here)

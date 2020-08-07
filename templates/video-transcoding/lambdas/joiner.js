@@ -1,10 +1,7 @@
 // const AWS = require('aws-sdk');
 // const s3 = new AWS.S3();
 
-exports.handler = async ({
-  intermediateBucket,
-  destinationBucket
-}) => {
+exports.handler = async ({ intermediateBucket, destinationBucket }) => {
   // Sleep in order to simulate joining segments
   await new Promise((resolve) => setTimeout(resolve, 2000));
 
