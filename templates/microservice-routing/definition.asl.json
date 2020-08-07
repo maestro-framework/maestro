@@ -21,26 +21,26 @@
               "StringEquals": "Hello World",
             }
           ],
-          "Next": "MicroServiceA"
+          "Next": "MicroserviceA"
         },
         {
           "Variable": "$.isProcessingComplete",
           "BooleanEquals": true,
-          "Next": "MicroServiceB"
+          "Next": "MicroserviceB"
         },
       ],
       "Default": "PostProccesor"
     },
 
-    "MicroServiceA": {
+    "MicroserviceA": {
       "Type" : "Task",
-      "Resource": "arn:aws:lambda:REGION:ACCOUNT_ID:function:WORKFLOW_NAME_microServiceA",
+      "Resource": "arn:aws:lambda:REGION:ACCOUNT_ID:function:WORKFLOW_NAME_microserviceA",
       "End": true
     },
 
-    "MicroServiceB": {
+    "MicroserviceB": {
       "Type" : "Task",
-      "Resource": "arn:aws:lambda:REGION:ACCOUNT_ID:function:WORKFLOW_NAME_microServiceB",
+      "Resource": "arn:aws:lambda:REGION:ACCOUNT_ID:function:WORKFLOW_NAME_microserviceB",
       "End": true
     },
 
