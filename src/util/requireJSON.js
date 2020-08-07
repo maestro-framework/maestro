@@ -3,9 +3,9 @@
 const fs = require("fs");
 
 const requireJSON = (relPath) => {
-  let absPath = __dirname + '/' + relPath;
+  let absPath = __dirname + "/" + relPath;
 
-  if (!absPath.endsWith('.json')) {
+  if (!absPath.endsWith(".json")) {
     absPath = `${absPath}.json`;
   }
 

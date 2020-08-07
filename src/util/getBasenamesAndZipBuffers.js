@@ -1,5 +1,5 @@
 const childProcess = require("child_process");
-const basename = require('./basename');
+const basename = require("./basename");
 const fs = require("fs");
 
 const zipFileToBuffer = (directory, filename) => {

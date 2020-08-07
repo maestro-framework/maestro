@@ -1,4 +1,4 @@
-# Maestro #
+# Maestro
 
 Maestro is a framework to manage and deploy workflows. There is a deployer (`deploy.js`) which is an automatic deployer script
 that will deploy AWS IAM Roles, AWS Lambdas, and AWS Step Functions to create a functioning state machine.
@@ -7,7 +7,7 @@ In the `bin` directory lie `deploy.js` and `teardown.js`. When `deploy.js` is in
 
 In the `templates` directory lie an assortment of template Maestro projects to help you bootstrap your project. When you want to create a project that is based off of a template, first create a directory anywhere in your filesystem with the name of your project (eg `mkdir /path/to/project-name/`). Next, `cd` into that directory. Then `cp` the template files over (eg `cp -r /path/to/maestro/templates/video-transcoding/* .`). After that, you can deploy with `/path/to/maestro/bin/deploy.js` and teardown with `/path/to/maestro/bin/teardown.js`.
 
-## Usage ##
+## Usage
 
 To use, you must have the [AWS CLI][aws-cli] installed and set up.
 
@@ -28,16 +28,16 @@ To use, you must have the [AWS CLI][aws-cli] installed and set up.
    - This prompts you for confirmation. If you prefer to run it without a confirmation, provide a `-f` or `--force` flag
    - This doesn't automatically tear down the roles that were created by `deploy.js`. To do that, provide a `--roles` flag with a comma-separated-list of role names to tear down (for example, `--roles=roleName1,roleName2` OR `--roles roleName1,roleName2`)
 
-## Dependencies ##
+## Dependencies
 
 - Node.js 12.x or greater
 - npm packages (installed during `npm install`):
-   - `minimist`
-   - `aws-sdk`
+  - `minimist`
+  - `aws-sdk`
 - `zip` command line utility
 - [AWS CLI][aws-cli]
 
-## Development Assumptions ##
+## Development Assumptions
 
 - The name of the workflow is the project directory
   - The project directory has to have a `lambdas` and `state-machines` child directory (to change soon)
