@@ -11,18 +11,22 @@ const createStepFunction = require("../src/aws/createStepFunction");
 const basenamesAndZipBuffers = getBasenamesAndZipBuffers("lambdas");
 const { lambdaRoleName, statesRoleName } = require("../src/config/roleNames");
 
-establishIAMRole(lambdaRoleName)
-  .then(() =>
-    generateMultipleFunctionParams(
-      basenamesAndZipBuffers,
-      lambdaRoleName
+const deploy = () => {
+  establishIAMRole(lambdaRoleName)
+    .then(() =>
+      generateMultipleFunctionParams(
+        basenamesAndZipBuffers,
+        lambdaRoleName
+      )
     )
-  )
-  .then(createLambdaFunctions)
-  .then(() => console.log("Successfully created function(s)"));
+    .then(createLambdaFunctions)
+    .then(() => console.log("Successfully created function(s)"));
 
-establishIAMRole(statesRoleName)
-  .then(() => generateStateMachineParams(statesRoleName))
-  .then(createStepFunction)
-  .then(() => console.log("Successfully created state machine"))
-  .catch(() => {});
+  establishIAMRole(statesRoleName)
+    .then(() => generateStateMachineParams(statesRoleName))
+    .then(createStepFunction)
+    .then(() => console.log("Successfully created state machine"))
+    .catch(() => {});
+}
+
+module.exports = deploy;
