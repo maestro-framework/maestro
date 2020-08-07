@@ -1,6 +1,6 @@
 {
   "Comment": "This is a branching logic template",
-  "StartsAt": "GeneratePayload",
+  "StartAt": "GeneratePayload",
   "States": {
     "GeneratePayload": {
       "Type": "Task",
@@ -14,11 +14,11 @@
           "And": [
             {
               "Variable": "$.isProcessingComplete",
-              "BooleanEquals": true,
+              "BooleanEquals": true
             },
             {
               "Variable": "$.data",
-              "StringEquals": "Hello World",
+              "StringEquals": "Hello World"
             }
           ],
           "Next": "MicroserviceA"
@@ -27,7 +27,7 @@
           "Variable": "$.isProcessingComplete",
           "BooleanEquals": true,
           "Next": "MicroserviceB"
-        },
+        }
       ],
       "Default": "PostProccesor"
     },
@@ -47,7 +47,7 @@
     "PostProccesor": {
       "Type": "Task",
       "Resource": "arn:aws:lambda:REGION:ACCOUNT_ID:function:WORKFLOW_NAME_postProcessor",
-      "Next": "GeneratePayload"
+      "Next": "ChoiceState"
     }
   }
 }
