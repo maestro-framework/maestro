@@ -1,40 +1,16 @@
 #!/usr/bin/env node
 
 const fs = require("fs");
-const minimist = require("minimist");
-const childProcess = require("child_process");
 
-const retryAsync = require("../src/util/retryAsync");
-const { lambdaRoleName, statesRoleName } = require("../src/config/roleNames");
-const {
-  lambdaPolicyArns,
-  statesPolicyArns,
-} = require("../src/config/policy-arn");
 const deleteLambdas = require("../src/aws/deleteLambdas");
 const deleteStateMachine = require("../src/aws/deleteStateMachine");
 const teardownRoleByName = require("../src/aws/teardownRoleByName");
 const getStateMachineArn = require("../src/aws/getStateMachineArn");
 const basename = require("../src/util/basename");
 const promptAsyncYesNoAndExec = require("../src/util/promptAsyncYesNoAndExec");
-
-const argv = minimist(process.argv.slice(2), {
-  boolean: ["f", "force"],
-  string: ["roles"],
-  default: {
-    roles: "",
-  },
-});
 const stateMachineName = require("../src/util/workflowName");
-const rolesToDelete = argv.roles.split(",").filter((role) => role.length > 0);
 
-const lambdaNames = fs
-  .readdirSync("lambdas")
-  .map(basename)
-  .map((lambdaName) => {
-    return stateMachineName + "_" + lambdaName;
-  });
-
-const main = async () => {
+const deleteResources = async (rolesToDelete, lambdaNames) => {
   const deleteLambdasPromise = deleteLambdas(lambdaNames).catch(console.log);
   const deleteStateMachinePromise = getStateMachineArn(stateMachineName)
     .then(deleteStateMachine)
@@ -44,11 +20,23 @@ const main = async () => {
   rolesToDelete.forEach(teardownRoleByName);
 };
 
-if (argv.force || argv.f) {
-  main();
-} else {
-  promptAsyncYesNoAndExec(
-    `Are you sure you want to delete ${stateMachineName}?`,
-    main
-  );
-}
+const teardown = (argv) => {
+  const lambdaNames = fs
+    .readdirSync("lambdas")
+    .map(basename)
+    .map((lambdaName) => {
+      return stateMachineName + "_" + lambdaName;
+    });
+  const rolesToDelete = argv.roles.split(",").filter((role) => role.length > 0);
+
+  if (argv.force || argv.f) {
+    deleteResources(rolesToDelete, lambdaNames);
+  } else {
+    promptAsyncYesNoAndExec(
+      `Are you sure you want to delete ${stateMachineName}?`,
+      () => deleteResources(rolesToDelete, lambdaNames)
+    );
+  }
+};
+
+module.exports = teardown;

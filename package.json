@@ -2,5 +2,55 @@
   "dependencies": {
     "aws-sdk": "^2.724.0",
     "minimist": "^1.2.5"
-  }
+  },
+  "name": "maestro-framework",
+  "description": "Maestro is a framework for quickly bootstrapping serverless orchestration workflows with AWS Step Functions",
+  "version": "1.0.0",
+  "bin": {
+    "maestro": "./bin/maestro.js"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maestro-framework/maestro.git"
+  },
+  "keywords": [
+    "lambda",
+    "aws",
+    "amazon web services",
+    "serverless",
+    "faas",
+    "maestro",
+    "orchestration",
+    "orchestrator",
+    "framework",
+    "maestro-framework"
+  ],
+  "author": "maestro-framework",
+  "contributors": [
+    {
+      "name": "Torrel Moseley",
+      "email": "trrl.mo@hotmail.com"
+    },
+    {
+      "name": "Zac Klammer",
+      "email": "zklamm@gmail.com"
+    },
+    {
+      "name": "John Isom",
+      "email": "john@johnisom.dev"
+    }
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/maestro-framework/maestro/issues"
+  },
+  "preferGlobal": true,
+  "engines": {
+    "node": ">=10"
+  },
+  "homepage": "https://github.com/maestro-framework/maestro#readme"
 }
