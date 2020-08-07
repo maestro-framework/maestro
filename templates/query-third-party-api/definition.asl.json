@@ -10,6 +10,7 @@
       "Type": "Task",
       "Resource": "arn:aws:lambda:REGION:ACCOUNT_ID:function:WORKFLOW_NAME_queryAPI",
       "Next": "Bar",
+      "TimeoutSeconds": 2,
       "Retry": [
         {
           "ErrorEquals": ["States.Timeout"],
