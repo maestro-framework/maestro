@@ -24,12 +24,8 @@ const argv = minimist(process.argv.slice(2), {
     roles: "",
   },
 });
-const stateMachineName = argv._[0];
+const stateMachineName = require("../src/util/workflowName");
 const rolesToDelete = argv.roles.split(",").filter((role) => role.length > 0);
-
-if (!stateMachineName) {
-  throw new Error("State machine name needs to be provided");
-}
 
 // TODO: Specify Lambdas prepended by a given workflow name to delete
 const lambdaNames = fs.readdirSync("lambdas").map(basename);

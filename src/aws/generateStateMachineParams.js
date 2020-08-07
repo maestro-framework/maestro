@@ -10,13 +10,8 @@ const readConfigFileFromHome = (path) => {
   return configFile;
 };
 
-// TODO: The state machine name is now going to be moved up to the directory
-//       having the name of the workflow. This directory represents what will
-//       be the project directory in the future. Issue #34
-const readStateMachineDefinition = () => {
-  const definition = fs
-    .readFileSync(`state-machines/${}.asl.json`)
-    .toString();
+const readStateMachineDefinition = (stateMachineName) => {
+  const definition = fs.readFileSync("definition.asl.json").toString();
 
   return definition;
 };
@@ -26,11 +21,14 @@ const replacePlaceholdersInDefinition = (definition, stateMachineName) => {
   let modifiedDefinition = definition;
 
   modifiedDefinition = modifiedDefinition.replace(/REGION/g, region);
-  modifiedDefinition = modifiedDefinition.replace(/ACCOUNT_ID/g, account_number);
+  modifiedDefinition = modifiedDefinition.replace(
+    /ACCOUNT_ID/g,
+    account_number
+  );
   // TODO: replace WORKFLOW_NAME (not WORKFLOW_NAME_) with stateMachineName
   //       temporarily only removes the placeholder until the lambdas names
   //       are updated to reflect the name of the workflow
-  modifiedDefinition = modifiedDefinition.replace(/WORKFLOW_NAME_/g, '');
+  modifiedDefinition = modifiedDefinition.replace(/WORKFLOW_NAME_/g, "");
 
   return modifiedDefinition;
 };

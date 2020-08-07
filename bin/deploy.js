@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 
-// TODO: determine how to implement ../src/util/requireJSON.js
 const getBasenamesAndZipBuffers = require("../src/util/getBasenamesAndZipBuffers");
 const generateMultipleFunctionParams = require("../src/aws/generateMultipleFunctionParams");
 const generateStateMachineParams = require("../src/aws/generateStateMachineParams");
