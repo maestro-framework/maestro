@@ -26,19 +26,14 @@ const replacePlaceholdersInDefinition = (definition) => {
     /ACCOUNT_ID/g,
     account_number
   );
-  // TODO: replace WORKFLOW_NAME (not WORKFLOW_NAME_) with stateMachineName
-  //       temporarily only removes the placeholder until the lambdas names
-  //       are updated to reflect the name of the workflow
-  modifiedDefinition = modifiedDefinition.replace(/WORKFLOW_NAME_/g, "");
+
+  modifiedDefinition = modifiedDefinition.replace(/WORKFLOW_NAME_/g, stateMachineName);
 
   return modifiedDefinition;
 };
 
-// TODO: Remove stateMachineName. Per issue #34, we'll now read in the current directory
-//       to represent the stateMachineName. Also, the Maestro project README reflects this.
 const generateStateMachineParams = async (roleName) => {
   const role = await iam.getRole({ RoleName: roleName }).promise();
-  // TODO: readStateMachineName and assign to variable
   const definition = replacePlaceholdersInDefinition(
     readStateMachineDefinition()
   );
