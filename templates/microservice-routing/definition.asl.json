@@ -1,0 +1,53 @@
+{
+  "Comment": "This is a branching logic template",
+  "StartsAt": "GeneratePayload",
+  "States": {
+    "GeneratePayload": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:REGION:ACCOUNT_ID:function:WORKFLOW_NAME_generatePayload",
+      "Next": "ChoiceState"
+    },
+    "ChoiceState": {
+      "Type": "Choice",
+      "Choices": [
+        {
+          "And": [
+            {
+              "Variable": "$.isProcessingComplete",
+              "BooleanEquals": true,
+            },
+            {
+              "Variable": "$.data",
+              "StringEquals": "Hello World",
+            }
+          ],
+          "Next": "MicroServiceA"
+        },
+        {
+          "Variable": "$.isProcessingComplete",
+          "BooleanEquals": true,
+          "Next": "MicroServiceB"
+        },
+      ],
+      "Default": "PostProccesor"
+    },
+
+    "MicroServiceA": {
+      "Type" : "Task",
+      "Resource": "arn:aws:lambda:REGION:ACCOUNT_ID:function:WORKFLOW_NAME_microServiceA",
+      "End": true
+    },
+
+    "MicroServiceB": {
+      "Type" : "Task",
+      "Resource": "arn:aws:lambda:REGION:ACCOUNT_ID:function:WORKFLOW_NAME_microServiceB",
+      "End": true
+    },
+
+    "PostProccesor": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:REGION:ACCOUNT_ID:function:WORKFLOW_NAME_postProcessor",
+      "Next": "GeneratePayload"
+    }
+  }
+}
