@@ -1,4 +1,4 @@
-const readline = require('readline');
+const readline = require("readline");
 
 const promptAsync = (question, ...options) => {
   const rl = readline.createInterface({
@@ -6,7 +6,9 @@ const promptAsync = (question, ...options) => {
     input: process.stdin,
   });
 
-  let prompt = `${question}${options.length > 0 ? ' [' + options.join('/') + ']' : ''} `;
+  let prompt = `${question}${
+    options.length > 0 ? " [" + options.join("/") + "]" : ""
+  } `;
 
   return new Promise((resolve) => {
     rl.question(prompt, (result) => {

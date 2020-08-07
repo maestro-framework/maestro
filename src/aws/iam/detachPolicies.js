@@ -1,4 +1,4 @@
-const { iam } = require('./services');
+const { iam } = require("../services");
 
 const detachPolicies = (policyArns, roleName) => {
   const detachPolicyPromises = policyArns.map((arn) => {

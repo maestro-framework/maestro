@@ -1,14 +1,12 @@
-#!/usr/bin/env node
-
 const fs = require("fs");
 
-const deleteLambdas = require("../src/aws/deleteLambdas");
-const deleteStateMachine = require("../src/aws/deleteStateMachine");
-const teardownRoleByName = require("../src/aws/teardownRoleByName");
-const getStateMachineArn = require("../src/aws/getStateMachineArn");
-const basename = require("../src/util/basename");
-const promptAsyncYesNoAndExec = require("../src/util/promptAsyncYesNoAndExec");
-const stateMachineName = require("../src/util/workflowName");
+const deleteLambdas = require("../aws/lambda/deleteLambdas");
+const deleteStateMachine = require("../aws/step-function/deleteStateMachine");
+const teardownRoleByName = require("../aws/iam/teardownRoleByName");
+const getStateMachineArn = require("../aws/iam/getStateMachineArn");
+const basename = require("../util/basename");
+const promptAsyncYesNoAndExec = require("../util/promptAsyncYesNoAndExec");
+const stateMachineName = require("../util/workflowName");
 
 const deleteResources = async (rolesToDelete, lambdaNames) => {
   const deleteLambdasPromise = deleteLambdas(lambdaNames).catch(console.log);

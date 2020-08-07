@@ -1,8 +1,8 @@
-const { iam } = require("./services");
+const { iam } = require("../services");
 const fs = require("fs");
 const os = require("os");
 const account_info_path = "/.config/maestro/aws_account_info.json";
-const stateMachineName = require("../util/workflowName");
+const stateMachineName = require("../../util/workflowName");
 
 const readConfigFileFromHome = (path) => {
   const homedir = os.homedir();
@@ -27,7 +27,10 @@ const replacePlaceholdersInDefinition = (definition) => {
     account_number
   );
 
-  modifiedDefinition = modifiedDefinition.replace(/WORKFLOW_NAME/g, stateMachineName);
+  modifiedDefinition = modifiedDefinition.replace(
+    /WORKFLOW_NAME/g,
+    stateMachineName
+  );
 
   return modifiedDefinition;
 };
