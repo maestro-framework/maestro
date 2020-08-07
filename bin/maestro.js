@@ -8,8 +8,8 @@ const argv = minimist(process.argv.slice(2), {
     roles: "",
   },
 });
-const deploy = require('./deploy');
-const teardown = require('./teardown');
+const deploy = require('../src/commands/deploy');
+const teardown = require('../src/commands/teardown');
 
 switch(argv._[0]) {
   case 'deploy':

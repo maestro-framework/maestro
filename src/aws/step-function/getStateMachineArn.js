@@ -1,4 +1,4 @@
-const { stepFunctions } = require("./services.js");
+const { stepFunctions } = require("../services.js");
 
 const getStateMachineArn = async (name) => {
   const stateMachines = (await stepFunctions.listStateMachines().promise())
