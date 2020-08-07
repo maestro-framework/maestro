@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 const getBasenamesAndZipBuffers = require("../src/util/getBasenamesAndZipBuffers");
 const generateMultipleFunctionParams = require("../src/aws/generateMultipleFunctionParams");
 const generateStateMachineParams = require("../src/aws/generateStateMachineParams");
