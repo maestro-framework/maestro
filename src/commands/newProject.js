@@ -4,36 +4,9 @@ const fs = require("fs");
 const configDir = require("../util/configDir");
 const capitalize = require("../util/capitalize");
 const titleize = require("../util/titleize");
-const promptAsync = require("../util/promptAsync");
 const initializeGitRepository = require("../util/initializeGitRepository");
 const copyTemplateToDir = require("../util/copyTemplateToDir");
-
-const selectTemplateIdx = async (templateNames) => {
-  console.log(
-    "Select a template to base your project off of (defaults to no template)"
-  );
-  console.log(
-    "-----------------------------------------------------------------------"
-  );
-
-  templateNames.forEach(([prettyName, rawName], idx) => {
-    console.log(`${`[${idx + 1}]`.padStart(5)} ${prettyName} (${rawName})`);
-  });
-
-  console.log(
-    "-----------------------------------------------------------------------"
-  );
-  const selectedIdx =
-    Number(
-      await promptAsync(`Select template 1-${templateNames.length}`, "none")
-    ) - 1;
-
-  if (Number.isNaN(selectedIdx) || !templateNames[selectedIdx]) {
-    return -1;
-  } else {
-    return selectedIdx;
-  }
-};
+const selectTemplateIdx = require("../util/selectTemplateIdx");
 
 const cleanupAndCapitalize = (str) => {
   const cleaned = str.replace(/[-_]/g, " ");
