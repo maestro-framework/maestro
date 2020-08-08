@@ -5,6 +5,7 @@ const configDir = require("../util/configDir");
 const capitalize = require("../util/capitalize");
 const promptAsync = require("../util/promptAsync");
 const initializeGitRepository = require("../util/initializeGitRepository");
+const copyTemplateToDir = require("../util/copyTemplateToDir");
 
 const selectTemplateIdx = async (templateNames) => {
   console.log('Select a template to base your project off of (defaults to no template)');
@@ -22,10 +23,6 @@ const selectTemplateIdx = async (templateNames) => {
   } else {
     return selectedIdx;
   }
-};
-
-const copyTemplateToDir = (templateName, dirname) => {
-  childProcess.execSync(`cp -r ${configDir}/templates/${templateName}/* ${dirname}`);
 };
 
 const newProject = async (argv) => {
