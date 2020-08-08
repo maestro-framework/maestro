@@ -5,8 +5,12 @@ const teardown = require("../src/commands/teardown");
 const newProject = require("../src/commands/newProject");
 const minimist = require("minimist");
 const argv = minimist(process.argv.slice(2), {
-  boolean: ["f", "force", "n"],
+  boolean: ["force", "n"],
   string: ["roles", "template"],
+  alias: {
+    f: "force",
+    t: "template",
+  },
   default: {
     roles: "",
   },
