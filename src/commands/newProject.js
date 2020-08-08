@@ -23,12 +23,12 @@ const selectTemplateIdx = async (templateNames) => {
   }
 };
 
-const copyTemplateToProject = (templateName, projectName) => {
-  childProcess.execSync(`cp -r ${configDir}/templates/${templateName}/* ${projectName}`);
+const copyTemplateToDir = (templateName, dirname) => {
+  childProcess.execSync(`cp -r ${configDir}/templates/${templateName}/* ${dirname}`);
 };
 
-const initializeProjectGitRepository = (projectName) => {
-  childProcess.execSync(`git init ${projectName}`);
+const initializeGitRepository = (dirname) => {
+  childProcess.execSync(`git init ${dirname}`);
 };
 
 const newProject = async (argv) => {
@@ -66,8 +66,8 @@ const newProject = async (argv) => {
     console.log("Creating project without template...");
   }
 
-  copyTemplateToProject(selectedTemplate, projectName);
-  initializeProjectGitRepository(projectName);
+  copyTemplateToDir(selectedTemplate, projectName);
+  initializeGitRepository(projectName);
 
   console.log(`Created project "${projectName}"!`);
 };
