@@ -13,6 +13,28 @@ const cleanupAndCapitalize = (str) => {
   return capitalize(cleaned);
 };
 
+const createProjectFromTemplate = (projectName, templateName) => {
+  const cleanSelectedTemplateName = cleanupAndCapitalize(templateName);
+
+  console.log(
+    `Creating project based off of template ${cleanSelectedTemplateName}...`
+  );
+
+  copyTemplateToDir(templateName, projectName);
+  initializeGitRepository(projectName);
+
+  console.log(`Created project "${projectName}"!`);
+};
+
+const createProjectWithoutTemplate = (projectName) => {
+  console.log("Creating project without template...");
+
+  createEmptyProject(projectName);
+  initializeGitRepository(projectName);
+
+  console.log(`Created project "${projectName}"!`);
+};
+
 const newProject = async (argv) => {
   const projectName = argv._[1];
 
@@ -33,50 +55,21 @@ const newProject = async (argv) => {
   const templateNames = fs.readdirSync(`${configDir}/templates`);
 
   if (argv.template && templateNames.includes(argv.template)) {
-    const cleanSelectedTemplateName = cleanupAndCapitalize(argv.template);
-
-    console.log(
-      `Creating project based off of template ${cleanSelectedTemplateName}...`
-    );
-
-    copyTemplateToDir(argv.template, projectName);
-    initializeGitRepository(projectName);
-
-    console.log(`Created project "${projectName}"!`);
+    createProjectFromTemplate(projectName, argv.template);
   } else if (argv.n || argv.template === false) {
-    console.log("Creating project without template...");
-
-    createEmptyProject(projectName);
-    initializeGitRepository(projectName);
-
-    console.log(`Created project "${projectName}"!`);
+    createProjectWithoutTemplate(projectName);
   } else {
-    const displayTemplateNames = templateNames.map((name) => {
-      // has structure of [["Example workflow", "example-workflow"], ...]
-      return [cleanupAndCapitalize(name), name];
-    });
+    // has structure of [["Example workflow", "example-workflow"], ...]
+    const displayTemplateNames = templateNames.map((name) => [cleanupAndCapitalize(name), name]);
 
     const selectedTemplateIdx = await selectTemplateIdx(displayTemplateNames);
-    let selectedTemplate;
 
     if (selectedTemplateIdx !== -1) {
-      const cleanSelectedTemplateName = templateNames[selectedTemplateIdx][0];
-      selectedTemplate = templateNames[selectedTemplateIdx][1];
-
-      console.log(
-        `Creating project based off of template ${cleanSelectedTemplateName}...`
-      );
-
-      copyTemplateToDir(selectedTemplate, projectName);
+      const selectedTemplate = displayTemplateNames[selectedTemplateIdx][1];
+      createProjectFromTemplate(projectName, selectedTemplate);
     } else {
-      console.log("Creating project without template...");
-
-      createEmptyProject(projectName);
+      createProjectWithoutTemplate(projectName);
     }
-
-    initializeGitRepository(projectName);
-
-    console.log(`Created project "${projectName}"!`);
   }
 };
 
