@@ -56,11 +56,12 @@ const newProject = async (argv) => {
     selectedTemplate = templateNames[selectedTemplateIdx][1];
 
     console.log(`Creating project based off of template ${cleanSelectedTemplateName}...`);
+
+    copyTemplateToDir(selectedTemplate, projectName);
   } else {
     console.log("Creating project without template...");
   }
 
-  copyTemplateToDir(selectedTemplate, projectName);
   initializeGitRepository(projectName);
 
   console.log(`Created project "${projectName}"!`);
