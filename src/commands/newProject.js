@@ -31,6 +31,11 @@ const createEmptyProject = (name) => {
   fs.mkdirSync(`${name}/lambdas`);
 };
 
+const cleanupAndCapitalize = (str) => {
+  const cleaned = str.replace(/[-_]/g,' ');
+  return capitalize(cleaned);
+};
+
 const newProject = async (argv) => {
   const projectName = argv._[1];
 
@@ -50,8 +55,7 @@ const newProject = async (argv) => {
 
   // has structure of [["Example workflow", "example-workflow"], ...]
   const templateNames = fs.readdirSync(`${configDir}/templates`).map((name) => {
-    const cleanedName = name.replace(/[-_]/g,' ');
-    return [capitalize(cleanedName), name];
+    return [cleanupAndCapitalize(name), name];
   });
 
   const selectedTemplateIdx = await selectTemplateIdx(templateNames);
