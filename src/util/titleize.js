@@ -2,23 +2,23 @@ const capitalize = require("./capitalize");
 
 const special = new Set();
 const specialArray = [
-  'and',
-  'or',
-  'to',
-  'of',
-  'for',
-  'in',
-  'the',
-  'a',
-  'an',
-  'nor',
-  'but',
+  "and",
+  "or",
+  "to",
+  "of",
+  "for",
+  "in",
+  "the",
+  "a",
+  "an",
+  "nor",
+  "but",
 ];
 
 specialArray.forEach((word) => special.add(word));
 
 const titleize = (str) => {
-  if (str === '') return '';
+  if (str === "") return "";
 
   const words = str.split(/\s/);
   if (words.length === 1) {
@@ -39,7 +39,7 @@ const titleize = (str) => {
 
   resultWords.push(capitalize(lastWord));
 
-  return resultWords.join(' ');
+  return resultWords.join(" ");
 };
 
 module.exports = titleize;

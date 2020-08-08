@@ -1,5 +1,5 @@
-const os = require('os');
+const os = require("os");
 const homedir = os.homedir();
-const configDir = '.maestro';
+const configDir = ".maestro";
 
 module.exports = `${homedir}/${configDir}`;
