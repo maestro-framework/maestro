@@ -13,6 +13,9 @@ const cleanupAndCapitalize = (str) => {
   return capitalize(cleaned);
 };
 
+// TODO: add support for a `--no-template`/`-n` boolean flag
+// and a `--template=`/`--template`/`-t` string flag,
+
 const newProject = async (argv) => {
   const projectName = argv._[1];
 
