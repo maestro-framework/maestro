@@ -13,7 +13,7 @@ To use, you must have the [AWS CLI][aws-cli] installed and set up.
 
 1. Clone this repository (`git clone https://github.com/maestro-framework/maestro.git /path/to/maestro`)
 2. Install the npm package globally (`sudo npm -g install /path/to/maestro`)
-3. Create a new project with `maestro new [-n|--no-template|--template=<template>|--template <template>] <projectname>`
+3. Create a new project with `maestro new [-n|--no-template|-t <template>|--template=<template>|--template <template>] <projectname>`
 6. Create a file called `aws_account_info.json` under `~/.maestro/` that looks like this (change info to your specific needs):
    ```
    {
