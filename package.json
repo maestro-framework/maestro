@@ -16,7 +16,7 @@
     "postinstall": "./bin/welcome-message.sh"
   },
   "man": [
-    "doc/maestro.1.gz"
+    "doc/man/maestro.1.gz"
   ],
   "repository": {
     "type": "git",
