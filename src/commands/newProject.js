@@ -2,16 +2,11 @@ const childProcess = require("child_process");
 const fs = require("fs");
 
 const configDir = require("../util/configDir");
-const capitalize = require("../util/capitalize");
 const initializeGitRepository = require("../util/initializeGitRepository");
 const copyTemplateToDir = require("../util/copyTemplateToDir");
 const selectTemplateIdx = require("../util/selectTemplateIdx");
 const createEmptyProject = require("../util/createEmptyProject");
-
-const cleanupAndCapitalize = (str) => {
-  const cleaned = str.replace(/[-_]/g, " ");
-  return capitalize(cleaned);
-};
+const cleanupAndCapitalize = require("../util/cleanupAndCapitalize");
 
 const createProjectFromTemplate = (projectName, templateName) => {
   const cleanSelectedTemplateName = cleanupAndCapitalize(templateName);
