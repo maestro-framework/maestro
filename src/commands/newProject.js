@@ -32,7 +32,10 @@ const newProject = async (argv) => {
     createProjectWithoutTemplate(projectName);
   } else {
     // has structure of [["Example workflow", "example-workflow"], ...]
-    const displayTemplateNames = templateNames.map((name) => [cleanupAndCapitalize(name), name]);
+    const displayTemplateNames = templateNames.map((name) => [
+      cleanupAndCapitalize(name),
+      name,
+    ]);
 
     const selectedTemplateIdx = await selectTemplateIdx(displayTemplateNames);
 
