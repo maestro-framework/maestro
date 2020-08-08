@@ -1,17 +1,20 @@
 .TH MAESTRO 1 2020-08-08 "Maestro v1.0.0"
 
 .SH NAME
+
 maestro \- a framework for working with AWS Step Functions
 
 .SH SYNOPSIS
 
 .PP
 .B maestro
-.I [help|\-h|\-\-help]
+[\fBhelp\fR|\fB\-h\fR|\fB\-\-help\fR]
 
 .PP
 .B maestro new
-[\fB\-n\fR|\fB\-\-no\-template\fR|\fB\-t\fR \fItemplate_name\fR|\fB\-\-template=\fItemplate_name\fR|\fB\-\-template\fR \fItemplate_name\fR]
+[\fB\-n\fR|\fB\-\-no\-template\fR|\fB\-t\fR 
+\fItemplate_name\fR|\fB\-\-template=\fItemplate_name\fR|\fB\-\-template\fR 
+\fItemplate_name\fR]
 
 .PP
 .B maestro deploy
@@ -19,9 +22,26 @@ maestro \- a framework for working with AWS Step Functions
 .PP
 .B maestro teardown
 [\fB\-f\fR|\fB\-\-force\fR]
-[\fB\-\-roles=\fIrole1\fR[,\fIrole2\fR...\fI]|\fB\-\-roles\fR \fIrole1\fR[,\fIrole2\fR...\fI]]
+[\fB\-\-roles=\fIrole1\fR[,\fIrole2\fR...]|\fB\-\-roles\fR 
+\fIrole1\fR[,\fIrole2\fR...]]
 
 .SH DESCRIPTION
+
+.PP
+Maestro is an open-source easy-to-use framework for quickly bootstrapping, 
+deploying, and rapidly iterating your serverless orchestration (hence the 
+name) workflows and applications using
+.UR https://nodejs.org/
+Node.js\*R
+.UE
+and
+.UR https://aws.amazon.com/step-functions
+AWS Step Functions
+.UE .
+Maestro makes it easy to get started developing your serverless 
+orchestration workflows, makes deploying a breeze, and provides a method 
+for quick re-deploys, helping you out not just in the initial phase of 
+your project, but in the ongoing maitenence and iteration as well.
 
 .SH OPTIONS
 
