@@ -1,5 +1,8 @@
 const fs = require("fs");
 
+const configDir = require("../util/configDir");
+const capitalize = require("../util/capitalize");
+
 const newProject = (argv) => {
   const projectName = argv._[1];
 
@@ -16,6 +19,14 @@ const newProject = (argv) => {
     );
     return;
   }
+
+  // has structure of [["Example workflow", "example-workflow"], ...]
+  const templateNames = fs.readdirSync(`${configDir}/templates`).map((name) => {
+    const cleanedName = name.replace(/[-_]/,' ');
+    return [capitalize(cleanedName), name];
+  });
+
+  console.log('Template names:', templateNames);
 
   console.log(`Created project "${projectName}"!`);
 };
