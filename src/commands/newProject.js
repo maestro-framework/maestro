@@ -25,6 +25,12 @@ const selectTemplateIdx = async (templateNames) => {
   }
 };
 
+const createEmptyProject = (name) => {
+  fs.writeFileSync(`${name}/README.md`,'');
+  fs.writeFileSync(`${name}/definition.asl.json`,'{}');
+  fs.mkdirSync(`${name}/lambdas`);
+};
+
 const newProject = async (argv) => {
   const projectName = argv._[1];
 
@@ -60,6 +66,8 @@ const newProject = async (argv) => {
     copyTemplateToDir(selectedTemplate, projectName);
   } else {
     console.log("Creating project without template...");
+
+    createEmptyProject(projectName);
   }
 
   initializeGitRepository(projectName);
