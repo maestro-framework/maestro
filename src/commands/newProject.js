@@ -1,3 +1,4 @@
+const childProcess = require("child_process");
 const fs = require("fs");
 
 const configDir = require("../util/configDir");
@@ -20,6 +21,10 @@ const selectTemplateIdx = async (templateNames) => {
   } else {
     return selectedIdx;
   }
+};
+
+const copyTemplateToProject = (templateName, projectName) => {
+  childProcess.execSync(`cp -r ${configDir}/templates/${templateName}/* ${projectName}`);
 };
 
 const newProject = async (argv) => {
@@ -56,6 +61,8 @@ const newProject = async (argv) => {
   } else {
     console.log("Creating project without template...");
   }
+
+  copyTemplateToProject(selectedTemplate, projectName);
 
   console.log(`Created project "${projectName}"!`);
 };
