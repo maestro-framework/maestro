@@ -5,8 +5,9 @@
 cat <<'EOF'
 +--------------------------------------------------------------+
 | Welcome to Maestro!                                          |
-| Run `maestro setup` to configure Maestro for first-time use. |
-| Or run `maestro help` for instructions for use.              |
+| Run `maestro config` to configure Maestro for first-time use.|
+| Or see the documentation for instructions for use.           |
+|   https://github.com/maestro-framework/maestro               |
 | Happy coding!                                                |
 +--------------------------------------------------------------+
 

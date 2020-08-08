@@ -10,6 +10,7 @@ const argv = minimist(process.argv.slice(2), {
 });
 const deploy = require('../src/commands/deploy');
 const teardown = require('../src/commands/teardown');
+const config = require('../src/commands/config');
 
 switch(argv._[0]) {
   case 'deploy':
@@ -17,6 +18,9 @@ switch(argv._[0]) {
     break;
   case 'teardown':
     teardown(argv);
+    break;
+  case 'config';
+    config();
     break;
   default:
     console.log(`See documentation for commands (i.e. deploy, teardown).\n https://github.com/maestro-framework/maestro`);
