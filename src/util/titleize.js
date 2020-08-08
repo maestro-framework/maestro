@@ -21,6 +21,10 @@ const titleize = (str) => {
   if (str === '') return '';
 
   const words = str.split(/\s/);
+  if (words.length === 1) {
+    return capitalize(words[0]);
+  }
+
   const middleWords = words.slice(1, words.length - 1);
   const firstWord = words[0];
   const lastWord = words[words.length - 1];

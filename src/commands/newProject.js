@@ -46,7 +46,7 @@ const cleanupAndTitleize = (str) => {
 };
 
 const createEmptyProject = (name) => {
-  fs.writeFileSync(`${name}/README.md`, `# ${cleanupAndTitleize(name)}\n`);
+  fs.writeFileSync(`${name}/README.md`, `# ${cleanupAndTitleize(name)}\n\n`);
   fs.writeFileSync(`${name}/definition.asl.json`, "{}");
   fs.mkdirSync(`${name}/lambdas`);
 };
