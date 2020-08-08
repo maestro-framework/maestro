@@ -2,33 +2,10 @@ const childProcess = require("child_process");
 const fs = require("fs");
 
 const configDir = require("../util/configDir");
-const initializeGitRepository = require("../util/initializeGitRepository");
-const copyTemplateToDir = require("../util/copyTemplateToDir");
 const selectTemplateIdx = require("../util/selectTemplateIdx");
-const createEmptyProject = require("../util/createEmptyProject");
 const cleanupAndCapitalize = require("../util/cleanupAndCapitalize");
-
-const createProjectFromTemplate = (projectName, templateName) => {
-  const cleanSelectedTemplateName = cleanupAndCapitalize(templateName);
-
-  console.log(
-    `Creating project based off of template ${cleanSelectedTemplateName}...`
-  );
-
-  copyTemplateToDir(templateName, projectName);
-  initializeGitRepository(projectName);
-
-  console.log(`Created project "${projectName}"!`);
-};
-
-const createProjectWithoutTemplate = (projectName) => {
-  console.log("Creating project without template...");
-
-  createEmptyProject(projectName);
-  initializeGitRepository(projectName);
-
-  console.log(`Created project "${projectName}"!`);
-};
+const createProjectFromTemplate = require("../util/createProjectFromTemplate");
+const createProjectWithoutTemplate = require("../util/createProjectWithoutTemplate");
 
 const newProject = async (argv) => {
   const projectName = argv._[1];
