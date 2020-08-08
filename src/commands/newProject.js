@@ -3,25 +3,14 @@ const fs = require("fs");
 
 const configDir = require("../util/configDir");
 const capitalize = require("../util/capitalize");
-const titleize = require("../util/titleize");
 const initializeGitRepository = require("../util/initializeGitRepository");
 const copyTemplateToDir = require("../util/copyTemplateToDir");
 const selectTemplateIdx = require("../util/selectTemplateIdx");
+const createEmptyProject = require("../util/createEmptyProject");
 
 const cleanupAndCapitalize = (str) => {
   const cleaned = str.replace(/[-_]/g, " ");
   return capitalize(cleaned);
-};
-
-const cleanupAndTitleize = (str) => {
-  const cleaned = str.replace(/[-_]/g, " ");
-  return titleize(cleaned);
-};
-
-const createEmptyProject = (name) => {
-  fs.writeFileSync(`${name}/README.md`, `# ${cleanupAndTitleize(name)}\n\n`);
-  fs.writeFileSync(`${name}/definition.asl.json`, "{}");
-  fs.mkdirSync(`${name}/lambdas`);
 };
 
 const newProject = async (argv) => {
