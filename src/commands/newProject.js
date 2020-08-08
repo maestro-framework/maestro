@@ -27,6 +27,10 @@ const copyTemplateToProject = (templateName, projectName) => {
   childProcess.execSync(`cp -r ${configDir}/templates/${templateName}/* ${projectName}`);
 };
 
+const initializeProjectGitRepository = (projectName) => {
+  childProcess.execSync(`git init ${projectName}`);
+};
+
 const newProject = async (argv) => {
   const projectName = argv._[1];
 
@@ -63,6 +67,7 @@ const newProject = async (argv) => {
   }
 
   copyTemplateToProject(selectedTemplate, projectName);
+  initializeProjectGitRepository(projectName);
 
   console.log(`Created project "${projectName}"!`);
 };
