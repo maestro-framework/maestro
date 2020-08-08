@@ -33,6 +33,18 @@ const newProject = async (argv) => {
     return;
   }
 
+  if (argv.n || argv.template === false) {
+    console.log("Creating project without template...");
+
+    createEmptyProject(projectName);
+
+    initializeGitRepository(projectName);
+
+    console.log(`Created project "${projectName}"!`);
+
+    return;
+  }
+
   // has structure of [["Example workflow", "example-workflow"], ...]
   const templateNames = fs.readdirSync(`${configDir}/templates`).map((name) => {
     return [cleanupAndCapitalize(name), name];

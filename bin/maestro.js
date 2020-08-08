@@ -1,16 +1,16 @@
 #!/usr/bin/env node
 
+const deploy = require("../src/commands/deploy");
+const teardown = require("../src/commands/teardown");
+const newProject = require("../src/commands/newProject");
 const minimist = require("minimist");
 const argv = minimist(process.argv.slice(2), {
-  boolean: ["f", "force"],
-  string: ["roles"],
+  boolean: ["f", "force", "n"],
+  string: ["roles", "template"],
   default: {
     roles: "",
   },
 });
-const deploy = require("../src/commands/deploy");
-const teardown = require("../src/commands/teardown");
-const newProject = require("../src/commands/newProject");
 
 switch (argv._[0]) {
   case "deploy":
