@@ -41,7 +41,7 @@ const newProject = async (argv) => {
 
   // has structure of [["Example workflow", "example-workflow"], ...]
   const templateNames = fs.readdirSync(`${configDir}/templates`).map((name) => {
-    const cleanedName = name.replace(/[-_]/,' ');
+    const cleanedName = name.replace(/[-_]/g,' ');
     return [capitalize(cleanedName), name];
   });
 
