@@ -2,8 +2,27 @@ const fs = require("fs");
 
 const configDir = require("../util/configDir");
 const capitalize = require("../util/capitalize");
+const promptAsync = require("../util/promptAsync");
 
-const newProject = (argv) => {
+const selectTemplateIdx = async (templateNames) => {
+  console.log('Select a template to base your project off of (defaults to no template)');
+  console.log('-----------------------------------------------------------------------');
+
+  templateNames.forEach(([prettyName, rawName], idx) => {
+    console.log(`${`[${idx + 1}]`.padStart(5)} ${prettyName} (${rawName})`);
+  });
+
+  console.log('-----------------------------------------------------------------------');
+  const selectedIdx = Number(await promptAsync(`Select template 1-${templateNames.length}`, 'none')) - 1;
+
+  if (Number.isNaN(selectedIdx) || !templateNames[selectedIdx]) {
+    return -1;
+  } else {
+    return selectedIdx;
+  }
+};
+
+const newProject = async (argv) => {
   const projectName = argv._[1];
 
   if (!projectName) {
@@ -26,7 +45,17 @@ const newProject = (argv) => {
     return [capitalize(cleanedName), name];
   });
 
-  console.log('Template names:', templateNames);
+  const selectedTemplateIdx = await selectTemplateIdx(templateNames);
+  let selectedTemplate;
+
+  if (selectedTemplateIdx !== -1) {
+    const cleanSelectedTemplateName = templateNames[selectedTemplateIdx][0];
+    selectedTemplate = templateNames[selectedTemplateIdx][1];
+
+    console.log(`Creating project based off of template ${cleanSelectedTemplateName}...`);
+  } else {
+    console.log("Creating project without template...");
+  }
 
   console.log(`Created project "${projectName}"!`);
 };
