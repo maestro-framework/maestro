@@ -8,15 +8,24 @@ const initializeGitRepository = require("../util/initializeGitRepository");
 const copyTemplateToDir = require("../util/copyTemplateToDir");
 
 const selectTemplateIdx = async (templateNames) => {
-  console.log('Select a template to base your project off of (defaults to no template)');
-  console.log('-----------------------------------------------------------------------');
+  console.log(
+    "Select a template to base your project off of (defaults to no template)"
+  );
+  console.log(
+    "-----------------------------------------------------------------------"
+  );
 
   templateNames.forEach(([prettyName, rawName], idx) => {
     console.log(`${`[${idx + 1}]`.padStart(5)} ${prettyName} (${rawName})`);
   });
 
-  console.log('-----------------------------------------------------------------------');
-  const selectedIdx = Number(await promptAsync(`Select template 1-${templateNames.length}`, 'none')) - 1;
+  console.log(
+    "-----------------------------------------------------------------------"
+  );
+  const selectedIdx =
+    Number(
+      await promptAsync(`Select template 1-${templateNames.length}`, "none")
+    ) - 1;
 
   if (Number.isNaN(selectedIdx) || !templateNames[selectedIdx]) {
     return -1;
@@ -26,13 +35,13 @@ const selectTemplateIdx = async (templateNames) => {
 };
 
 const createEmptyProject = (name) => {
-  fs.writeFileSync(`${name}/README.md`,'');
-  fs.writeFileSync(`${name}/definition.asl.json`,'{}');
+  fs.writeFileSync(`${name}/README.md`, "");
+  fs.writeFileSync(`${name}/definition.asl.json`, "{}");
   fs.mkdirSync(`${name}/lambdas`);
 };
 
 const cleanupAndCapitalize = (str) => {
-  const cleaned = str.replace(/[-_]/g,' ');
+  const cleaned = str.replace(/[-_]/g, " ");
   return capitalize(cleaned);
 };
 
@@ -65,7 +74,9 @@ const newProject = async (argv) => {
     const cleanSelectedTemplateName = templateNames[selectedTemplateIdx][0];
     selectedTemplate = templateNames[selectedTemplateIdx][1];
 
-    console.log(`Creating project based off of template ${cleanSelectedTemplateName}...`);
+    console.log(
+      `Creating project based off of template ${cleanSelectedTemplateName}...`
+    );
 
     copyTemplateToDir(selectedTemplate, projectName);
   } else {
