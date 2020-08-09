@@ -1,9 +1,10 @@
 const initializeGitRepository = require("../util/initializeGitRepository");
 const copyTemplateToDir = require("../util/copyTemplateToDir");
-const cleanupAndCapitalize = require("../util/cleanupAndCapitalize");
+const capitalize = require("../util/capitalize");
+const cleanupProjectName = require("../util/cleanupProjectName");
 
 const createProjectFromTemplate = (projectName, templateName) => {
-  const cleanSelectedTemplateName = cleanupAndCapitalize(templateName);
+  const cleanSelectedTemplateName = capitalize(cleanupProjectName(templateName));
 
   console.log(
     `Creating project based off of template ${cleanSelectedTemplateName}...`
