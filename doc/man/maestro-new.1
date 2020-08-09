@@ -12,36 +12,33 @@ maestro-new \- create a new maestro project
 .SH DESCRIPTION
 
 .PP
-This command creates a new Maestro project with the given project name. When
+This command creates a new Maestro project with the given project name.
+When
 .B maestro new
-is executed, the user is prompted with a list of all the templates to base their new project off of:
-
-.PP
-.RS
-.EX
-.EE
-.RE
+is executed,
+the user is prompted with a list of all the templates to
+base their new project off of.
 
 .PP
 If the user simply presses
 .I <return>
-at the prompt or enters an invalid input, the new project is created without influence of a template.
+at the prompt or enters an invalid input,
+the new project is created without influence of a template.
 
 .SH OPTIONS
 
 .TP
 .BR \-n ", " \-\-no\-template
-Creates the project without the influence of a template, similar to if the user simply pressed
+Creates the project without the influence of a template,
+similar to if the user simply pressed
 .I <return>
 at the prompt or entered an invalid input.
 
 .TP
 \fB\-t\fR \fItemplate_name\fR, \fB\-\-template=\fItemplate_name\fR, \fB\-\-template\fR \fItemplate_name\fR
-Allows the user to manually specify the name of a template through a command line argument, rather than have to choose from a prompt.
+Allows the user to manually specify the name of a template through a command line argument rather than have to choose from a prompt.
 
 .SH FILES
-
-.SH NOTES
 
 .SH BUGS
 
@@ -52,6 +49,23 @@ the GitHub Issues page
 .UE .
 
 .SH EXAMPLE
+
+.SS Template prompt
+
+.PP
+.RS
+.EX
+$ \fBmaestro new foobar\fR
+Select a template to base your project off of (defaults to no template)
+-----------------------------------------------------------------------
+  [1] Example workflow (example-workflow)
+  [2] Microservice routing (microservice-routing)
+  [3] Query third party api (query-third-party-api)
+  [4] Video transcoding (video-transcoding)
+-----------------------------------------------------------------------
+Select template 1-4 [none] 
+.EE
+.RE
 
 .SH SEE ALSO
 
