@@ -36,6 +36,7 @@ To use, you must have the [AWS CLI][aws-cli] installed and set up.
   - `aws-sdk`
 - `zip` command line utility
 - [AWS CLI][aws-cli]
+- `git` version control system
 
 ## Development Assumptions
 
