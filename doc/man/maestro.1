@@ -8,22 +8,8 @@ maestro \- a framework for working with AWS Step Functions
 
 .PP
 .B maestro
-[\fBhelp\fR|\fB\-h\fR|\fB\-\-help\fR]
-
-.PP
-.B maestro new
-[\fB\-n\fR|\fB\-\-no\-template\fR|\fB\-t\fR 
-\fItemplate_name\fR|\fB\-\-template=\fItemplate_name\fR|\fB\-\-template\fR 
-\fItemplate_name\fR]
-
-.PP
-.B maestro deploy
-
-.PP
-.B maestro teardown
-[\fB\-f\fR|\fB\-\-force\fR]
-[\fB\-\-roles=\fIrole1\fR[,\fIrole2\fR...]|\fB\-\-roles\fR 
-\fIrole1\fR[,\fIrole2\fR...]]
+[\fIoptions\fR...]
+.I command
 
 .SH DESCRIPTION
 
@@ -43,11 +29,25 @@ orchestration workflows, makes deploying a breeze, and provides a method
 for quick re-deploys, helping you out not just in the initial phase of 
 your project, but in the ongoing maitenence and iteration as well.
 
-.SH OPTIONS
-
-.SH ENVIRONMENT
-
 .SH FILES
+
+.PP
+Maestro uses
+.I ~/.maestro/
+as a general config directory as well as place to hold maestro-specific files, such as templates. 
+
+.PP
+The
+.I ~/.maestro/aws_account_info.json
+file is used for configuration of AWS for deployment, and has 2 main fields:
+
+.TP
+\fB"account_number"\fR
+your AWS IAM account number to deploy under (e.g., \fI"12345689012"\fR)
+
+.TP
+\fB"region"\fR
+the AWS region you wish to deploy under (e.g., \fI"us-east-2"\fR)
 
 .SH NOTES
 
@@ -56,3 +56,8 @@ your project, but in the ongoing maitenence and iteration as well.
 .SH EXAMPLE
 
 .SH SEE ALSO
+
+.BR maestro-help (1),
+.BR maestro-deploy (1),
+.BR maestro-new (1),
+.BR maestro-teardown (1)

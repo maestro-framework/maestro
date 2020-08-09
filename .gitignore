@@ -5,4 +5,4 @@ __MACOSX
 .env
 yarn.*
 *.log
-doc/*.1.gz
+doc/man/*.1.gz
