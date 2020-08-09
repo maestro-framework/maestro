@@ -5,7 +5,7 @@ AWS.config.logger = console;
 
 const apiVersion = "latest";
 const region = JSON.parse(
-  fs.readFileSync(homedir + "/.config/maestro/aws_account_info.json")
+  fs.readFileSync(homedir + "/.maestro/aws_account_info.json")
 ).region;
 
 const iam = new AWS.IAM();
