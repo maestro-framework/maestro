@@ -1,5 +1,5 @@
-const initializeGitRepository = require("../util/initializeGitRepository");
-const createEmptyProject = require("../util/createEmptyProject");
+const initializeGitRepository = require("./initializeGitRepository");
+const createEmptyProject = require("./createEmptyProject");
 
 const createProjectWithoutTemplate = (projectName) => {
   console.log("Creating project without template...");

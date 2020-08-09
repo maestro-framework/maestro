@@ -1,4 +1,4 @@
-const promptAsync = require("../util/promptAsync");
+const promptAsync = require("./promptAsync");
 
 const selectTemplateIdx = async (templateNames) => {
   console.log(
