@@ -14,7 +14,7 @@ maestro \- a framework for working with AWS Step Functions
 .SH DESCRIPTION
 
 .PP
-Maestro is an open-source easy-to-use framework for quickly bootstrapping, 
+Maestro is an open-source easy-to-use framework for quickly bootstrapping,
 deploying,
 and rapidly iterating your serverless orchestration
 (hence the name)
@@ -28,7 +28,7 @@ AWS Step Functions
 .UE .
 
 .PP
-Maestro makes it easy to get started developing your serverless 
+Maestro makes it easy to get started developing your serverless
 orchestration workflows,
 makes deploying a breeze,
 and provides a method for quick re-deploys,
@@ -60,8 +60,10 @@ displays help about Maestro as a whole.
 .PP
 Maestro uses
 .I ~/.maestro/
-as a general config directory as well as place to hold
-Maestro-specific files, such as templates. 
+as a general configuration directory as well as place to hold Maestro-\
+specific files and directories such as templates configuration files.
+
+.SS AWS account configuration
 
 .PP
 The
@@ -77,11 +79,47 @@ your AWS IAM account number to deploy under (e.g., \fI"12345689012"\fR).
 \fB"region"\fR
 the AWS region you wish to deploy under (e.g., \fI"us-east-2"\fR).
 
+.PP
+See
+.BR maestro-config (1),
+for directions on setting up this configuration file.
+
+.SS Project templates
+
+.PP
+The
+.I ~/.maestro/templates/
+directory holds templates of custom and default example project structures\
+/workflows.
+See
+.BR maestro-get-templates (1)
+and
+.BR maestro-new (1)
+for more details
+
 .SH NOTES
+
+.PP
+This project is still under heavy development, so keep tuned ;).
 
 .SH BUGS
 
+.PP
+While there are no immediately obvious bugs
+(because this project is still in the prototype phase),
+please submit bug reports to
+.UR https://github.com/maestro-framework/maestro/issues
+the GitHub Issues page
+.UE .
+
+
 .SH EXAMPLE
+
+.PP
+For specific examples, see the
+.B SYNOPSIS
+section for each manual page listed under
+\fBSEE ALSO\fR.
 
 .SH SEE ALSO
 
