@@ -14,14 +14,15 @@ const config = require('../src/commands/config');
 const getTemplates = require('../src/commands/getTemplates');
 
 switch(argv._[0]) {
+  case 'config':
+    config();
+    break;
   case 'deploy':
     deploy();
     break;
   case 'teardown':
     teardown(argv);
     break;
-  case 'config';
-    config();
   // TODO: perhaps `maestro get-templates` should be called as part of the `maestro config` command? If so, should we still leave `get-templates` as a top level sub-command?
   case 'get-templates':
     getTemplates();
