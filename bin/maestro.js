@@ -8,16 +8,18 @@ const argv = minimist(process.argv.slice(2), {
     roles: "",
   },
 });
-const deploy = require('../src/commands/deploy');
-const teardown = require('../src/commands/teardown');
+const deploy = require("../src/commands/deploy");
+const teardown = require("../src/commands/teardown");
 
-switch(argv._[0]) {
-  case 'deploy':
+switch (argv._[0]) {
+  case "deploy":
     deploy();
     break;
-  case 'teardown':
+  case "teardown":
     teardown(argv);
     break;
   default:
-    console.log(`See documentation for commands (i.e. deploy, teardown).\n https://github.com/maestro-framework/maestro`);
+    console.log(
+      `See man pages for commands (i.e. maestro(1), maestro-deploy(1), maestro-teardown(1), etc.)`
+    );
 }
