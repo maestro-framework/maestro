@@ -15,8 +15,10 @@ maestro \- a framework for working with AWS Step Functions
 
 .PP
 Maestro is an open-source easy-to-use framework for quickly bootstrapping, 
-deploying, and rapidly iterating your serverless orchestration (hence the 
-name) workflows and applications using
+deploying,
+and rapidly iterating your serverless orchestration
+(hence the name)
+workflows and applications using
 .UR https://nodejs.org/
 Node.js\*R
 .UE
@@ -24,30 +26,56 @@ and
 .UR https://aws.amazon.com/step-functions
 AWS Step Functions
 .UE .
+
+.PP
 Maestro makes it easy to get started developing your serverless 
-orchestration workflows, makes deploying a breeze, and provides a method 
-for quick re-deploys, helping you out not just in the initial phase of 
-your project, but in the ongoing maitenence and iteration as well.
+orchestration workflows,
+makes deploying a breeze,
+and provides a method for quick re-deploys,
+helping you out not just in the initial phase of your project,
+but in the ongoing maitenence and iteration as well.
+
+.SH OPTIONS
+
+.PP
+The options that Maestro accepts depends heavily on the
+sub-command that Maestro is invoked with
+(see the
+.B COMMANDS
+section for a list of all the commands).
+
+.PP
+By itself,
+.B maestro
+has one option:
+
+.TP
+.BR -h , " --help"
+displays help about Maestro as a whole.
+
+.SH COMMANDS
 
 .SH FILES
 
 .PP
 Maestro uses
 .I ~/.maestro/
-as a general config directory as well as place to hold maestro-specific files, such as templates. 
+as a general config directory as well as place to hold
+Maestro-specific files, such as templates. 
 
 .PP
 The
 .I ~/.maestro/aws_account_info.json
-file is used for configuration of AWS for deployment, and has 2 main fields:
+file is used for configuration of AWS for deployment,
+and has 2 main fields:
 
 .TP
 \fB"account_number"\fR
-your AWS IAM account number to deploy under (e.g., \fI"12345689012"\fR)
+your AWS IAM account number to deploy under (e.g., \fI"12345689012"\fR).
 
 .TP
 \fB"region"\fR
-the AWS region you wish to deploy under (e.g., \fI"us-east-2"\fR)
+the AWS region you wish to deploy under (e.g., \fI"us-east-2"\fR).
 
 .SH NOTES
 
