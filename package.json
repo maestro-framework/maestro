@@ -20,6 +20,7 @@
     "doc/man/maestro-deploy.1.gz",
     "doc/man/maestro-help.1.gz",
     "doc/man/maestro-new.1.gz",
+    "doc/man/maestro-get-templates.1.gz",
     "doc/man/maestro-teardown.1.gz"
   ],
   "repository": {

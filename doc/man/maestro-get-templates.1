@@ -1,0 +1,33 @@
+.TH MAESTRO-GET-TEMPLATES 1 2020-08-08 "Maestro v1.0.0"
+
+.SH NAME
+
+maestro-get-templates \- fetch and install the default maestro templates
+
+.SH SYNOPSIS
+
+.PP
+.B maestro get-templates
+
+.SH DESCRIPTION
+
+.PP
+Fetches the
+.UR https://github.com/maestro-framework/maestro-templates
+Maestro default templates
+.UE from git and installs them on the user's local machine.
+
+.PP
+If the templates are already installed, this simply notifies the user.
+
+.SH FILES
+
+.PP
+Like
+.BR maestro (1),
+this uses the special maestro directory located at
+.BR ~/.maestro/ .
+The templates that
+.BR maestro-get-templates (1)
+installs are located in the
+.BR "~/.maestro/templates/ " directory.
