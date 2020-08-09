@@ -2,27 +2,92 @@
 
 .SH NAME
 
+.PP
 maestro-teardown \- teardown an existing maestro project
 
 .SH SYNOPSIS
 
+.PP
 .B maestro teardown
-[\fB\-f\fR|\fB\-\-force\fR]
-[\fB\-\-roles=\fIrole1\fR[,\fIrole2\fR...]|\fB\-\-roles\fR
-\fIrole1\fR[,\fIrole2\fR...]]
+.RI [ options " ...]"
 
 .SH DESCRIPTION
 
+.PP
+Executing this command with your working directory
+being the root of some Maestro project will tear down
+the associated resources from Amazon Web Services.
+The associated resources are as follows:
+
+.IP \(bu
+All AWS Lambdas uploaded from the project-local
+.I lambdas
+directory.
+See
+.BR maestro-deploy (1) 
+for more detail.
+
+.IP \(bu
+The AWS Step Functions state machine definition created from the project-local
+.I definition.asl.json
+definition file.
+See
+.BR maestro-deploy (1) 
+for more detail.
+
+.IP \(bu
+Any AWS IAM roles specified via an optional flag.
+See the
+.B OPTIONS
+section for more detail.
+
 .SH OPTIONS
 
+.TP
+.BR \-f ", " \-\-force
+Do not prompt for confirmation.
+
+.TP
+\fB\-\-roles=\fIrole1\fR[,\fIrole2\fR...],\
+ \fB\-\-roles\fR \fIrole1\fR[,\fIrole2\fR...]
+Specify the AWS IAM roles by role name to be deleted
+in addition to the state machines and functions.
+
 .SH NOTES
+
+.PP
+Assuming your working directory has the form of
+.I /path/to/project-name
+(and therefore your project has the name of \fIproject-name\fR),
+when
+.B maestro teardown
+is executed, a prompt appears of this form:
+
+.PP
+.RS
+.EX
+Are you sure you want to delete project-name? [y/N] 
+.EE
+.RE
 
 .SH BUGS
 
 .SH EXAMPLE
 
+.PP
+Assuming there is a Maestro project located at the path \fI/path/to/maestro-project\fR:
+
+.PP
+.RS
+.EX
+$ \fBcd /path/to/maestro-project\fR
+$ \fBmaestro teardown --roles=maestro_lambda,maestro_step_functions --force
+.EE
+.RE
+
 .SH SEE ALSO
 
+.PP
 .BR maestro (1),
 .BR maestro-help (1),
 .BR maestro-deploy (1),
