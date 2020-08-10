@@ -14,7 +14,7 @@ maestro-new \- create a new maestro project
 .PP
 This command creates a new Maestro project with the given project name.
 When
-.B maestro new
+.I maestro new
 is executed,
 the user is prompted with a list of all the templates to
 base their new project off of.
@@ -36,14 +36,156 @@ at the prompt or entered an invalid input.
 
 .TP
 \fB\-t\fR \fItemplate_name\fR, \fB\-\-template=\fItemplate_name\fR, \fB\-\-template\fR \fItemplate_name\fR
-Allows the user to manually specify the name of a template through a command line argument rather than have to choose from a prompt.
+Allows the user to manually specify the name of a template through a
+command line argument rather than have to choose from a prompt.
 
 .SH FILES
+
+.SS Structure of a template
+
+.PP
+All subdirectories located under
+.I ~/.maestro/templates/
+are considered templates, and are listed in the template prompt
+(see \fBEXAMPLE\fR).
+The format for template directories is shown as a tree structure:
+
+.PP
+.RS
+.EX
+name-of-template/
+├── definition.asl.json
+├── lambdas
+│   ├── lambda1.js
+│   ├── lambda2.js
+│   ├── lambda3.js
+│   └── lambda4.js
+└── README.md
+.EE
+.RE
+
+.PP
+Therefore, the tree structure of
+.I ~/.maestro/templates/
+should look something like this:
+
+.PP
+.RS
+.EX
+templates/
+├── name-of-template-1/
+│   ├── definition.asl.json
+│   ├── lambdas
+│   │   ├── lambda1.js
+│   │   ├── lambda2.js
+│   │   ├── lambda3.js
+│   │   └── lambda4.js
+│   └── README.md
+├── name-of-template-2/
+│   ├── definition.asl.json
+│   ├── lambdas/
+│   │   ├── lambda1.js
+│   │   ├── lambda2.js
+│   │   ├── lambda3.js
+│   │   └── lambda4.js
+│   └── README.md
+└── name-of-template-3/
+    ├── definition.asl.json
+    ├── lambdas/
+    │   └── lambda1.js
+    └── README.md
+.EE
+.RE
+
+.PP
+For more information on the structure of a Maestro project, see the
+.B FILES
+section of
+.BR maestro-deploy (1).
+
+.SS Project created without template
+
+.PP
+Though a project can be created without the influence
+of any particular template
+(e.g., with the
+.IR \-\-no-template / \-n
+flags),
+it will still be created with some structure as a starting point:
+
+.PP
+.RS
+.EX
+name-of-project/
+├── definition.asl.json
+├── lambdas/
+└── README.md
+.EE
+.RE
+
+.PP
+.I README.md
+contains the following where
+.I <titleized_project_name>
+is the name of the project with all hyphens and underscores replaced with
+spaces and the whole string converted to title case:
+
+.PP
+.RS
+.EX
+# \fI<titleized_project_name>\fR
+.EE
+.RE
+
+.PP
+.I definition.asl.json
+contains only this:
+
+.PP
+.RS
+.EX
+{}
+.EE
+.RE
+
+.PP
+And
+.I lambdas/
+is an empty directory with nothing.
+
+.SH NOTES
+
+.SS Custom templates
+
+.PP
+To use your own custom templates
+(which is very encouraged),
+all you have to do is create a directory and files with the same structure
+as described in the
+.B FILES
+section, then
+.I cp -r
+or
+.I mv
+that directory over to the
+.I ~/.maestro/templates/
+directory.
+In the future, we plan to really open this space up for
+middleware and plugins/extensions to make importing templates a breeze.
+
+.SS Git repositories
+
+.PP
+All templates created with
+.I maestro new
+are initialized with an empty git repository.
+If desired, it can be removed with \fIrm -rf template_name/.git/\fR.
 
 .SH BUGS
 
 .PP
-Since Maestro is in the prototypal phase, bug reports are welcome and can be submitted at
+Since Maestro is in the prototypal phase,
+bug reports are welcome and can be submitted at
 .UR https://github.com/maestro-framework/maestro/issues
 the GitHub Issues page
 .UE .
@@ -51,6 +193,13 @@ the GitHub Issues page
 .SH EXAMPLE
 
 .SS Template prompt
+
+.PP
+This shows what the template-choosing prompt looks like when the
+only templates located in
+.I ~/.maestro/templates/
+are the default ones installed by
+.BR maestro-get-templates (1):
 
 .PP
 .RS
@@ -64,6 +213,24 @@ Select a template to base your project off of (defaults to no template)
   [4] Video transcoding (video-transcoding)
 -----------------------------------------------------------------------
 Select template 1-4 [none] 
+.EE
+.RE
+
+.SS Specifying template through flag
+
+.PP
+.RS
+.EX
+$ \fBmaestro new --template=example-template\fR
+.EE
+.RE
+
+.SS Specifying no template through flag
+
+.PP
+.RS
+.EX
+$ \fBmaestro new --no-template\fR
 .EE
 .RE
 
