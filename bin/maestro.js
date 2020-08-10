@@ -28,11 +28,11 @@ switch (argv._[0]) {
     newProject(argv);
     break;
   // TODO: perhaps `maestro get-templates` should be called as part of the `maestro config` command? If so, should we still leave `get-templates` as a top level sub-command?
-  case 'get-templates':
+  case "get-templates":
     getTemplates();
     break;
   default:
     console.log(
-      `See documentation for commands (i.e. deploy, teardown).\n https://github.com/maestro-framework/maestro`
+      `See man pages for commands (i.e. maestro(1), maestro-deploy(1), maestro-teardown(1), etc.)`
     );
 }
