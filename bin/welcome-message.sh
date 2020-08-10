@@ -1,6 +1,4 @@
-#!/usr/bin/bash
-
-# TODO: install man/info pages (if/when we create them) here, and other post-install tasks
+#!/bin/bash
 
 cat <<'EOF'
 +--------------------------------------------------------------+
