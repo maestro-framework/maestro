@@ -25,7 +25,7 @@ const asyncPromptForAccountInfo = async () => {
     "Please enter the region for you AWS services (e.g. us-west-2): "
   );
 
-  return { accountNum, region };
+  return { account_number: accountNum, region };
 };
 
 const writeAccountInfoFile = (accountNumAndRegion) => {
