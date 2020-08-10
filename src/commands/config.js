@@ -1,39 +1,43 @@
-const fs = require('fs');
-const os = require('os');
-const promptAsync = require('../util/promptAsync');
+const fs = require("fs");
+const os = require("os");
+const promptAsync = require("../util/promptAsync");
 
-const hiddenMaestroDir = () => {
+const hiddenMaestroDirPath = () => {
   const homedir = os.homedir();
-  const dir = '/.maestro';
+  const dir = "/.maestro";
 
   return homedir + dir;
-}
+};
 
 const createHiddenMaestroDir = () => {
-  const hiddenDir = hiddenMaestroDir();
+  const hiddenDirPath = hiddenMaestroDirPath();
 
-  if (!fs.existsSync(hiddenDir)){
-      fs.mkdirSync(hiddenDir);
+  if (!fs.existsSync(hiddenDirPath)) {
+    fs.mkdirSync(hiddenDirPath);
   }
 };
 
 const asyncPromptForAccountInfo = async () => {
-  const accountNum = await promptAsync('Please enter your AWS Account Number: ');
-  const region = await promptAsync('Please enter the region for you AWS servises (e.g. us-west-2): ');
+  const accountNum = await promptAsync(
+    "Please enter your AWS Account Number: "
+  );
+  const region = await promptAsync(
+    "Please enter the region for you AWS servises (e.g. us-west-2): "
+  );
 
   return { accountNum, region };
 };
 
 const writeAccountInfoFile = (accountNumAndRegion) => {
-  
-
+  const accountInfoFilePath = hiddenMaestroDirPath() + "/aws_account_info.json";
+  fs.writeFileSync(accountInfoFilePath, JSON.stringify(accountNumAndRegion));
 };
 
 const config = async () => {
-  createHiddenMaestroDir();
   const accountNumAndRegion = await asyncPromptForAccountInfo();
-  // Create file .maestro/aws_account_info.json
-};
 
+  createHiddenMaestroDir();
+  writeAccountInfoFile(accountNumAndRegion);
+};
 
 module.exports = config;
