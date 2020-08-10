@@ -18,14 +18,14 @@ const createHiddenMaestroDir = () => {
 };
 
 const asyncPromptForAccountInfo = async () => {
-  const accountNum = await promptAsync(
+  const accountNumber = await promptAsync(
     "Please enter your AWS Account Number: "
   );
   const region = await promptAsync(
     "Please enter the region for you AWS services (e.g. us-west-2): "
   );
 
-  return { account_number: accountNum, region };
+  return { accountNumber, region };
 };
 
 const writeAccountInfoFile = (accountNumAndRegion) => {
