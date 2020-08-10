@@ -25,8 +25,9 @@ const newProject = async (argv) => {
     return;
   }
 
+  let templateNames;
   try {
-    const templateNames = fs.readdirSync(`${configDir}/templates`);
+    templateNames = fs.readdirSync(`${configDir}/templates`);
   } catch {
     console.log(`Warning: the directory "${configDir}/templates" doesn't exist.`);
     console.log(
