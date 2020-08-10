@@ -1,0 +1,108 @@
+.TH MAESTRO-TEARDOWN 1 2020-08-08 "Maestro v1.0.0"
+
+.SH NAME
+
+.PP
+maestro-teardown \- teardown an existing maestro project
+
+.SH SYNOPSIS
+
+.PP
+.B maestro teardown
+.RI [ options " ...]"
+
+.SH DESCRIPTION
+
+.PP
+Executing this command with your working directory
+being the root of some Maestro project will tear down
+the associated resources from Amazon Web Services.
+The associated resources are as follows:
+
+.IP \(bu
+All AWS Lambdas uploaded from the project-local
+.I lambdas
+directory.
+See
+.BR maestro-deploy (1) 
+for more detail.
+
+.IP \(bu
+The AWS Step Functions state machine definition created from the project-local
+.I definition.asl.json
+definition file.
+See
+.BR maestro-deploy (1) 
+for more detail.
+
+.IP \(bu
+Any AWS IAM roles specified via an optional flag.
+See the
+.B OPTIONS
+section for more detail.
+
+.SH OPTIONS
+
+.TP
+.BR \-f ", " \-\-force
+Do not prompt for confirmation.
+
+.TP
+\fB\-\-roles=\fIrole1\fR[,\fIrole2\fR...],\
+ \fB\-\-roles\fR \fIrole1\fR[,\fIrole2\fR...]
+Specify the AWS IAM roles by role name to be deleted
+in addition to the state machines and functions.
+
+.SH BUGS
+
+.PP
+Since Maestro is in the prototypal phase, bug reports are welcome and can be submitted at
+.UR https://github.com/maestro-framework/maestro/issues
+the GitHub Issues page
+.UE .
+
+.SH EXAMPLE
+
+.SS Interactive prompt
+
+.PP
+Assuming your working directory has the form of
+.I /path/to/project-name
+(and therefore your project has the name of \fIproject-name\fR),
+when
+.I maestro teardown
+is executed, a prompt appears of this form:
+
+.PP
+.RS
+.EX
+$ \fBmaestro teardown\fR
+Are you sure you want to delete project-name? [y/N] 
+.EE
+.RE
+
+.SS Force tearing down everything 
+
+.PP
+Assuming there is a Maestro project located at the path \fI/path/to/maestro-project\fR, this will tear down the project without prompts as well as the 2 associated Maestro roles:
+
+.PP
+.RS
+.EX
+$ \fBcd /path/to/maestro-project\fR
+$ \fBmaestro teardown --roles=maestro_lambda,maestro_step_functions --force\fR
+ ...
+ output from tearing everything down
+ ...
+.EE
+.RE
+
+.SH SEE ALSO
+
+.PP
+.BR maestro (1),
+.BR maestro-help (1),
+.BR maestro-config (1),
+.BR maestro-deploy (1),
+.BR maestro-new (1),
+.BR maestro-get-templates (1)
