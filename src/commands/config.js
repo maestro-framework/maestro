@@ -22,7 +22,7 @@ const asyncPromptForAccountInfo = async () => {
     "Please enter your AWS Account Number: "
   );
   const region = await promptAsync(
-    "Please enter the region for you AWS servises (e.g. us-west-2): "
+    "Please enter the region for you AWS services (e.g. us-west-2): "
   );
 
   return { accountNum, region };
