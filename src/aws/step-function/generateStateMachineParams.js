@@ -1,7 +1,7 @@
 const { iam } = require("../services");
 const fs = require("fs");
 const os = require("os");
-const accountInfoPath = "/.config/maestro/aws_account_info.json";
+const accountInfoPath = "/.maestro/aws_account_info.json";
 const stateMachineName = require("../../util/workflowName");
 
 const readConfigFileFromHome = (path) => {
