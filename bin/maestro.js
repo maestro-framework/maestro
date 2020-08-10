@@ -4,6 +4,7 @@ const deploy = require("../src/commands/deploy");
 const teardown = require("../src/commands/teardown");
 const newProject = require("../src/commands/newProject");
 const getTemplates = require("../src/commands/getTemplates");
+const config = require("../src/commands/config");
 const minimist = require("minimist");
 const argv = minimist(process.argv.slice(2), {
   boolean: ["force", "n"],
@@ -17,7 +18,10 @@ const argv = minimist(process.argv.slice(2), {
   },
 });
 
-switch (argv._[0]) {
+switch(argv._[0]) {
+  case "config":
+    config();
+    break;
   case "deploy":
     deploy();
     break;
