@@ -13,10 +13,7 @@ const deploy = () => {
 
   establishIAMRole(lambdaRoleName)
     .then(() =>
-      generateMultipleFunctionParams(
-        basenamesAndZipBuffers,
-        lambdaRoleName
-      )
+      generateMultipleFunctionParams(basenamesAndZipBuffers, lambdaRoleName)
     )
     .then(createLambdaFunctions)
     .then(() => console.log("Successfully created function(s)"));
@@ -26,6 +23,6 @@ const deploy = () => {
     .then(createStepFunction)
     .then(() => console.log("Successfully created state machine"))
     .catch(() => {});
-}
+};
 
 module.exports = deploy;
