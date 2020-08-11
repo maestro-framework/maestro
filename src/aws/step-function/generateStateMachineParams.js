@@ -18,13 +18,13 @@ const readStateMachineDefinition = () => {
 };
 
 const replacePlaceholdersInDefinition = (definition) => {
-  const { region, accountNumber } = readConfigFileFromHome(accountInfoPath);
+  const { accountNumber, region } = readConfigFileFromHome(accountInfoPath);
   let modifiedDefinition = definition;
 
   modifiedDefinition = modifiedDefinition.replace(/REGION/g, region);
   modifiedDefinition = modifiedDefinition.replace(
     /ACCOUNT_ID/g,
-    account_number
+    accountNumber
   );
 
   modifiedDefinition = modifiedDefinition.replace(
