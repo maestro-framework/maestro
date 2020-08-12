@@ -1,5 +1,5 @@
-const { iam } = require("./services.js");
-const stateMachineName = require("../util/workflowName");
+const { iam } = require("../services.js");
+const stateMachineName = require("../../util/workflowName");
 
 const generateFunctionParams = (basename, zipBuffer, role) => {
   return {

@@ -1,4 +1,4 @@
-const { iam } = require("./services");
+const { iam } = require("../services");
 
 const getAttachedPolicyArnsByRoleName = async (name) => {
   const attachedPolicies = (

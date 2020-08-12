@@ -11,22 +11,20 @@ In the `templates` directory lie an assortment of template Maestro projects to h
 
 To use, you must have the [AWS CLI][aws-cli] installed and set up.
 
-1. Clone this repository (`git clone https://github.com/maestro-framework/maestro.git`)
-2. Change directory into the newly cloned repo (`cd maestro`)
-3. Install npm packages (`npm install`)
-4. Place all lambda files (directories not supported yet) into the `lambdas` directory
-5. Place state machine definition(s) into the `state-machines` directory
-6. Create a file called `aws_account_info.json` under `~/.config/maestro/` that looks like this (change info to your specific needs):
+1. Clone this repository (`git clone https://github.com/maestro-framework/maestro.git /path/to/maestro`)
+2. Install the npm package globally (`sudo npm -g install /path/to/maestro`)
+3. Create a new project with `maestro new [-n|--no-template|-t <template>|--template=<template>|--template <template>] <projectname>`
+4. Create a file called `aws_account_info.json` under `~/.maestro/` that looks like this (change info to your specific needs):
    ```
    {
-      "account_number": "123456789012",
-      "region": "us-east-1"
+      "account_number": "XXXXXXXXXXXX",
+      "region": "XXXXXXXXX"
    }
    ```
-7. Run `deploy.js` in the top level directory of your Maestro project to deploy it to AWS
-8. To tear down state machine and associated resources, run the teardown script in the top level directory of your Maestro project
+5. Run `maestro deploy` in the top level directory of your Maestro project to deploy it to AWS
+6. To tear down state machine and associated resources, run `maestro teardown [-f|--force|--roles=<roles>|--roles <roles>]`
    - This prompts you for confirmation. If you prefer to run it without a confirmation, provide a `-f` or `--force` flag
-   - This doesn't automatically tear down the roles that were created by `deploy.js`. To do that, provide a `--roles` flag with a comma-separated-list of role names to tear down (for example, `--roles=roleName1,roleName2` OR `--roles roleName1,roleName2`)
+   - This doesn't automatically tear down the roles that were created upon deployment. To do that, provide a `--roles` flag with a comma-separated-list of role names to tear down (for example, `--roles=roleName1,roleName2` OR `--roles roleName1,roleName2`)
 
 ## Dependencies
 
@@ -36,11 +34,12 @@ To use, you must have the [AWS CLI][aws-cli] installed and set up.
   - `aws-sdk`
 - `zip` command line utility
 - [AWS CLI][aws-cli]
+- `git` version control system
 
 ## Development Assumptions
 
 - The name of the workflow is the project directory
-  - The project directory has to have a `lambdas` and `state-machines` child directory (to change soon)
+  - The project directory has to have a `lambdas` subdirectory and a `definition.asl.json` state machine definition template file
 - We'll never deploy or teardown from any location that isn't the project root directory (can't deploy from the lambdas directory or any nested)
 
 [aws-cli]: https://aws.amazon.com/cli/

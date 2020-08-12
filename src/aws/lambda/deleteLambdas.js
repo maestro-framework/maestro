@@ -1,4 +1,4 @@
-const { lambda } = require("./services");
+const { lambda } = require("../services");
 
 const deleteLambdas = (names) => {
   const deleteLambdaPromises = names.map((name) => {
