@@ -14,10 +14,16 @@ const areTemplatesExisting = () => {
 const downloadTemplates = () => {
   const temporaryDir = fs.mkdtempSync("tmp");
 
-  childProcess.execSync(`mkdir ${templatesDir}`);
-  childProcess.execSync(`git clone -q ${repo} ${temporaryDir}`);
-  childProcess.execSync(`mv ${temporaryDir}/templates/* ${templatesDir}`);
-  childProcess.execSync(`rm -rf ${temporaryDir}`);
+  childProcess.execSync(`git clone -q '${repo}' '${temporaryDir}'`);
+
+  fs.mkdirSync(templatesDir);
+  fs.readdirSync(`${temporaryDir}/templates`).forEach((templateName) => {
+    fs.renameSync(
+      `${temporaryDir}/templates/${templateName}`,
+      `${templatesDir}/${templateName}`
+    );
+  });
+  fs.rmdirSync(temporaryDir, { recursive: true });
 };
 
 const getTemplates = () => {
