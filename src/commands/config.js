@@ -4,20 +4,26 @@ const configDir = require("../util/configDir");
 const promptAsync = require("../util/promptAsync");
 const AWSRegions = require("../config/AWSRegions");
 
-// const hiddenMaestroDirPath = () => {
-//   const homedir = os.homedir();
-//   const dir = "/.maestro";
-
-//   return homedir + dir;
-// };
-
 const createHiddenMaestroDir = () => {
   if (!fs.existsSync(configDir)) {
     fs.mkdirSync(configDir);
   }
 };
 
-const promptForValidRegion = async () => {
+const asyncPromptForValidAccountNumber = async () => {
+  const isValidAccountLengthRegex = /\d{12}/;
+  let inputAcctNum = 'invalidAcctNum';
+
+  while(!isValidAccountLengthRegex.test(inputAcctNum)) {
+    inputAcctNum = await promptAsync(
+      "Please enter your AWS Account Number: "
+    );
+  }
+
+  return inputAcctNum;
+};
+
+const asyncPromptForValidRegion = async () => {
   let inputRegion = 'invalid-region';
 
   while (!AWSRegions.includes(inputRegion)) {
@@ -30,12 +36,8 @@ const promptForValidRegion = async () => {
 };
 
 const asyncPromptForAccountInfo = async () => {
-  // TODO: add validation for account #
-  //    12 digits, no separator
-  const accountNumber = await promptAsync(
-    "Please enter your AWS Account Number: "
-  );
-  const region = await promptForValidRegion();
+  const accountNumber = await asyncPromptForValidAccountNumber();
+  const region = await asyncPromptForValidRegion();
 
   return { accountNumber, region };
 };
