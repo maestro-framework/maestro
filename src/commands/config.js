@@ -18,15 +18,25 @@ const createHiddenMaestroDir = () => {
   }
 };
 
+const promptForValidRegion = async () => {
+  let inputRegion = 'invalid-region';
+
+  while (!AWSRegions.includes(inputRegion)) {
+    inputRegion = await promptAsync(
+      "Please enter the region for you AWS services (e.g. us-west-2): "
+    );
+  }
+
+  return inputRegion;
+};
+
 const asyncPromptForAccountInfo = async () => {
   // TODO: add validation for account #
   //    12 digits, no separator
   const accountNumber = await promptAsync(
     "Please enter your AWS Account Number: "
   );
-  const region = await promptAsync(
-    "Please enter the region for you AWS services (e.g. us-west-2): "
-  );
+  const region = await promptForValidRegion();
 
   return { accountNumber, region };
 };
