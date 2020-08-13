@@ -1,6 +1,7 @@
 const fs = require("fs");
 const os = require("os");
 const promptAsync = require("../util/promptAsync");
+const AWSRegions = require("../config/AWSRegions");
 
 const hiddenMaestroDirPath = () => {
   const homedir = os.homedir();
@@ -18,6 +19,8 @@ const createHiddenMaestroDir = () => {
 };
 
 const asyncPromptForAccountInfo = async () => {
+  // TODO: add validation for account #
+  //    12 digits, no separator
   const accountNumber = await promptAsync(
     "Please enter your AWS Account Number: "
   );
