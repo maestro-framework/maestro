@@ -1,20 +1,19 @@
 const fs = require("fs");
 const os = require("os");
+const configDir = require("../util/configDir");
 const promptAsync = require("../util/promptAsync");
 const AWSRegions = require("../config/AWSRegions");
 
-const hiddenMaestroDirPath = () => {
-  const homedir = os.homedir();
-  const dir = "/.maestro";
+// const hiddenMaestroDirPath = () => {
+//   const homedir = os.homedir();
+//   const dir = "/.maestro";
 
-  return homedir + dir;
-};
+//   return homedir + dir;
+// };
 
 const createHiddenMaestroDir = () => {
-  const hiddenDirPath = hiddenMaestroDirPath();
-
-  if (!fs.existsSync(hiddenDirPath)) {
-    fs.mkdirSync(hiddenDirPath);
+  if (!fs.existsSync(configDir)) {
+    fs.mkdirSync(configDir);
   }
 };
 
@@ -42,7 +41,7 @@ const asyncPromptForAccountInfo = async () => {
 };
 
 const writeAccountInfoFile = (accountNumAndRegion) => {
-  const accountInfoFilePath = hiddenMaestroDirPath() + "/aws_account_info.json";
+  const accountInfoFilePath = configDir + "/aws_account_info.json";
   fs.writeFileSync(accountInfoFilePath, JSON.stringify(accountNumAndRegion));
 };
 
