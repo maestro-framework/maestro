@@ -28,7 +28,7 @@ const asyncPromptForValidRegion = async () => {
 
   while (!AWSRegions.includes(inputRegion)) {
     inputRegion = await promptAsync(
-      "Please enter the region for you AWS services (e.g. us-west-2): "
+      "Please enter the region for your AWS services (e.g. us-west-2): "
     );
   }
 
