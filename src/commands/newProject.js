@@ -29,7 +29,9 @@ const newProject = async (argv) => {
   try {
     templateNames = fs.readdirSync(`${configDir}/templates`);
   } catch {
-    console.log(`Warning: the directory "${configDir}/templates" doesn't exist.`);
+    console.log(
+      `Warning: the directory "${configDir}/templates" doesn't exist.`
+    );
     console.log(
       "If you wish to create a project based off of a template," +
         " please run the `maestro get-templates` command and try again."

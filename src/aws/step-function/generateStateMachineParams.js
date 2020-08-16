@@ -22,10 +22,7 @@ const replacePlaceholdersInDefinition = (definition) => {
   let modifiedDefinition = definition;
 
   modifiedDefinition = modifiedDefinition.replace(/REGION/g, region);
-  modifiedDefinition = modifiedDefinition.replace(
-    /ACCOUNT_ID/g,
-    accountNumber
-  );
+  modifiedDefinition = modifiedDefinition.replace(/ACCOUNT_ID/g, accountNumber);
 
   modifiedDefinition = modifiedDefinition.replace(
     /WORKFLOW_NAME/g,
