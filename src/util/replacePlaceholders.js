@@ -1,8 +1,8 @@
 const { accountNumber, region } = require("./awsAccountInfo");
 const workflowName = require("./workflowName");
 
-const replacePlaceholders = (definitionTemplate) => {
-  let definition = definitionTemplate;
+const replacePlaceholders = (aslTemplate) => {
+  let definition = aslTemplate;
 
   definition = definition.replace(/REGION/g, region);
   definition = definition.replace(/ACCOUNT_ID/g, accountNumber);
