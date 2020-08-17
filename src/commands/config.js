@@ -1,5 +1,4 @@
 const fs = require("fs");
-const os = require("os");
 const configDir = require("../util/configDir");
 const promptAsync = require("../util/promptAsync");
 const AWSRegions = require("../config/AWSRegions");

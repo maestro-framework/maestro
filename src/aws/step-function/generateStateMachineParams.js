@@ -1,46 +1,27 @@
 const { iam } = require("../services");
 const fs = require("fs");
-const os = require("os");
-const accountInfoPath = "/.maestro/aws_account_info.json";
-const stateMachineName = require("../../util/workflowName");
+const workflowName = require("../../util/workflowName");
+const { accountNumber, region } = require("../../util/awsAccountInfo");
 
-const readConfigFileFromHome = (path) => {
-  const homedir = os.homedir();
-  const configFile = JSON.parse(fs.readFileSync(homedir + path));
+const replacePlaceholders = (definitionTemplate) => {
+  let definition = definitionTemplate;
 
-  return configFile;
-};
-
-const readStateMachineDefinition = () => {
-  const definition = fs.readFileSync("definition.asl.json").toString();
+  definition = definition.replace(/REGION/g, region);
+  definition = definition.replace(/ACCOUNT_ID/g, accountNumber);
+  definition = definition.replace(/WORKFLOW_NAME/g, workflowName);
 
   return definition;
 };
 
-const replacePlaceholdersInDefinition = (definition) => {
-  const { accountNumber, region } = readConfigFileFromHome(accountInfoPath);
-  let modifiedDefinition = definition;
-
-  modifiedDefinition = modifiedDefinition.replace(/REGION/g, region);
-  modifiedDefinition = modifiedDefinition.replace(/ACCOUNT_ID/g, accountNumber);
-
-  modifiedDefinition = modifiedDefinition.replace(
-    /WORKFLOW_NAME/g,
-    stateMachineName
-  );
-
-  return modifiedDefinition;
-};
-
 const generateStateMachineParams = async (roleName) => {
   const role = await iam.getRole({ RoleName: roleName }).promise();
-  const definition = replacePlaceholdersInDefinition(
-    readStateMachineDefinition()
+  const definition = replacePlaceholders(
+    fs.readFileSync("definition.asl.json").toString()
   );
 
   return {
     definition,
-    name: stateMachineName,
+    name: workflowName,
     roleArn: role.Role.Arn,
   };
 };
