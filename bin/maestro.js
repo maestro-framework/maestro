@@ -18,7 +18,7 @@ const argv = minimist(process.argv.slice(2), {
   },
 });
 
-switch(argv._[0]) {
+switch (argv._[0]) {
   case "config":
     config();
     break;

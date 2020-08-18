@@ -1,5 +1,4 @@
 const fs = require("fs");
-const os = require("os");
 const configDir = require("../util/configDir");
 const promptAsync = require("../util/promptAsync");
 const AWSRegions = require("../config/AWSRegions");
@@ -12,19 +11,17 @@ const createHiddenMaestroDir = () => {
 
 const asyncPromptForValidAccountNumber = async () => {
   const isValidAccountLengthRegex = /\d{12}/;
-  let inputAcctNum = 'invalidAcctNum';
+  let inputAcctNum = "invalidAcctNum";
 
-  while(!isValidAccountLengthRegex.test(inputAcctNum)) {
-    inputAcctNum = await promptAsync(
-      "Please enter your AWS Account Number: "
-    );
+  while (!isValidAccountLengthRegex.test(inputAcctNum)) {
+    inputAcctNum = await promptAsync("Please enter your AWS Account Number: ");
   }
 
   return inputAcctNum;
 };
 
 const asyncPromptForValidRegion = async () => {
-  let inputRegion = 'invalid-region';
+  let inputRegion = "invalid-region";
 
   while (!AWSRegions.includes(inputRegion)) {
     inputRegion = await promptAsync(
