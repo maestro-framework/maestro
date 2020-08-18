@@ -1,23 +1,12 @@
-const { iam } = require("../services");
 const fs = require("fs");
+const { iam } = require("../services");
 const workflowName = require("../../util/workflowName");
-const { accountNumber, region } = require("../../util/awsAccountInfo");
-
-const replacePlaceholders = (definitionTemplate) => {
-  let definition = definitionTemplate;
-
-  definition = definition.replace(/REGION/g, region);
-  definition = definition.replace(/ACCOUNT_ID/g, accountNumber);
-  definition = definition.replace(/WORKFLOW_NAME/g, workflowName);
-
-  return definition;
-};
+const replacePlaceholders = require("../../util/replacePlaceholders");
 
 const generateStateMachineParams = async (roleName) => {
   const role = await iam.getRole({ RoleName: roleName }).promise();
-  const definition = replacePlaceholders(
-    fs.readFileSync("definition.asl.json").toString()
-  );
+  const aslTemplate = fs.readFileSync("definition.asl.json").toString();
+  const definition = replacePlaceholders(aslTemplate);
 
   return {
     definition,
