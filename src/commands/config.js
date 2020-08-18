@@ -1,6 +1,7 @@
 const fs = require("fs");
 const configDir = require("../util/configDir");
 const promptAsync = require("../util/promptAsync");
+const obfuscate = require("../util/obfuscate");
 const AWSRegions = require("../config/AWSRegions");
 const {
   accountNumber: existingAccountNum,
@@ -18,7 +19,7 @@ const asyncPromptForValidAccountNumber = async () => {
   let inputAcctNum =
     (await promptAsync(
       "Please enter your AWS Account Number",
-      existingAccountNum
+      obfuscate(existingAccountNum, 4)
     )) || existingAccountNum;
 
   while (!isValidAccountLengthRegex.test(inputAcctNum)) {
@@ -26,7 +27,7 @@ const asyncPromptForValidAccountNumber = async () => {
     inputAcctNum =
       (await promptAsync(
         "Please enter your AWS Account Number",
-        existingAccountNum
+        obfuscate(existingAccountNum, 4)
       )) || existingAccountNum;
   }
 
