@@ -1,4 +1,3 @@
-const childProcess = require("child_process");
 const fs = require("fs");
 
 const configDir = require("../util/configDir");
