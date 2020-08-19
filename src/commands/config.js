@@ -3,6 +3,7 @@ const configDir = require("../util/configDir");
 const promptAsync = require("../util/promptAsync");
 const obfuscate = require("../util/obfuscate");
 const AWSRegions = require("../config/AWSRegions");
+
 const {
   accountNumber: existingAccountNum,
   region: existingRegion,
@@ -14,40 +15,44 @@ const createHiddenMaestroDir = () => {
   }
 };
 
+const getAcctNum = async () => {
+  const promptMsg = "Please enter your AWS Account Number";
+
+  if (existingAccountNum) {
+    return await promptAsync(promptMsg, obfuscate(existingAccountNum, 4));
+  } else {
+    return await promptAsync(promptMsg);
+  }
+};
+
 const asyncPromptForValidAccountNumber = async () => {
   const isValidAccountLengthRegex = /\d{12}/;
-  let inputAcctNum =
-    (await promptAsync(
-      "Please enter your AWS Account Number",
-      obfuscate(existingAccountNum, 4)
-    )) || existingAccountNum;
+  let inputAcctNum = await getAcctNum();
 
   while (!isValidAccountLengthRegex.test(inputAcctNum)) {
     console.log("Invalid account number. Must be in format XXXXXXXXXXXX.");
-    inputAcctNum =
-      (await promptAsync(
-        "Please enter your AWS Account Number",
-        obfuscate(existingAccountNum, 4)
-      )) || existingAccountNum;
+    inputAcctNum = await getAcctNum();
   }
 
   return inputAcctNum;
 };
 
+const getRegion = async () => {
+  const promptMsg = "Please enter the region for your AWS services";
+
+  if (existingRegion) {
+    return await promptAsync(promptMsg, existingRegion);
+  } else {
+    return await promptAsync(promptMsg);
+  }
+};
+
 const asyncPromptForValidRegion = async () => {
-  let inputRegion =
-    (await promptAsync(
-      "Please enter the region for your AWS services",
-      existingRegion
-    )) || existingRegion;
+  let inputRegion = await getRegion();
 
   while (!AWSRegions.includes(inputRegion)) {
     console.log("Invalid region.");
-    inputRegion =
-      (await promptAsync(
-        "Please enter the region for your AWS services",
-        existingRegion
-      )) || existingRegion;
+    inputRegion = await getRegion();
   }
 
   return inputRegion;
