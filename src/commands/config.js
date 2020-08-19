@@ -3,6 +3,7 @@ const configDir = require("../util/configDir");
 const promptAsync = require("../util/promptAsync");
 const obfuscate = require("../util/obfuscate");
 const AWSRegions = require("../config/AWSRegions");
+
 const {
   accountNumber: existingAccountNum,
   region: existingRegion,
@@ -16,12 +17,12 @@ const createHiddenMaestroDir = () => {
 
 const getAcctNum = async () => {
   if (existingAccountNum) {
-    return (await promptAsync(
+    return await promptAsync(
       "Please enter your AWS Account Number",
       obfuscate(existingAccountNum, 4)
-    ));
+    );
   } else {
-    return await promptAsync("Please enter your AWS Account Number:");
+    return await promptAsync("Please enter your AWS Account Number");
   }
 };
 
@@ -38,18 +39,22 @@ const asyncPromptForValidAccountNumber = async () => {
 };
 
 const getRegion = async () => {
-  return (await promptAsync(
-    "Please enter the region for your AWS services",
-    existingRegion
-  )) || existingRegion;
+  if (existingRegion) {
+    return await promptAsync(
+      "Please enter the region for your AWS services",
+      existingRegion
+    );
+  } else {
+    return await promptAsync("Please enter the region for your AWS services")
+  }
 };
 
 const asyncPromptForValidRegion = async () => {
-  let inputRegion = getRegion();
+  let inputRegion = await getRegion();
 
   while (!AWSRegions.includes(inputRegion)) {
     console.log("Invalid region.");
-    inputRegion = getRegion();
+    inputRegion = await getRegion();
   }
 
   return inputRegion;
