@@ -2,8 +2,7 @@ const fs = require("fs");
 
 const configDir = require("../util/configDir");
 const selectTemplateIdx = require("../util/selectTemplateIdx");
-const capitalize = require("../util/capitalize");
-const cleanupProjectName = require("../util/cleanupProjectName");
+const beautifyProjectName = require("../util/beautifyProjectName");
 const createProjectFromTemplate = require("../util/createProjectFromTemplate");
 const createProjectWithoutTemplate = require("../util/createProjectWithoutTemplate");
 
@@ -47,7 +46,7 @@ const newProject = async (argv) => {
   } else {
     // has structure of [["Example workflow", "example-workflow"], ...]
     const displayTemplateNames = templateNames.map((name) => [
-      capitalize(cleanupProjectName(name)),
+      beautifyProjectName(name),
       name,
     ]);
 
