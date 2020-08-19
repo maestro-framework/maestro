@@ -14,21 +14,20 @@ const createHiddenMaestroDir = () => {
   }
 };
 
+const getAcctNum = async () => {
+  (await promptAsync(
+    "Please enter your AWS Account Number",
+    obfuscate(existingAccountNum, 4)
+  )) || existingAccountNum;
+};
+
 const asyncPromptForValidAccountNumber = async () => {
   const isValidAccountLengthRegex = /\d{12}/;
-  let inputAcctNum =
-    (await promptAsync(
-      "Please enter your AWS Account Number",
-      obfuscate(existingAccountNum, 4)
-    )) || existingAccountNum;
+  let inputAcctNum = await getAcctNum();
 
   while (!isValidAccountLengthRegex.test(inputAcctNum)) {
     console.log("Invalid account number. Must be in format XXXXXXXXXXXX.");
-    inputAcctNum =
-      (await promptAsync(
-        "Please enter your AWS Account Number",
-        obfuscate(existingAccountNum, 4)
-      )) || existingAccountNum;
+    inputAcctNum = await getAcctNum();
   }
 
   return inputAcctNum;
