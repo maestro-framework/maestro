@@ -1,11 +1,11 @@
 const sleep = require("./sleep");
 
-async function retryAsync(
+const retryAsync = async (
   promiseCallback,
   maxAttempts = 3,
   interval = 2000,
   backoffRate = 3
-) {
+) => {
   try {
     await promiseCallback();
   } catch (err) {
@@ -24,6 +24,6 @@ async function retryAsync(
       backoffRate
     );
   }
-}
+};
 
 module.exports = retryAsync;
