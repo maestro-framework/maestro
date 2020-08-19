@@ -16,13 +16,12 @@ const createHiddenMaestroDir = () => {
 };
 
 const getAcctNum = async () => {
+  const promptMsg = "Please enter your AWS Account Number";
+
   if (existingAccountNum) {
-    return await promptAsync(
-      "Please enter your AWS Account Number",
-      obfuscate(existingAccountNum, 4)
-    );
+    return await promptAsync(promptMsg, obfuscate(existingAccountNum, 4));
   } else {
-    return await promptAsync("Please enter your AWS Account Number");
+    return await promptAsync(promptMsg);
   }
 };
 
@@ -39,13 +38,12 @@ const asyncPromptForValidAccountNumber = async () => {
 };
 
 const getRegion = async () => {
+  const promptMsg = "Please enter the region for your AWS services";
+
   if (existingRegion) {
-    return await promptAsync(
-      "Please enter the region for your AWS services",
-      existingRegion
-    );
+    return await promptAsync(promptMsg, existingRegion);
   } else {
-    return await promptAsync("Please enter the region for your AWS services")
+    return await promptAsync(promptMsg);
   }
 };
 
