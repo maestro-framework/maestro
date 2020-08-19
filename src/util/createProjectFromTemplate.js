@@ -3,7 +3,7 @@ const copyTemplateToDir = require("./copyTemplateToDir");
 const beautifyProjectName = require("./beautifyProjectName");
 
 const createProjectFromTemplate = (projectName, templateName) => {
-  const beautifulName = beautifyProjectName(projectName);
+  const beautifulName = beautifyProjectName(templateName);
 
   console.log(`Creating project based off of template "${beautifulName}"...`);
 
