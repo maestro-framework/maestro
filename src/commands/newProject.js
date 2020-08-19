@@ -1,10 +1,8 @@
-const childProcess = require("child_process");
 const fs = require("fs");
 
 const configDir = require("../util/configDir");
 const selectTemplateIdx = require("../util/selectTemplateIdx");
-const capitalize = require("../util/capitalize");
-const cleanupProjectName = require("../util/cleanupProjectName");
+const beautifyProjectName = require("../util/beautifyProjectName");
 const createProjectFromTemplate = require("../util/createProjectFromTemplate");
 const createProjectWithoutTemplate = require("../util/createProjectWithoutTemplate");
 
@@ -29,7 +27,9 @@ const newProject = async (argv) => {
   try {
     templateNames = fs.readdirSync(`${configDir}/templates`);
   } catch {
-    console.log(`Warning: the directory "${configDir}/templates" doesn't exist.`);
+    console.log(
+      `Warning: the directory "${configDir}/templates" doesn't exist.`
+    );
     console.log(
       "If you wish to create a project based off of a template," +
         " please run the `maestro get-templates` command and try again."
@@ -46,7 +46,7 @@ const newProject = async (argv) => {
   } else {
     // has structure of [["Example workflow", "example-workflow"], ...]
     const displayTemplateNames = templateNames.map((name) => [
-      capitalize(cleanupProjectName(name)),
+      beautifyProjectName(name),
       name,
     ]);
 

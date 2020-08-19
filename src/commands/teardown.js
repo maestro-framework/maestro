@@ -5,7 +5,7 @@ const deleteStateMachine = require("../aws/step-function/deleteStateMachine");
 const teardownRoleByName = require("../aws/iam/teardownRoleByName");
 const getStateMachineArn = require("../aws/iam/getStateMachineArn");
 const basename = require("../util/basename");
-const promptAsyncYesNoAndExec = require("../util/promptAsyncYesNoAndExec");
+const promptAsync = require("../util/promptAsync");
 const stateMachineName = require("../util/workflowName");
 
 const deleteResources = async (rolesToDelete, lambdaNames) => {
@@ -18,7 +18,7 @@ const deleteResources = async (rolesToDelete, lambdaNames) => {
   rolesToDelete.forEach(teardownRoleByName);
 };
 
-const teardown = (argv) => {
+const teardown = async (argv) => {
   const lambdaNames = fs
     .readdirSync("lambdas")
     .map(basename)
@@ -30,10 +30,19 @@ const teardown = (argv) => {
   if (argv.force || argv.f) {
     deleteResources(rolesToDelete, lambdaNames);
   } else {
-    promptAsyncYesNoAndExec(
-      `Are you sure you want to delete ${stateMachineName}?`,
-      () => deleteResources(rolesToDelete, lambdaNames)
-    );
+    const confirmation = (
+      await promptAsync(
+        `Are you sure you want to delete ${stateMachineName}?`,
+        "y",
+        "N"
+      )
+    ).toLowerCase();
+
+    if (confirmation === "y" || confirmation === "yes") {
+      deleteResources(rolesToDelete, lambdaNames);
+    } else {
+      console.log("Aborting...");
+    }
   }
 };
 
