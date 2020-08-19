@@ -5,9 +5,7 @@ const beautifyProjectName = require("./beautifyProjectName");
 const createProjectFromTemplate = (projectName, templateName) => {
   const beautifulName = beautifyProjectName(projectName);
 
-  console.log(
-    `Creating project based off of template "${beautifulName}"...`
-  );
+  console.log(`Creating project based off of template "${beautifulName}"...`);
 
   copyTemplateToDir(templateName, projectName);
   initializeGitRepository(projectName);
