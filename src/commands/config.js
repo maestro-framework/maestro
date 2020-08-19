@@ -15,10 +15,14 @@ const createHiddenMaestroDir = () => {
 };
 
 const getAcctNum = async () => {
-  (await promptAsync(
-    "Please enter your AWS Account Number",
-    obfuscate(existingAccountNum, 4)
-  )) || existingAccountNum;
+  if (existingAccountNum) {
+    return (await promptAsync(
+      "Please enter your AWS Account Number",
+      obfuscate(existingAccountNum, 4)
+    ));
+  } else {
+    return await promptAsync("Please enter your AWS Account Number:");
+  }
 };
 
 const asyncPromptForValidAccountNumber = async () => {
