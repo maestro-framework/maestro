@@ -37,20 +37,19 @@ const asyncPromptForValidAccountNumber = async () => {
   return inputAcctNum;
 };
 
+const getRegion = async () => {
+  return (await promptAsync(
+    "Please enter the region for your AWS services",
+    existingRegion
+  )) || existingRegion;
+};
+
 const asyncPromptForValidRegion = async () => {
-  let inputRegion =
-    (await promptAsync(
-      "Please enter the region for your AWS services",
-      existingRegion
-    )) || existingRegion;
+  let inputRegion = getRegion();
 
   while (!AWSRegions.includes(inputRegion)) {
     console.log("Invalid region.");
-    inputRegion =
-      (await promptAsync(
-        "Please enter the region for your AWS services",
-        existingRegion
-      )) || existingRegion;
+    inputRegion = getRegion();
   }
 
   return inputRegion;
