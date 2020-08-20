@@ -1,42 +1,13 @@
 const { iam } = require("../services");
-const {
-  lambdaPolicyArns,
-  statesPolicyArns,
-} = require("../../config/policy-arn");
-const sleep = require("../../util/sleep");
-const generateRoleParams = require("./generateRoleParams");
-
-const attachPolicies = (policyArns, roleName) => {
-  const attachPolicyPromises = policyArns.map((policyArn) => {
-    const policyParams = {
-      PolicyArn: policyArn,
-      RoleName: roleName,
-    };
-
-    return iam.attachRolePolicy(policyParams).promise();
-  });
-
-  return Promise.all(attachPolicyPromises);
-};
-
-module.exports = attachPolicies;
+const createIAMRole = require("./createIAMRole");
 
 const establishIAMRole = async (roleName) => {
-  const policyArns = roleName.includes("lambda")
-    ? lambdaPolicyArns
-    : statesPolicyArns;
-
   try {
     return await iam.getRole({ RoleName: roleName }).promise();
-  } catch (err) {
-    console.log(err.message);
+  } catch (error) {
+    console.log(error.message);
     console.log(`Creating a new role called ${roleName}...`);
-    return await iam
-      .createRole(generateRoleParams(roleName))
-      .promise()
-      .then(() => sleep(7000))
-      .then(() => attachPolicies(policyArns, roleName))
-      .then(() => console.log("Successfully attached policies"));
+    await createIAMRole(roleName);
   } finally {
     console.log(`Successfully established a role called ${roleName}.`);
   }
