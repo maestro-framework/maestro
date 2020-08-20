@@ -2,7 +2,7 @@ const assert = require("assert");
 const { accountNumber, region } = require("../src/util/awsAccountInfo.js");
 const AWSRegions = require("../src/config/AWSRegions.js");
 
-describe("awsAccountInfo.js tests", () => {
+describe("AWS Account info tests", () => {
   describe("accountNumber Tests", () => {
     const accountNumberFormatRegex = /\d{12}/;
     it("accountNumber should be configured", () => {
