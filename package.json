@@ -14,7 +14,6 @@
     "mocha": "^8.1.1"
   },
   "scripts": {
-    "preinstall": "./bin/zip-man-pages.sh",
     "postinstall": "./bin/welcome-message.sh",
     "test":"mocha"
   },
