@@ -1,5 +1,7 @@
 const { iam } = require("../services");
+const sleep = require("../../util/sleep");
 const attachPolicies = require("./attachPolicies");
+const generateRoleParams = require("./generateRoleParams");
 
 const {
   lambdaPolicyArns,
