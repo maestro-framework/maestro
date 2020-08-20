@@ -10,11 +10,14 @@
   "bin": {
     "maestro": "./bin/maestro.js"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "mocha": "^8.1.1"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "preinstall": "./bin/zip-man-pages.sh",
-    "postinstall": "./bin/welcome-message.sh"
+    "postinstall": "./bin/welcome-message.sh",
+    "test":"mocha"
   },
   "man": [
     "doc/man/maestro.1.gz",
