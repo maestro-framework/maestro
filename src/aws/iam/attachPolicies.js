@@ -1,3 +1,5 @@
+const { iam } = require("../services");
+
 const attachPolicies = (policyArns, roleName) => {
   const attachPolicyPromises = policyArns.map((policyArn) => {
     const policyParams = {

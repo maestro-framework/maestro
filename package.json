@@ -13,17 +13,16 @@
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "preinstall": "./bin/zip-man-pages.sh",
     "postinstall": "./bin/welcome-message.sh"
   },
   "man": [
-    "doc/man/maestro.1.gz",
-    "doc/man/maestro-deploy.1.gz",
-    "doc/man/maestro-help.1.gz",
-    "doc/man/maestro-new.1.gz",
-    "doc/man/maestro-config.1.gz",
-    "doc/man/maestro-get-templates.1.gz",
-    "doc/man/maestro-teardown.1.gz"
+    "doc/man/maestro.1",
+    "doc/man/maestro-deploy.1",
+    "doc/man/maestro-help.1",
+    "doc/man/maestro-new.1",
+    "doc/man/maestro-config.1",
+    "doc/man/maestro-get-templates.1",
+    "doc/man/maestro-teardown.1"
   ],
   "repository": {
     "type": "git",

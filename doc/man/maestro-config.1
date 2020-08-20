@@ -12,6 +12,29 @@ maestro-config \- set up or alter your Maestro configuration files
 
 .SH DESCRIPTION
 
+.PP
+The
+.I maestro config
+command should be the first command run after installing Maestro. Any Maestro deployment depends on the account information in the hidden directory created by the initial invocation of
+.I maestro config.
+
+.PP
+.I maestro config
+checks for creation of a hidden
+.I .maestro
+directory created in the users home directory and also the existence of a file
+.IR aws_account_info.json .
+If the directory and file exists, and there is information present, the values present are presented to the user when prompted for account information. Otherwise, a user will simply be prompted for appropriate account information (i.e. in the case this is the initial invocation of the command).
+
+.PP
+The pertinent pieces of account information that
+.I maestro config
+is concerned with are the AWS account number and region. The account number is a 12 digit number, and the user is required to input said number in the format
+.IR XXXXXXXXXXXX .
+
+.PP
+The region corresponds to the AWS region to which the user will deploy their resources. The user's input will be compared with the set of AWS service endpoints associated with various regions as of August 2020 (https://docs.aws.amazon.com/general/latest/gr/rande.html).
+
 .SH BUGS
 
 .PP
