@@ -1,12 +1,12 @@
 const { iam } = require("../services.js");
-const stateMachineName = require("../../util/workflowName");
+const workflowName = require("../../util/workflowName");
 
 const generateFunctionParams = (basename, zipBuffer, role) => {
   return {
     Code: {
       ZipFile: zipBuffer,
     },
-    FunctionName: stateMachineName + "_" + basename,
+    FunctionName: workflowName + "_" + basename,
     Handler: `${basename}.handler`,
     Role: role.Role.Arn,
     Runtime: "nodejs12.x",

@@ -1,11 +1,10 @@
 const getBasenamesAndZipBuffers = require("../util/getBasenamesAndZipBuffers");
+// TODO: Separate the retrieving of file basenames and creating zip buffers
 const generateMultipleFunctionParams = require("../aws/lambda/generateMultipleFunctionParams");
 const createLambdaFunctions = require("../aws/lambda/createLambdaFunctions");
 const generateStateMachineParams = require("../aws/step-function/generateStateMachineParams");
 const createStepFunction = require("../aws/step-function/createStepFunction");
 const establishIAMRole = require("../aws/iam/establishIAMRole");
-// TODO: Separate the retrieving of file basenames and creating zip buffers
-//   Specify files to retrieve by a workflow name
 const { lambdaRoleName, statesRoleName } = require("../config/roleNames");
 
 const deploy = () => {
