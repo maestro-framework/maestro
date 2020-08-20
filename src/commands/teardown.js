@@ -6,11 +6,11 @@ const teardownRoleByName = require("../aws/iam/teardownRoleByName");
 const getStateMachineArn = require("../aws/iam/getStateMachineArn");
 const basename = require("../util/basename");
 const promptAsync = require("../util/promptAsync");
-const stateMachineName = require("../util/workflowName");
+const workflowName = require("../util/workflowName");
 
 const deleteResources = async (rolesToDelete, lambdaNames) => {
   const deleteLambdasPromise = deleteLambdas(lambdaNames).catch(console.log);
-  const deleteStateMachinePromise = getStateMachineArn(stateMachineName)
+  const deleteStateMachinePromise = getStateMachineArn(workflowName)
     .then(deleteStateMachine)
     .catch(console.log);
   await Promise.all([deleteLambdasPromise, deleteStateMachinePromise]);
@@ -23,7 +23,7 @@ const teardown = async (argv) => {
     .readdirSync("lambdas")
     .map(basename)
     .map((lambdaName) => {
-      return stateMachineName + "_" + lambdaName;
+      return workflowName + "_" + lambdaName;
     });
   const rolesToDelete = argv.roles.split(",").filter((role) => role.length > 0);
 
@@ -32,7 +32,7 @@ const teardown = async (argv) => {
   } else {
     const confirmation = (
       await promptAsync(
-        `Are you sure you want to delete ${stateMachineName}?`,
+        `Are you sure you want to delete ${workflowName}?`,
         "y",
         "N"
       )
