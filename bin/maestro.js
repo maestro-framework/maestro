@@ -1,10 +1,5 @@
 #!/usr/bin/env node
 
-const deploy = require("../src/commands/deploy");
-const teardown = require("../src/commands/teardown");
-const newProject = require("../src/commands/newProject");
-const getTemplates = require("../src/commands/getTemplates");
-const config = require("../src/commands/config");
 const minimist = require("minimist");
 
 const argv = minimist(process.argv.slice(2), {
@@ -21,19 +16,19 @@ const argv = minimist(process.argv.slice(2), {
 
 switch (argv._[0]) {
   case "config":
-    config();
+    require("../src/commands/config")();
     break;
   case "deploy":
-    deploy();
+    require("../src/commands/deploy")();
     break;
   case "teardown":
-    teardown(argv);
+    require("../src/commands/teardown")(argv);
     break;
   case "new":
-    newProject(argv);
+    require("../src/commands/newProject")(argv);
     break;
   case "get-templates":
-    getTemplates();
+    require("../src/commands/getTemplates")();
     break;
   default:
     console.log(
