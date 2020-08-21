@@ -6,7 +6,7 @@
   },
   "name": "@maestro-framework/maestro",
   "description": "Maestro is a framework for quickly bootstrapping serverless orchestration workflows with AWS Step Functions",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "bin": {
     "maestro": "bin/maestro.js"
   },
