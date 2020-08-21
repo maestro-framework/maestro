@@ -1,6 +1,5 @@
 {
   "dependencies": {
-    "@maestro-framework/asl-validator": "^1.7.1",
     "aws-sdk": "^2.724.0",
     "minimist": "^1.2.5"
   },
