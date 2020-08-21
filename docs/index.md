@@ -67,13 +67,13 @@ Certainly there are multiple considerations related to serverless orchestration,
 A request comes in to the manager who has the option of accepting or denying the request. If the manager approves, the resource is provisioned and the requester is granted access. If the manager denies, the requester is notified of the denial. The savvy developer may break down the problem into smaller components and generate a workflow:
  
 Diagram (thin workflow)
-1. Request made
-2. Manager decision
-    - Accept -> step 3
-    - Deny -> step 5
-3. Provision resource
-4. Grant access
-5. Notify requester of decision
+  1. Request made
+  2. Manager decision
+      - Accept -> step 3
+      - Deny -> step 5
+  3. Provision resource
+  4. Grant access
+  5. Notify requester of decision
 
 
 The workflow can be implemented with each component representing an individual AWS Lambda. Ideally, each component would do one simple thing in isolation. Yet, a Lambda couldn't fulfill its role in a meaningful way if it were to execute arbitrarily, independent of the rest of the workflow. The work of each Lambda must be orchestrated for the application to execute in a meaningful sequence.
@@ -218,15 +218,15 @@ Maestro also has robust 'man' pages which contribute to its ease of use. A new p
  
 ### 4.1 Commands
 
-Given that templates can provide a useful mechanism for developing with Step Functions, Maestro interacts with an external template repository through the |maestro get-templates| command that creates a local version of the repo locally. Maestro itself is able to stay light by separating out the template repository which can then be utilized independently. Separation also provides a future basis for middleware to add templates. Included in the repository are several templates deemed foundational by AWS. However, the Maestro philosophy is, 'Bring Your Own Template', and any template placed in the local repository will be included for creation by the |new| command.
+Given that templates can provide a useful mechanism for developing with Step Functions, Maestro interacts with an external template repository through the `maestro get-templates` command that creates a local version of the repo locally. Maestro itself is able to stay light by separating out the template repository which can then be utilized independently. Separation also provides a future basis for middleware to add templates. Included in the repository are several templates deemed foundational by AWS. However, the Maestro philosophy is, 'Bring Your Own Template', and any template placed in the local repository will be included for creation by the `new` command.
 
-Since configuration of Lambda and Step Functions can be cumbersome, a convenience method for configuring a practitioner's AWS region and account number is provided (|maestro config|). The pertinent account information is made available to any maestro project and automatically included for deployment of resources that would otherwise require manual configuration.
+Since configuration of Lambda and Step Functions can be cumbersome, a convenience method for configuring a practitioner's AWS region and account number is provided (`maestro config`). The pertinent account information is made available to any maestro project and automatically included for deployment of resources that would otherwise require manual configuration.
 
-Once a user's local environment has been configured, a new project can be created with |maestro new|. As Maestro is template oriented, the user is prompted to select from a list of templates from which to base the new project otherwise a skeleton will be provided. Creating the new project locally allows a developer to access the project files with their preferred text editor.
+Once a user's local environment has been configured, a new project can be created with `maestro new`. As Maestro is template oriented, the user is prompted to select from a list of templates from which to base the new project otherwise a skeleton will be provided. Creating the new project locally allows a developer to access the project files with their preferred text editor.
 
-The |maestro deploy| command is the mechanism through which a practitioner's local code is made available on AWS servers. A deployment ensures the creation of IAM roles that allow Lambda and Step Functions to operate in AWS, attaching policies that allow resources with a given role to perform tasks, creation of Lambdas associated with the project, and creation of the Step Functions state machine. The creation of resources like the Lambdas and state machine takes place concurrently such that deployment is faster. If the roles associated with a deployment already exist in an AWS account, deployment takes about 3 seconds while a deployment that requires creating the roles takes around 15 seconds.
+The `maestro deploy` command is the mechanism through which a practitioner's local code is made available on AWS servers. A deployment ensures the creation of IAM roles that allow Lambda and Step Functions to operate in AWS, attaching policies that allow resources with a given role to perform tasks, creation of Lambdas associated with the project, and creation of the Step Functions state machine. The creation of resources like the Lambdas and state machine takes place concurrently such that deployment is faster. If the roles associated with a deployment already exist in an AWS account, deployment takes about 3 seconds while a deployment that requires creating the roles takes around 15 seconds.
 
-Development requires not only deploying code and auditing its execution on AWS but starting over with as few artifacts as possible when necessary. Tearing down in the AWS console requires navigating various interfaces hoping to identify every resource that was associated with a workflow. Missing just one could result in conflicts in future deployments and fees associated with lingering artifacts. |maestro teardown| allows the developer to remove all resources associated with a project in one command. Like deploying, tearing down is extremely fast, running in about 2 seconds. Flags allow the developer to distinguish just which resources to tear down in the event the intent is not to tear down everything. For instance, roles are left behind unless flags are included to indicate their destruction.
+Development requires not only deploying code and auditing its execution on AWS but starting over with as few artifacts as possible when necessary. Tearing down in the AWS console requires navigating various interfaces hoping to identify every resource that was associated with a workflow. Missing just one could result in conflicts in future deployments and fees associated with lingering artifacts. `maestro teardown` allows the developer to remove all resources associated with a project in one command. Like deploying, tearing down is extremely fast, running in about 2 seconds. Flags allow the developer to distinguish just which resources to tear down in the event the intent is not to tear down everything. For instance, roles are left behind unless flags are included to indicate their destruction.
 
 ### 4.2 Challenges
 
@@ -248,7 +248,7 @@ The process of retrial was fraught with its own challenges since the error messa
 
 Discussing the challenge of creating a Lambda or State Machine with the ability to properly interact with AWS depending on another service touches on an overarching challenge that would need to be reconciled in developing Maestro: asynchronicity. Maestro is able to offer quick deployment based on concurrent creation and deployment of resources which requires navigating numerous issues related to synchronicity.
 
-A helpful pattern that allowed the team to work with asynchronous functions and Promises was the 'async / await' pattern. This allowed certain actions to be treated synchronously. However, the Maestro philosophy was not to completely remove Promise chains by dogmatically applying the 'async / await' pattern everywhere possible. Overuse of the pattern can cause code to be slow by essentially making every step synchronous [15]. To achieve relevant concurrency in creating resources, a mixture of 'Promise chains', 'async / await', and |Promise.all| was implemented. The result is a lightning fast framework.
+A helpful pattern that allowed the team to work with asynchronous functions and Promises was the 'async / await' pattern. This allowed certain actions to be treated synchronously. However, the Maestro philosophy was not to completely remove Promise chains by dogmatically applying the 'async / await' pattern everywhere possible. Overuse of the pattern can cause code to be slow by essentially making every step synchronous [15]. To achieve relevant concurrency in creating resources, a mixture of 'Promise chains', 'async / await', and `Promise.all` was implemented. The result is a lightning fast framework.
 
 ### 4.3 Future Work
 
