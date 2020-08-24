@@ -43,6 +43,44 @@ Since Maestro is in the prototypal phase, bug reports are welcome and can be sub
 the GitHub Issues page
 .UE .
 
+.SH EXAMPLE
+
+.SS Prompt without existing account information
+
+.PP
+This shows what the prompt will look like when there is no account information located at
+.I ~/.maestro/aws_account_info.json:
+
+.RS
+$ maestro config
+
+Please enter your AWS Account Number:
+
+$ XXXXXXXXXXXX
+
+Please enter the region for your AWS services:
+
+$ us-east-2
+.RE
+
+.SS Prompt with existing account information
+
+.PP
+This shows what the prompt will look like when there is account information located at
+.I ~/.maestro/aws_account_info.json:
+
+.RS
+$ maestro config
+
+Please enter your AWS Account Number [********XXXX]:
+
+$ XXXXXXXXXXXX
+
+Please enter the region for your AWS services [us-east-2]:
+
+$ us-east-2
+.RE
+
 .SH SEE ALSO
 
 .PP
