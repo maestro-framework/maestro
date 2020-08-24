@@ -5,7 +5,7 @@ that will deploy AWS IAM Roles, AWS Lambdas, and AWS Step Functions to create a 
 
 In the `bin` directory lie `deploy.js` and `teardown.js`. When `deploy.js` is invoked in a directory that has a `lambdas` subdirectory and `definition.asl.json` state machine definition file, all of the lambdas in that specified directory are deployed, and the `definition.asl.json` file is deployed as well, filling in values as necessary.
 
-In the `templates` directory lie an assortment of template Maestro projects to help you bootstrap your project. When you want to create a project that is based off of a template, first create a directory anywhere in your filesystem with the name of your project (eg `mkdir /path/to/project-name/`). Next, `cd` into that directory. Then `cp` the template files over (eg `cp -r /path/to/maestro/templates/video-transcoding/* .`). After that, you can deploy with `/path/to/maestro/bin/deploy.js` and teardown with `/path/to/maestro/bin/teardown.js`.
+In the `templates` directory lie an assortment of template Maestro projects to help you bootstrap your project. When you want to create a project that is based off of a template, first create a directory anywhere in your filesystem with the name of your project (eg `mkdir /path/to/project-name/`). Next, `cd` into that directory. Then `cp` the template files over (eg `cp -r /path/to/maestro/templates/example-workflow/* .`). After that, you can deploy with `/path/to/maestro/bin/deploy.js` and teardown with `/path/to/maestro/bin/teardown.js`.
 
 ## Usage
 
