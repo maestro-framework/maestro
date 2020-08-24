@@ -19,6 +19,6 @@ describe("AWS Account info tests", () => {
     });
     it("AWS region is valid", () => {
       assert.equal(AWSRegions.includes(region), true);
-    })
+    });
   });
 });

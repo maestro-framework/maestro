@@ -11,5 +11,5 @@ describe("Local templates directory Tests", () => {
   });
   it("Local templates directory to not be empty", () => {
     assert.equal(fs.readdirSync(`${configDir}/templates`).length > 0, true);
-  })
+  });
 });

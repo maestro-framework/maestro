@@ -15,7 +15,7 @@
   },
   "scripts": {
     "postinstall": "./bin/welcome-message.sh",
-    "test":"mocha"
+    "test": "mocha"
   },
   "man": [
     "doc/man/maestro.1",
