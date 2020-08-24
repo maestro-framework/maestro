@@ -45,6 +45,38 @@ the GitHub Issues page
 
 .SH EXAMPLE
 
+.SS Prompt without existing account information
+
+.PP
+This shows what the prompt will look like when there is no account information located at
+.IR ~/.maestro/aws_account_info.json :
+
+.PP
+.RS
+.EX
+$ \fBmaestro config
+\fRPlease enter your AWS Account Number: \fB123456789012
+\fRPlease enter the region for your AWS services: \fBus-east-2
+\fR
+.EE
+.RE
+
+.SS Prompt with existing account information
+
+.PP
+This shows what the prompt will look like when there is account information located at
+.IR ~/.maestro/aws_account_info.json :
+
+.PP
+.RS
+.EX
+$ \fBmaestro config
+\fRPlease enter your AWS Account Number [********9012]: \fB98765432109
+\fRPlease enter the region for your AWS services [us-east-2]: \fBus-west-2
+\fR
+.EE
+.RE
+
 .SH SEE ALSO
 
 .PP
