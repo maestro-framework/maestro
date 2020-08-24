@@ -8,7 +8,7 @@ const promptAsync = (question, ...options) => {
 
   let prompt = `${question}${
     options.length > 0 ? " [" + options.join("/") + "]" : ""
-  } `;
+  }: `;
 
   return new Promise((resolve) => {
     rl.question(prompt, (result) => {
