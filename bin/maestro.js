@@ -38,6 +38,9 @@ switch (argv._[0]) {
   case "get-templates":
     require("../src/commands/getTemplates")();
     break;
+  case "help":
+    require("../src/commands/help")(argv);
+    break;
   default:
     console.log(defaultMsg);
 }
