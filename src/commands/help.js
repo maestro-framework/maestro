@@ -4,6 +4,7 @@ const codes = {
   faint:     "\033[2m",
   italic:    "\033[3m",
   underline: "\033[4m",
+  black:     "\033[30m",
   red:       "\033[31m",
   green:     "\033[32m",
   yellow:    "\033[33m",
@@ -14,7 +15,11 @@ const codes = {
 };
 
 const genericHelpMsg  = `Run \`${codes.blue}maestro help${codes.reset} ${codes.italic + codes.underline + codes.red}command${codes.reset}\` to get help specific to a subcommand.`;
-const configMsg       = `"Config" help message`;
+const configMsg       = `maestro-config: ${codes.blue + codes.italic}maestro config${codes.reset}
+    Set up or alter your Maestro configuration files.
+
+    Run ${codes.blue + codes.italic}maestro config${codes.reset} to set the global config values of AWS account number and region.
+    See manual page ${codes.yellow + codes.bold}maestro-config(1)${codes.reset} for more information.`;
 const deployMsg       = `"Deploy" help message`;
 const teardownMsg     = `"Teardown" help message`;
 const newMsg          = `"New" help message`;
