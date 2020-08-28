@@ -25,12 +25,19 @@ const configMsg       = `maestro-config: ${codes.blue + codes.italic}maestro con
 const deployMsg       = `maestro-deploy: ${codes.blue + codes.italic}maestro deploy${codes.reset}
     Deploy a full AWS Step Functions workflow with AWS Lambdas.
 
-    Run ${codes.blue + codes.italic}maestro deploy${codes.reset} inside a Maestro project to deploy all the project's
-    resources including AWS IAM Roles, AWS Lambdas, and the AWS Step Functions
-    state machine.
+    Run ${codes.blue + codes.italic}maestro deploy${codes.reset} inside a Maestro project to quickly deploy all the
+    project's resources including AWS IAM Roles, AWS Lambdas, and the AWS Step
+    Functions state machine.
 
-    See manual page ${codes.yellow + codes.bold}maestro-config(1)${codes.reset} for more information.`;
-const teardownMsg     = `"Teardown" help message`;
+    See manual page ${codes.yellow + codes.bold}maestro-deploy(1)${codes.reset} for more information.`;
+const teardownMsg     = `maestro-teardown: ${codes.blue + codes.italic}maestro teardown${codes.reset}
+    Teardown an existing maestro project.
+
+    Run ${codes.blue + codes.italic}maestro teardown${codes.reset} inside a Maestro project to quickly tear down all
+    the project's resources including AWS Lambdas, the AWS Step Functions state
+    machine, and optionally AWS IAM Roles.
+
+    See manual page ${codes.yellow + codes.bold}maestro-teardown(1)${codes.reset} for more information.`;
 const newMsg          = `"New" help message`;
 const getTemplatesMsg = `"Get templates" help message`;
 const helpMsg         = genericHelpMsg;
