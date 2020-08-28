@@ -1,4 +1,4 @@
-# Maestro
+# ![LS-BrandDev-Maestro_logo-full-onlight](https://user-images.githubusercontent.com/42946880/91614803-739b7200-e93f-11ea-85aa-32f5fbb5f150.png)
 
 Maestro is a framework to manage and deploy workflows. There is a deployer (`deploy.js`) which is an automatic deployer script
 that will deploy AWS IAM Roles, AWS Lambdas, and AWS Step Functions to create a functioning state machine.
