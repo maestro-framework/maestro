@@ -18,9 +18,18 @@ const genericHelpMsg  = `Run \`${codes.blue}maestro help${codes.reset} ${codes.i
 const configMsg       = `maestro-config: ${codes.blue + codes.italic}maestro config${codes.reset}
     Set up or alter your Maestro configuration files.
 
-    Run ${codes.blue + codes.italic}maestro config${codes.reset} to set the global config values of AWS account number and region.
+    Run ${codes.blue + codes.italic}maestro config${codes.reset} to set the global config values of AWS account number and
+    region.
+
     See manual page ${codes.yellow + codes.bold}maestro-config(1)${codes.reset} for more information.`;
-const deployMsg       = `"Deploy" help message`;
+const deployMsg       = `maestro-deploy: ${codes.blue + codes.italic}maestro deploy${codes.reset}
+    Deploy a full AWS Step Functions workflow with AWS Lambdas.
+
+    Run ${codes.blue + codes.italic}maestro deploy${codes.reset} inside a Maestro project to deploy all the project's
+    resources including AWS IAM Roles, AWS Lambdas, and the AWS Step Functions
+    state machine.
+
+    See manual page ${codes.yellow + codes.bold}maestro-config(1)${codes.reset} for more information.`;
 const teardownMsg     = `"Teardown" help message`;
 const newMsg          = `"New" help message`;
 const getTemplatesMsg = `"Get templates" help message`;
