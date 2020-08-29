@@ -31,14 +31,22 @@ const deployMsg       = `maestro-deploy: ${codes.blue + codes.italic}maestro dep
 
     See manual page ${codes.yellow + codes.bold}maestro-deploy(1)${codes.reset} for more information.`;
 const teardownMsg     = `maestro-teardown: ${codes.blue + codes.italic}maestro teardown${codes.reset}
-    Teardown an existing maestro project.
+    Teardown an existing Maestro project.
 
     Run ${codes.blue + codes.italic}maestro teardown${codes.reset} inside a Maestro project to quickly tear down all
     the project's resources including AWS Lambdas, the AWS Step Functions state
     machine, and optionally AWS IAM Roles.
 
     See manual page ${codes.yellow + codes.bold}maestro-teardown(1)${codes.reset} for more information.`;
-const newMsg          = `"New" help message`;
+const newMsg          = `maestro-new: ${codes.blue + codes.italic}maestro new${codes.reset} ${codes.italic + codes.underline + codes.red}project_name${codes.reset}
+    Create a new Maestro project.
+
+    Run ${codes.blue + codes.italic}maestro new${codes.reset} ${codes.italic + codes.underline + codes.red}project_name${codes.reset} to create a new maestro project with the
+    given project name.
+    When this command is executed a prompt is displayed listing all of the
+    available templates on which to base this new project.
+
+    See manual page ${codes.yellow + codes.bold}maestro-new(1)${codes.reset} for more information.`;
 const getTemplatesMsg = `"Get templates" help message`;
 const helpMsg         = genericHelpMsg;
 const defaultMsg      = genericHelpMsg;
