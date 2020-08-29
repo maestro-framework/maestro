@@ -1,3 +1,10 @@
+/*
+TODO:
+- add support for a `--help/-h` flag to any subcommand
+- create man page for maestro-help(1)
+- add flag usage for commands that need it
+*/
+
 const codes = {
   reset: "\033[m",
   bold: "\033[1m",
@@ -58,12 +65,12 @@ const teardownMsg = `maestro-teardown: ${
   codes.reset
 } for more information.`;
 
-const newMsg = `maestro-new: ${codes.italic + codes.blue}maestro new${
-  codes.reset
-} ${codes.italic + codes.bold + codes.red}project_name${codes.reset}
+const newMsg = `maestro-new: ${codes.italic + codes.blue}maestro new ${
+  codes.bold + codes.red
+}project_name${codes.reset}
     Create a new Maestro project.
 
-    Run ${codes.italic + codes.blue}maestro new${
+    Run ${codes.italic + codes.blue}maestro new ${
   codes.bold + codes.red
 }project_name${codes.reset} to create a new maestro project with the
     given project name.
@@ -106,7 +113,7 @@ const helpMsg = `maestro-help: ${codes.italic + codes.blue}maestro help ${
   codes.reset
 } for more information.`;
 
-const defaultMsg = `Run \`${codes.italic + codes.blue}maestro help${
+const defaultMsg = `Run \`${codes.italic + codes.blue}maestro help ${
   codes.bold + codes.red
 }command${codes.reset}\` to get help specific to a subcommand.`;
 
