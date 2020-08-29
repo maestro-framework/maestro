@@ -1,6 +1,5 @@
 /*
 TODO:
-- add support for a `--help/-h` flag to any subcommand
 - create man page for maestro-help(1)
 - add flag usage for commands that need it
 */
@@ -117,8 +116,8 @@ const defaultMsg = `Run \`${codes.italic + codes.blue}maestro help ${
   codes.bold + codes.red
 }command${codes.reset}\` to get help specific to a subcommand.`;
 
-const help = (argv) => {
-  switch (argv._[1]) {
+const help = (command) => {
+  switch (command) {
     case undefined:
       console.log(defaultMsg);
       break;
