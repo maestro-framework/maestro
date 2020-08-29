@@ -50,7 +50,9 @@ const deployMsg = `maestro-deploy: ${codes.italic + codes.blue}maestro deploy${
 
 const teardownMsg = `maestro-teardown: ${
   codes.italic + codes.blue
-}maestro teardown${codes.reset}
+}maestro teardown${codes.reset} [${
+  codes.italic + codes.bold + codes.red
+}options${codes.reset} ...]
     Teardown an existing Maestro project.
 
     Run ${codes.italic + codes.blue}maestro teardown${
@@ -58,6 +60,14 @@ const teardownMsg = `maestro-teardown: ${
 } inside a Maestro project to quickly tear down all
     the project's resources including AWS Lambdas, the AWS Step Functions state
     machine, and optionally AWS IAM Roles.
+
+    Options:
+      -f, --force
+          Do not prompt for confirmation.
+
+      --roles ${codes.italic + codes.bold + codes.red}role1${codes.reset}[,${codes.italic + codes.bold + codes.red}role2${codes.reset}...],
+      --roles=${codes.italic + codes.bold + codes.red}role1${codes.reset}[,${codes.italic + codes.bold + codes.red}role2${codes.reset}...]
+          Specify the roles to be deleted in addition to the other resources.
 
     See manual page ${codes.yellow + codes.bold}maestro-teardown(1)${
   codes.reset
