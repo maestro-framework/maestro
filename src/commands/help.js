@@ -1,8 +1,3 @@
-/*
-TODO:
-- add flag usage for commands that need it
-*/
-
 const codes = {
   reset: "\033[m",
   bold: "\033[1m",
