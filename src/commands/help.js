@@ -14,16 +14,16 @@ const codes = {
   white: "\033[37m",
 };
 
-const genericHelpMsg = `Run \`${codes.blue}maestro help${codes.reset} ${
-  codes.italic + codes.underline + codes.red
+const genericHelpMsg = `Run \`${codes.italic + codes.blue}maestro help${codes.reset} ${
+  codes.italic + codes.bold + codes.red
 }command${codes.reset}\` to get help specific to a subcommand.`;
 
-const configMsg = `maestro-config: ${codes.blue + codes.italic}maestro config${
+const configMsg = `maestro-config: ${codes.italic + codes.blue}maestro config${
   codes.reset
 }
     Set up or alter your Maestro configuration files.
 
-    Run ${codes.blue + codes.italic}maestro config${
+    Run ${codes.italic + codes.blue}maestro config${
   codes.reset
 } to set the global config values of AWS account number and
     region.
@@ -32,12 +32,12 @@ const configMsg = `maestro-config: ${codes.blue + codes.italic}maestro config${
   codes.reset
 } for more information.`;
 
-const deployMsg = `maestro-deploy: ${codes.blue + codes.italic}maestro deploy${
+const deployMsg = `maestro-deploy: ${codes.italic + codes.blue}maestro deploy${
   codes.reset
 }
     Deploy a full AWS Step Functions workflow with AWS Lambdas.
 
-    Run ${codes.blue + codes.italic}maestro deploy${
+    Run ${codes.italic + codes.blue}maestro deploy${
   codes.reset
 } inside a Maestro project to quickly deploy all the
     project's resources including AWS IAM Roles, AWS Lambdas, and the AWS Step
@@ -48,11 +48,11 @@ const deployMsg = `maestro-deploy: ${codes.blue + codes.italic}maestro deploy${
 } for more information.`;
 
 const teardownMsg = `maestro-teardown: ${
-  codes.blue + codes.italic
+  codes.italic + codes.blue
 }maestro teardown${codes.reset}
     Teardown an existing Maestro project.
 
-    Run ${codes.blue + codes.italic}maestro teardown${
+    Run ${codes.italic + codes.blue}maestro teardown${
   codes.reset
 } inside a Maestro project to quickly tear down all
     the project's resources including AWS Lambdas, the AWS Step Functions state
@@ -62,13 +62,13 @@ const teardownMsg = `maestro-teardown: ${
   codes.reset
 } for more information.`;
 
-const newMsg = `maestro-new: ${codes.blue + codes.italic}maestro new${
+const newMsg = `maestro-new: ${codes.italic + codes.blue}maestro new${
   codes.reset
-} ${codes.italic + codes.underline + codes.red}project_name${codes.reset}
+} ${codes.italic + codes.bold + codes.red}project_name${codes.reset}
     Create a new Maestro project.
 
-    Run ${codes.blue + codes.italic}maestro new${codes.reset} ${
-  codes.italic + codes.underline + codes.red
+    Run ${codes.italic + codes.blue}maestro new${codes.reset} ${
+  codes.italic + codes.bold + codes.red
 }project_name${codes.reset} to create a new maestro project with the
     given project name.
     When this command is executed a prompt is displayed listing all of the
@@ -78,7 +78,18 @@ const newMsg = `maestro-new: ${codes.blue + codes.italic}maestro new${
   codes.reset
 } for more information.`;
 
-const getTemplatesMsg = `"Get templates" help message`;
+const getTemplatesMsg = `maestro-get-templates: ${
+  codes.italic + codes.blue
+}maestro get-templates${codes.reset}
+    Fetch and install the default Maestro templates.
+
+    Run ${codes.italic + codes.blue}maestro get-templates${codes.reset} to fetch and install the default Maestro
+    templates from the ${codes.yellow}⟨${codes.green + codes.underline}https://github.com/maestro-framework/maestro-templates${codes.reset + codes.yellow}⟩${codes.reset}
+    git repository.
+
+    See manual page ${codes.yellow + codes.bold}maestro-get-templates(1)${
+  codes.reset
+} for more information.`;
 
 const helpMsg = genericHelpMsg;
 
