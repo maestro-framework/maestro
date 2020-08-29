@@ -14,10 +14,6 @@ const codes = {
   white: "\033[37m",
 };
 
-const genericHelpMsg = `Run \`${codes.italic + codes.blue}maestro help${codes.reset} ${
-  codes.italic + codes.bold + codes.red
-}command${codes.reset}\` to get help specific to a subcommand.`;
-
 const configMsg = `maestro-config: ${codes.italic + codes.blue}maestro config${
   codes.reset
 }
@@ -67,8 +63,8 @@ const newMsg = `maestro-new: ${codes.italic + codes.blue}maestro new${
 } ${codes.italic + codes.bold + codes.red}project_name${codes.reset}
     Create a new Maestro project.
 
-    Run ${codes.italic + codes.blue}maestro new${codes.reset} ${
-  codes.italic + codes.bold + codes.red
+    Run ${codes.italic + codes.blue}maestro new${
+  codes.bold + codes.red
 }project_name${codes.reset} to create a new maestro project with the
     given project name.
     When this command is executed a prompt is displayed listing all of the
@@ -83,22 +79,41 @@ const getTemplatesMsg = `maestro-get-templates: ${
 }maestro get-templates${codes.reset}
     Fetch and install the default Maestro templates.
 
-    Run ${codes.italic + codes.blue}maestro get-templates${codes.reset} to fetch and install the default Maestro
-    templates from the ${codes.yellow}⟨${codes.green + codes.underline}https://github.com/maestro-framework/maestro-templates${codes.reset + codes.yellow}⟩${codes.reset}
+    Run ${codes.italic + codes.blue}maestro get-templates${
+  codes.reset
+} to fetch and install the default Maestro
+    templates from the ${codes.yellow}⟨${
+  codes.green + codes.underline
+}https://github.com/maestro-framework/maestro-templates${
+  codes.reset + codes.yellow
+}⟩${codes.reset}
     git repository.
 
     See manual page ${codes.yellow + codes.bold}maestro-get-templates(1)${
   codes.reset
 } for more information.`;
 
-const helpMsg = genericHelpMsg;
+const helpMsg = `maestro-help: ${codes.italic + codes.blue}maestro help ${
+  codes.bold + codes.red
+}command${codes.reset}
+    Display help about a specific Maestro command.
 
-const defaultMsg = genericHelpMsg;
+    Run ${codes.italic + codes.blue}maestro help ${
+  codes.bold + codes.red
+}command${codes.reset} to get help specific to a Maestro subcommand.
+
+    See manual page ${codes.yellow + codes.bold}maestro-help(1)${
+  codes.reset
+} for more information.`;
+
+const defaultMsg = `Run \`${codes.italic + codes.blue}maestro help${
+  codes.bold + codes.red
+}command${codes.reset}\` to get help specific to a subcommand.`;
 
 const help = (argv) => {
   switch (argv._[1]) {
     case undefined:
-      console.log(genericHelpMsg);
+      console.log(defaultMsg);
       break;
     case "config":
       console.log(configMsg);
