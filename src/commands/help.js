@@ -1,6 +1,5 @@
 /*
 TODO:
-- create man page for maestro-help(1)
 - add flag usage for commands that need it
 */
 
