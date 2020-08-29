@@ -64,6 +64,8 @@ const teardownMsg = `maestro-teardown: ${
 } for more information.`;
 
 const newMsg = `maestro-new: ${codes.italic + codes.blue}maestro new ${
+  codes.reset
+}[${codes.italic + codes.bold + codes.red}options ${codes.reset}...] ${
   codes.bold + codes.red
 }project_name${codes.reset}
     Create a new Maestro project.
@@ -74,6 +76,19 @@ const newMsg = `maestro-new: ${codes.italic + codes.blue}maestro new ${
     given project name.
     When this command is executed a prompt is displayed listing all of the
     available templates on which to base this new project.
+
+    Options:
+      -n, --no-template
+          Don't use a template for the new project.
+
+      -t ${codes.italic + codes.bold + codes.red}template_name${codes.reset},
+      --template ${codes.italic + codes.bold + codes.red}template_name${
+  codes.reset
+},
+      --template=${codes.italic + codes.bold + codes.red}template_name${
+  codes.reset
+}
+          Use a specific template for the new project.
 
     See manual page ${codes.yellow + codes.bold}maestro-new(1)${
   codes.reset
