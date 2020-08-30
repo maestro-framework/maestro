@@ -60,8 +60,12 @@ const teardownMsg = `maestro-teardown: ${
       -f, --force
           Do not prompt for confirmation.
 
-      --roles ${codes.italic + codes.bold + codes.red}role1${codes.reset}[,${codes.italic + codes.bold + codes.red}role2${codes.reset}...],
-      --roles=${codes.italic + codes.bold + codes.red}role1${codes.reset}[,${codes.italic + codes.bold + codes.red}role2${codes.reset}...]
+      --roles ${codes.italic + codes.bold + codes.red}role1${codes.reset}[,${
+  codes.italic + codes.bold + codes.red
+}role2${codes.reset}...],
+      --roles=${codes.italic + codes.bold + codes.red}role1${codes.reset}[,${
+  codes.italic + codes.bold + codes.red
+}role2${codes.reset}...]
           Specify the roles to be deleted in addition to the other resources.
 
     See manual page ${codes.yellow + codes.bold}maestro-teardown(1)${
