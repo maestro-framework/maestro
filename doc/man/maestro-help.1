@@ -14,12 +14,6 @@ maestro \- display help information about maestro or maestro command
 .B maestro
 [\fIcommand\fR] \fB\-h\fR|\fB\-\-help\fR
 
-.SH DESCRIPTION
-
-.SH OPTIONS
-
-.SH NOTES
-
 .SH BUGS
 
 .PP
@@ -29,6 +23,46 @@ the GitHub Issues page
 .UE .
 
 .SH EXAMPLE
+
+.SS Using the --help flag
+
+.PP
+This shows an example of running
+.IR "maestro <subcommand> --help" .
+
+.PP
+.RS
+.EX
+$ \fBmaestro config --help\fR
+maestro-config: \fImaestro config\fR
+    Set up or alter your Maestro configuration files.
+
+    Run \fImaestro config\fR to set the global config values of AWS account number and
+    region.
+
+    See manual page \fBmaestro-config(1)\fR for more information.
+.EE
+.RE
+
+.SS Using the help subcommand
+
+.PP
+This shows an example of running
+.IR "maestro help <subcommand>" .
+
+.PP
+.RS
+.EX
+$ \fBmaestro help config\fR
+maestro-config: \fImaestro config\fR
+    Set up or alter your Maestro configuration files.
+
+    Run \fImaestro config\fR to set the global config values of AWS account number and
+    region.
+
+    See manual page \fBmaestro-config(1)\fR for more information.
+.EE
+.RE
 
 .SH SEE ALSO
 
