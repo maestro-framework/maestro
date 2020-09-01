@@ -1,26 +1,22 @@
 # ![LS-BrandDev-Maestro_logo-full-onlight](https://user-images.githubusercontent.com/42946880/91614803-739b7200-e93f-11ea-85aa-32f5fbb5f150.png)
 
-Maestro is a framework to manage and deploy workflows. There is a deployer (`deploy.js`) which is an automatic deployer script
-that will deploy AWS IAM Roles, AWS Lambdas, and AWS Step Functions to create a functioning state machine.
-
-In the `bin` directory lie `deploy.js` and `teardown.js`. When `deploy.js` is invoked in a directory that has a `lambdas` subdirectory and `definition.asl.json` state machine definition file, all of the lambdas in that specified directory are deployed, and the `definition.asl.json` file is deployed as well, filling in values as necessary.
-
-In the `templates` directory lie an assortment of template Maestro projects to help you bootstrap your project. When you want to create a project that is based off of a template, first create a directory anywhere in your filesystem with the name of your project (eg `mkdir /path/to/project-name/`). Next, `cd` into that directory. Then `cp` the template files over (eg `cp -r /path/to/maestro/templates/example-workflow/* .`). After that, you can deploy with `/path/to/maestro/bin/deploy.js` and teardown with `/path/to/maestro/bin/teardown.js`.
+Maestro is a framework that enables rapid iteration for serverless orchestration. The rise of serverless architectures and FaaS offerings such as AWS Lambda has revolutionized how companies are developing modern apps. The need for an orchestration layer over these architectures has brought about services such as AWS Step Functions. However, deploying apps that use Step Functions can be tedious and error-prone. Maestro prioritizes speed and developer productivity by automating this process so that the developer’s focus stays on developing their application's business logic. 
 
 ## Usage
 
 To use, you must have the [AWS CLI][aws-cli] installed and set up.
 
-1. Clone this repository (`git clone https://github.com/maestro-framework/maestro.git /path/to/maestro`)
-2. Install the npm package globally (`sudo npm -g install /path/to/maestro`)
+1. Install the npm package globally (`sudo npm -g install maestro`)
+2. Configure your AWS account number and region with (`maestro config`)
 3. Run `maestro get-templates` to get the default project templates provided by Maestro
 4. Create a new project with `maestro new`
-5. Run `maestro config` and follow the prompts
+5. Hack away on your `definition.asl.json` state machine definitino file and the lambdas in the `lambdas/` directory
 6. Run `maestro deploy` in the top level directory of your Maestro project to deploy it to AWS
 7. To tear down state machine and associated resources, run `maestro teardown`
    - This prompts you for confirmation. If you prefer to run it without a confirmation, provide a `-f` or `--force` flag
    - This doesn't automatically tear down the roles that were created upon deployment. To do that, provide a `--roles` flag with a comma-separated-list of role names to tear down (for example, `--roles=roleName1,roleName2` OR `--roles roleName1,roleName2`)
 8. Read the man pages and get up to speed! (`man maestro`)
+   i. Alternatively, take advantage of our helpful `maestro help` command! (e.g. `maestro help deploy` or `maestro deploy --help`)
 
 ## Dependencies
 
@@ -31,11 +27,5 @@ To use, you must have the [AWS CLI][aws-cli] installed and set up.
 - `zip` command line utility
 - [AWS CLI][aws-cli]
 - `git` version control system
-
-## Development Assumptions
-
-- The name of the workflow is the project directory
-  - The project directory has to have a `lambdas` subdirectory and a `definition.asl.json` state machine definition template file
-- We'll never deploy or teardown from any location that isn't the project root directory (can't deploy from the lambdas directory or any nested)
 
 [aws-cli]: https://aws.amazon.com/cli/
