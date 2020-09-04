@@ -7,10 +7,10 @@ const isVerbose = minimist(process.argv.slice(2), {
   },
 }).verbose;
 
-const logger = (...args) => {
+const log = (...args) => {
   if (isVerbose) {
     console.log(...args);
   }
 };
 
-module.exports = logger;
+module.exports = log;
