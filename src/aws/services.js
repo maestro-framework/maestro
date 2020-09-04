@@ -1,10 +1,10 @@
 const AWS = require("aws-sdk");
 const { region } = require("../util/awsAccountInfo");
-const { log } = require("../util/log");
+const { logger } = require("../util/logger");
 
 const apiVersion = "latest";
 
-AWS.config.logger = log;
+AWS.config.logger = logger;
 
 const iam = new AWS.IAM();
 const lambda = new AWS.Lambda({ apiVersion, region });
