@@ -29,12 +29,18 @@ const downloadTemplates = () => {
 };
 
 const getTemplates = () => {
-  if (areTemplatesExisting()) {
-    console.log(alreadyExistsMsg);
+  if (fs.existsSync(configDir)) {
+    if (areTemplatesExisting()) {
+      console.log(alreadyExistsMsg);
+    } else {
+      console.log(loadingMsg);
+      downloadTemplates();
+      console.log(creationMsg);
+    }
   } else {
-    console.log(loadingMsg);
-    downloadTemplates();
-    console.log(creationMsg);
+    console.log(
+      "Before retrieving templates, first configure Maestro by executing the 'maestro config' command"
+    );
   }
 };
 
